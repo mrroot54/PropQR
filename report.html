@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropQR Dashboard - Code Analysis Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --brand: #d97706;
+            --brandDark: #b45309;
+            --brandLight: #fffbeb;
+            --accent: #10b981;
+            --info: #06b6d4;
+            --danger: #ef4444;
+            --textPrimary: #1e293b;
+            --textSecondary: #475569;
+            --textMuted: #94a3b8;
+            --border: #e2e8f0;
+            --surface: #f8fafc;
+            --sidebar: #0c1222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #ffffff;
+            color: var(--textPrimary);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        @media print {
+            body { font-size: 11pt; }
+            .no-print { display: none !important; }
+            .page { box-shadow: none !important; margin: 0 !important; border-radius: 0 !important; }
+            .page-break { page-break-before: always; }
+            .report-section { break-inside: avoid; }
+            .highlight-box { border: 1px solid #e2e8f0 !important; }
+        }
+
+        .page {
+            max-width: 210mm;
+            margin: 30px auto;
+            background: #fff;
+            padding: 50px 55px;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+            border-radius: 4px;
+        }
+
+        /* Cover Page */
+        .cover {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--brand);
+            border-radius: 8px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--brand), var(--info), var(--accent));
+        }
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent), var(--info), var(--brand));
+        }
+        .cover-icon {
+            width: 80px; height: 80px;
+            background: var(--brand);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(217,119,6,0.3);
+        }
+        .cover-icon i { color: #fff; font-size: 36px; }
+        .cover h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--textPrimary);
+            margin-bottom: 8px;
+        }
+        .cover h1 span { color: var(--brand); }
+        .cover .subtitle {
+            font-size: 18px;
+            color: var(--textSecondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cover-meta-item {
+            text-align: center;
+        }
+        .cover-meta-item .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--textMuted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .cover-meta-item .value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--textPrimary);
+        }
+
+        /* Section Headings */
+        .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            background: var(--brand);
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 8px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--textPrimary);
+            margin-bottom: 6px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--brand);
+        }
+        .section-desc {
+            color: var(--textSecondary);
+            font-size: 13.5px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .report-section {
+            margin-bottom: 36px;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: var(--surface);
+            border-left: 4px solid var(--brand);
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+        .highlight-box.green { border-left-color: var(--accent); }
+        .highlight-box.blue { border-left-color: var(--info); }
+        .highlight-box.red { border-left-color: var(--danger); }
+        .highlight-box.purple { border-left-color: #8b5cf6; }
+        .highlight-box strong { color: var(--textPrimary); }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #f1f5f9;
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list .icon-box {
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .icon-box.amber { background: #fef3c7; color: var(--brand); }
+        .icon-box.green { background: #d1fae5; color: var(--accent); }
+        .icon-box.blue { background: #cffafe; color: var(--info); }
+        .icon-box.red { background: #fee2e2; color: var(--danger); }
+        .icon-box.purple { background: #ede9fe; color: #8b5cf6; }
+        .feature-list .text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--textPrimary);
+            margin-bottom: 1px;
+        }
+        .feature-list .text p {
+            font-size: 12.5px;
+            color: var(--textSecondary);
+            line-height: 1.6;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 12px 0;
+        }
+        .data-table thead th {
+            background: var(--surface);
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--textMuted);
+            border-bottom: 2px solid var(--border);
+        }
+        .data-table tbody td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--textSecondary);
+        }
+        .data-table tbody tr:hover { background: #fafbfc; }
+        .data-table tbody td:first-child { color: var(--textPrimary); font-weight: 600; }
+
+        /* Stat Grid */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .stat-item {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #f1f5f9;
+        }
+        .stat-item .num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--textPrimary);
+        }
+        .stat-item .label {
+            font-size: 11.5px;
+            color: var(--textMuted);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+        .stat-item .change {
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+        .stat-item .change.up { color: var(--accent); }
+        .stat-item .change.neutral { color: #8b5cf6; }
+
+        /* Architecture Diagram */
+        .arch-box {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 6px 0;
+        }
+        .arch-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 4px 0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .arch-row.dark { background: var(--sidebar); color: #fff; }
+        .arch-row.light { background: #f8fafc; color: var(--textPrimary); border: 1px solid #e2e8f0; }
+        .arch-row.brand { background: var(--brand); color: #fff; }
+        .arch-arrow {
+            text-align: center;
+            color: var(--textMuted);
+            font-size: 18px;
+            padding: 2px 0;
+        }
+
+        /* Color Palette */
+        .color-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f8fafc;
+        }
+        .color-swatch {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .color-name { font-weight: 600; font-size: 13px; color: var(--textPrimary); min-width: 120px; }
+        .color-hex { font-family: 'Courier New', monospace; font-size: 12px; color: var(--textMuted); }
+        .color-use { font-size: 12px; color: var(--textSecondary); margin-left: auto; }
+
+        /* Tech Badge */
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 4px;
+        }
+        .tech-badge.orange { background: #fef3c7; color: #92400e; }
+        .tech-badge.blue { background: #dbeafe; color: #1e40af; }
+        .tech-badge.green { background: #d1fae5; color: #065f46; }
+        .tech-badge.purple { background: #ede9fe; color: #5b21b6; }
+        .tech-badge.gray { background: #f1f5f9; color: #475569; }
+
+        /* Summary Box */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .summary-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid #f1f5f9;
+        }
+        .summary-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--textPrimary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-card p {
+            font-size: 12.5px;
+            color: var(--textSecondary);
+            line-height: 1.7;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--brand);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 30px rgba(217,119,6,0.35);
+            transition: all 0.2s ease;
+            z-index: 999;
+        }
+        .print-btn:hover { background: var(--brandDark); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(217,119,6,0.4); }
+        .print-btn:active { transform: translateY(0); }
+
+        /* Footer */
+        .report-footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+            margin-top: 30px;
+        }
+        .report-footer p { font-size: 11px; color: var(--textMuted); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page { padding: 30px 25px; margin: 10px; }
+            .cover h1 { font-size: 26px; }
+            .stat-grid { grid-template-columns: repeat(2, 1fr); }
+            .summary-grid { grid-template-columns: 1fr; }
+            .cover-meta { gap: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .stat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .color-use { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Print / Save PDF Button -->
+<button class="print-btn no-print" onclick="window.print()">
+    <i class="fa-solid fa-file-pdf"></i> Save as PDF
+</button>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page">
+    <div class="cover">
+        <div class="cover-icon">
+            <i class="fa-solid fa-building"></i>
+        </div>
+        <h1>Prop<span>QR</span> Dashboard</h1>
+        <p class="subtitle">Complete Code Analysis Report</p>
+        <p style="color: var(--textMuted); font-size: 13px; max-width: 480px; margin-bottom: 40px; line-height: 1.7;">
+            Yeh report aapke PropQR Admin Dashboard ke code ko detail mein samjhata hai. Har section, har feature, aur har interactive element ko simple English mein explain kiya gaya hai.
+        </p>
+        <div class="cover-meta">
+            <div class="cover-meta-item">
+                <div class="label">Page Type</div>
+                <div class="value">Admin Dashboard</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Technology</div>
+                <div class="value">HTML / CSS / JS</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Total Sections</div>
+                <div class="value">7 Major Parts</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="label">Report Date</div>
+                <div class="value" id="reportDate"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 2: OVERVIEW ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">1</span>
+            Overall Summary
+        </div>
+        <p class="section-desc">
+            Yeh page ek <strong>Real Estate Property Management Dashboard</strong> hai jiska naam "PropQR" hai. Iska main kaam hai property dealers ko unki properties, leads (enquiries), aur QR codes ko ek jagah manage karne dena.
+        </p>
+
+        <div class="highlight-box">
+            <strong>Simple mein kahun toh:</strong> Yeh ek control room hai jahan se property wala sab kuch dekh sakta hai — kitni properties hain, kitne log ne interest dikaya, kaunse property pe kitne leads aaye, aur QR codes download kar sakta hai.
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h4><i class="fa-solid fa-bullseye" style="color:var(--brand)"></i> Main Purpose</h4>
+                <p>Real estate agents ko ek single screen pe sab important numbers dikhana — properties count, leads count, QR codes status, aur recent activity.</p>
+            </div>
+            <div class="summary-card">
+                <h4><i class="fa-solid fa-user" style="color:var(--info)"></i> Target User</h4>
+                <p>Property dealers / Real estate agents jo apni properties ka QR code bana ke share karte hain aur incoming enquiries track karte hain.</p>
+            </div>
+            <div class="summary-card">
+                <h4><i class="fa-solid fa-mobile-screen" style="color:var(--accent)"></i> Device Support</h4>
+                <p>Mobile, Tablet, aur Desktop — teeno pe kaam karta hai. Chhoti screen pe sidebar slide hota hai, bade screen pe fixed rehta hai.</p>
+            </div>
+            <div class="summary-card">
+                <h4><i class="fa-solid fa-database" style="color:#8b5cf6"></i> Data Type</h4>
+                <p>Abhi yeh static/hardcoded data use kar raha hai. Koi real backend nahi hai. Sab numbers aur names code mein likhe hue hain.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">2</span>
+            Technologies Used
+        </div>
+        <p class="section-desc">Is dashboard ko banane ke liye ye technologies use ki gayi hain:</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin: 14px 0;">
+            <span class="tech-badge orange"><i class="fa-brands fa-html5"></i> HTML5</span>
+            <span class="tech-badge blue"><i class="fa-brands fa-css3-alt"></i> Tailwind CSS</span>
+            <span class="tech-badge gray"><i class="fa-solid fa-paintbrush"></i> Custom CSS</span>
+            <span class="tech-badge purple"><i class="fa-brands fa-js"></i> Vanilla JavaScript</span>
+            <span class="tech-badge green"><i class="fa-solid fa-chart-line"></i> Chart.js v4.4</span>
+            <span class="tech-badge blue"><i class="fa-brands fa-font-awesome"></i> Font Awesome 6.5</span>
+            <span class="tech-badge orange"><i class="fa-brands fa-google"></i> Google Fonts</span>
+        </div>
+
+        <div class="highlight-box blue">
+            <strong>Important Note:</strong> Yeh koi React, Angular ya Vue nahi hai. Yeh pure <strong>vanilla HTML + CSS + JavaScript</strong> hai. Matlab koi framework nahi lagaya gaya. Sab kuch ek single file mein hai.
+        </div>
+
+        <table class="data-table" style="margin-top:16px;">
+            <thead>
+                <tr>
+                    <th>Technology</th>
+                    <th>Version / Source</th>
+                    <th>Kya Kaam Karta Hai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tailwind CSS</td>
+                    <td>CDN (Runtime)</td>
+                    <td>Quick styling — classes se design banate hain</td>
+                </tr>
+                <tr>
+                    <td>Chart.js</td>
+                    <td>v4.4.1 (CDN)</td>
+                    <td>Line chart aur Donut chart banane ke liye</td>
+                </tr>
+                <tr>
+                    <td>Font Awesome</td>
+                    <td>v6.5.1 (CDN)</td>
+                    <td>Sab icons — bell, building, QR code etc.</td>
+                </tr>
+                <tr>
+                    <td>Plus Jakarta Sans</td>
+                    <td>Google Fonts</td>
+                    <td>Body text ka font — clean aur modern</td>
+                </tr>
+                <tr>
+                    <td>Space Grotesk</td>
+                    <td>Google Fonts</td>
+                    <td>Headings ka font — bold aur sharp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== PAGE 3: PAGE STRUCTURE ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">3</span>
+            Page Structure (Layout)
+        </div>
+        <p class="section-desc">Yeh page 2 main parts mein divided hai — Sidebar (left) aur Main Content Area (right). Neeche diagram se samjho:</p>
+
+        <div class="arch-box">
+            <div class="arch-row brand" style="justify-content:center; font-size:15px;">
+                <i class="fa-solid fa-browser"></i>&nbsp; Full Page (100% width)
+            </div>
+            <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+            <div style="display:grid; grid-template-columns: 240px 1fr; gap:10px;">
+                <div>
+                    <div class="arch-row dark" style="flex-direction:column; align-items:flex-start; min-height:420px; gap:8px; font-size:12px;">
+                        <div style="font-weight:800; font-size:13px;"><i class="fa-solid fa-building"></i> PropQR Logo</div>
+                        <div style="width:100%; height:1px; background:rgba(255,255,255,0.1);"></div>
+                        <div>Dashboard (Active)</div>
+                        <div>Properties</div>
+                        <div>Add Property</div>
+                        <div>Leads (47)</div>
+                        <div>QR Codes</div>
+                        <div style="width:100%; height:1px; background:rgba(255,255,255,0.1);"></div>
+                        <div>Settings</div>
+                        <div>Help</div>
+                        <div style="margin-top:auto; width:100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top:8px;">
+                            <div><i class="fa-solid fa-user"></i> Rahul Sharma</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="arch-row light" style="justify-content:space-between; margin-bottom:4px; font-size:12px;">
+                        <span><i class="fa-solid fa-bars"></i> Header — Title, Search, Bell, Profile</span>
+                    </div>
+                    <div class="arch-row light" style="flex-direction:column; align-items:flex-start; min-height:380px; gap:6px; font-size:11px; padding:10px;">
+                        <div style="font-weight:700;">Date + Export / Add Property Buttons</div>
+                        <div style="width:100%; height:1px; background:#e2e8f0;"></div>
+                        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; width:100%; text-align:center;">
+                            <div style="background:#fffbeb; padding:8px; border-radius:6px; font-size:10px;">Properties: 24</div>
+                            <div style="background:#d1fae5; padding:8px; border-radius:6px; font-size:10px;">Leads: 47</div>
+                            <div style="background:#cffafe; padding:8px; border-radius:6px; font-size:10px;">Today: 6</div>
+                            <div style="background:#ede9fe; padding:8px; border-radius:6px; font-size:10px;">QR: 24</div>
+                        </div>
+                        <div style="font-weight:700; margin-top:4px;">Charts Section (Line + Donut)</div>
+                        <div style="font-weight:700;">Recent Leads Table</div>
+                        <div style="font-weight:700;">Quick Actions + Top Properties</div>
+                        <div style="font-weight:700;">All Properties Table</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box green" style="margin-top:16px;">
+            <strong>Key Point:</strong> Sidebar ki width <strong>260px</strong> fixed hai. Main content area bachi hui jagah leta hai. Mobile pe sidebar hide hota hai aur hamburger menu se open hota hai. Desktop pe hamesha visible rehta hai.
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">4</span>
+            Sidebar (Left Navigation)
+        </div>
+        <p class="section-desc">Sidebar yeh dashboard ka main navigation panel hai. Dark blue-black background hai.</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="icon-box amber"><i class="fa-solid fa-building"></i></div>
+                <div class="text">
+                    <h4>Logo Area (Top)</h4>
+                    <p>PropQR ka logo with brand icon. "Prop" white color mein hai aur "QR" amber/gold color mein. Neeche "Admin Panel" likha hai chhota font mein.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box green"><i class="fa-solid fa-list"></i></div>
+                <div class="text">
+                    <h4>Main Menu (6 Items)</h4>
+                    <p><strong>Dashboard</strong> (active — amber highlight), <strong>Properties</strong>, <strong>Add Property</strong>, <strong>Leads</strong> (47 badge — amber count), <strong>QR Codes</strong>. Active item ke left mein 3px amber line aati hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box blue"><i class="fa-solid fa-gear"></i></div>
+                <div class="text">
+                    <h4>Settings Section (2 Items)</h4>
+                    <p><strong>Settings</strong> aur <strong>Help</strong> — "Main Menu" se alag category mein dikhte hain with a divider line.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box purple"><i class="fa-solid fa-user"></i></div>
+                <div class="text">
+                    <h4>User Profile (Bottom)</h4>
+                    <p>Rahul Sharma ka naam aur email (rahul@propqr.in). Ek green dot hai jo "online" dikhata hai (pulsing animation). Logout button bhi hai.</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-box purple">
+            <strong>Mobile Behavior:</strong> Screen chhoti ho toh sidebar left side se slide out ho jata hai (translateX -100%). Ek dark overlay aata hai background pe. Close button ya overlay click se sidebar band hota hai. Body scroll bhi lock ho jata hai.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 4: STAT CARDS ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">5</span>
+            Top Header Bar
+        </div>
+        <p class="section-desc">Sidebar ke right mein yeh sticky header hai — matlab scroll karne pe bhi top pe hi rehta hai.</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="icon-box amber"><i class="fa-solid fa-bars"></i></div>
+                <div class="text">
+                    <h4>Hamburger Menu (Mobile Only)</h4>
+                    <p>Badi screen pe invisible hota hai (lg:hidden). Sirf mobile/tablet pe dikhta hai. Click karne se sidebar open hota hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box green"><i class="fa-solid fa-heading"></i></div>
+                <div class="text">
+                    <h4>Page Title</h4>
+                    <p>"Dashboard" bold font mein. Neeche welcome message: "Welcome back, Rahul. Here's your property overview." — yeh chhoti screen pe hide hota hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box blue"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="text">
+                    <h4>Search Bar</h4>
+                    <p>"Search properties..." placeholder hai. Chhoti screen pe hide hota hai. Focus karne pe border amber color ho jata hai. Abhi ye search kaam nahi karta — just design hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-bell"></i></div>
+                <div class="text">
+                    <h4>Notification Bell</h4>
+                    <p>Red dot (pulsing) dikhata hai ki unread notifications hain. Click karne se ek dropdown panel khulta hai with 4 notifications. "Mark all read" link hai. Panel ke bahar click karne se band hota hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box purple"><i class="fa-solid fa-circle-user"></i></div>
+                <div class="text">
+                    <h4>Profile Section</h4>
+                    <p>User ka chhota avatar, naam "Rahul Sharma", aur role "Admin". Chhoti screen pe sirf avatar dikhta hai.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">6</span>
+            Stat Cards (4 Number Boxes)
+        </div>
+        <p class="section-desc">Header ke neeche 4 cards hain jo important numbers dikhate hain. Grid layout mein hain — mobile pe 2 column, desktop pe 4 column.</p>
+
+        <div class="stat-grid">
+            <div class="stat-item">
+                <div class="num" style="color:var(--brand)">24</div>
+                <div class="label">Total Properties</div>
+                <div class="change up"><i class="fa-solid fa-arrow-up"></i> 12% increase</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" style="color:var(--accent)">47</div>
+                <div class="label">Total Leads</div>
+                <div class="change up"><i class="fa-solid fa-arrow-up"></i> 24% increase</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" style="color:var(--info)">6</div>
+                <div class="label">Today's Leads</div>
+                <div class="change up"><i class="fa-solid fa-arrow-up"></i> 8% increase</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" style="color:#8b5cf6">24</div>
+                <div class="label">QR Generated</div>
+                <div class="change neutral"><i class="fa-solid fa-check"></i> All done</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Card Design Details:</strong> Har card mein — ek icon (colorful background), percentage badge (top right), number (bada bold font), label (chhota gray text), aur neeche ek progress bar. Hover karne pe card 4px upar uthta hai with shadow effect.
+        </div>
+
+        <table class="data-table" style="margin-top:14px;">
+            <thead>
+                <tr>
+                    <th>Card</th>
+                    <th>Icon Color</th>
+                    <th>Progress Bar Width</th>
+                    <th>Meaning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Total Properties</td><td>Amber/Gold</td><td>60%</td><td>24 properties listed hain</td></tr>
+                <tr><td>Total Leads</td><td>Green</td><td>78%</td><td>47 total enquiries aaye hain</td></tr>
+                <tr><td>Today's Leads</td><td>Cyan/Blue</td><td>45%</td><td>Aaj 6 naye leads aaye</td></tr>
+                <tr><td>QR Generated</td><td>Purple</td><td>100%</td><td>Har property ka QR bana hai</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== PAGE 5: CHARTS ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">7</span>
+            Charts Section
+        </div>
+        <p class="section-desc">Stat cards ke neeche 2 charts hain — ek Line Chart (bada) aur ek Donut Chart (chhota). Dono Chart.js library se bane hain.</p>
+
+        <h3 style="font-family:'Space Grotesk'; font-size:16px; font-weight:700; margin:20px 0 10px; color:var(--textPrimary);">
+            <i class="fa-solid fa-chart-line" style="color:var(--brand); margin-right:8px;"></i>Leads Overview — Line Chart
+        </h3>
+
+        <div class="highlight-box">
+            <strong>Yeh chart dikhata hai:</strong> Kitne leads din pe aaye. Amber/gold color ki line hai with gradient fill neeche. Points pe hover karne se tooltip dikhta hai with exact number.
+        </div>
+
+        <table class="data-table" style="margin-top:10px;">
+            <thead>
+                <tr>
+                    <th>Time Period</th>
+                    <th>Labels</th>
+                    <th>Data Values</th>
+                    <th>Kya Dikhata Hai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Week</strong> (Default)</td>
+                    <td>Mon, Tue, Wed, Thu, Fri, Sat, Sun</td>
+                    <td>4, 2, 6, 8, 5, 9, 6</td>
+                    <td>Har din kitne leads — Sunday best nahi, Saturday best hai (9)</td>
+                </tr>
+                <tr>
+                    <td><strong>Month</strong></td>
+                    <td>Week 1, Week 2, Week 3, Week 4</td>
+                    <td>8, 12, 15, 12</td>
+                    <td>Har week ka total — Week 3 sabse zyada (15)</td>
+                </tr>
+                <tr>
+                    <td><strong>Year</strong></td>
+                    <td>Jan to Dec (12 months)</td>
+                    <td>2, 3, 5, 4, 8, 11, 14, 12, 10, 15, 18, 22</td>
+                    <td>Pura saal ka trend — growth dikh rahi hai, Dec mein peak (22)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box green">
+            <strong>Interactive Feature:</strong> Teen buttons hain — Week, Month, Year. Kisi bhi button pe click karne se chart ka data change ho jata hai with smooth animation. Active button amber background mein hota hai.
+        </div>
+
+        <h3 style="font-family:'Space Grotesk'; font-size:16px; font-weight:700; margin:24px 0 10px; color:var(--textPrimary);">
+            <i class="fa-solid fa-chart-pie" style="color:var(--info); margin-right:8px;"></i>Property Types — Donut Chart
+        </h3>
+
+        <div class="highlight-box blue">
+            <strong>Yeh chart dikhata hai:</strong> Properties ka breakdown — kis type ki property kitni hai. Circular (ring) shape mein hai with 72% hollow center.
+        </div>
+
+        <table class="data-table" style="margin-top:10px;">
+            <thead>
+                <tr><th>Property Type</th><th>Percentage</th><th>Color</th><th>Approx Count (out of 24)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Apartment</td><td>42%</td><td><span style="display:inline-block;width:14px;height:14px;background:#d97706;border-radius:4px;vertical-align:middle;margin-right:6px;"></span> Amber</td><td>~10 properties</td></tr>
+                <tr><td>Villa</td><td>25%</td><td><span style="display:inline-block;width:14px;height:14px;background:#06b6d4;border-radius:4px;vertical-align:middle;margin-right:6px;"></span> Cyan</td><td>~6 properties</td></tr>
+                <tr><td>Flat</td><td>21%</td><td><span style="display:inline-block;width:14px;height:14px;background:#10b981;border-radius:4px;vertical-align:middle;margin-right:6px;"></span> Green</td><td>~5 properties</td></tr>
+                <tr><td>Plot</td><td>12%</td><td><span style="display:inline-block;width:14px;height:14px;background:#8b5cf6;border-radius:4px;vertical-align:middle;margin-right:6px;"></span> Purple</td><td>~3 properties</td></tr>
+            </tbody>
+        </table>
+
+        <p style="font-size:12.5px; color:var(--textSecondary); margin-top:10px;">
+            Chart ke neeche ek legend list bhi hai jo same information text format mein dikhata hai — har type ke saath ek colored dot hai.
+        </p>
+    </div>
+</div>
+
+<!-- ==================== PAGE 6: LEADS TABLE ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">8</span>
+            Recent Leads Table
+        </div>
+        <p class="section-desc">Charts ke neeche left side mein yeh table hai jo latest property enquiries dikhata hai.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Property Interested In</th>
+                    <th>Budget</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Vikram Singh</td>
+                    <td>98765 43210</td>
+                    <td>Luxury 3BHK Apartment</td>
+                    <td>80L - 90L</td>
+                    <td>25 Jun 2025</td>
+                    <td><span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;">New</span></td>
+                </tr>
+                <tr>
+                    <td>Priya Patel</td>
+                    <td>87654 32109</td>
+                    <td>Premium Villa</td>
+                    <td>1.5Cr - 2Cr</td>
+                    <td>25 Jun 2025</td>
+                    <td><span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;">New</span></td>
+                </tr>
+                <tr>
+                    <td>Amit Kumar</td>
+                    <td>76543 21098</td>
+                    <td>Modern 2BHK Flat</td>
+                    <td>40L - 50L</td>
+                    <td>24 Jun 2025</td>
+                    <td><span style="background:#dbeafe;color:#1e40af;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;">Contacted</span></td>
+                </tr>
+                <tr>
+                    <td>Sneha Roy</td>
+                    <td>65432 10987</td>
+                    <td>Commercial Plot</td>
+                    <td>50L - 70L</td>
+                    <td>24 Jun 2025</td>
+                    <td><span style="background:#d1fae5;color:#065f46;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;">Converted</span></td>
+                </tr>
+                <tr>
+                    <td>Rajesh Nair</td>
+                    <td>54321 09876</td>
+                    <td>Luxury 3BHK Apartment</td>
+                    <td>70L - 85L</td>
+                    <td>23 Jun 2025</td>
+                    <td><span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;">Lost</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box" style="margin-top:14px;">
+            <strong>Status Types Explain:</strong><br>
+            <strong style="color:#92400e;">New</strong> = Abhi abhi aaya hai, abhi tak koi contact nahi hua<br>
+            <strong style="color:#1e40af;">Contacted</strong> = Agent ne call/message kar diya<br>
+            <strong style="color:#065f46;">Converted</strong> = Lead buyer ban gaya — deal successful<br>
+            <strong style="color:#991b1b;">Lost</strong> = Lead interested nahi raha ya kisi aur se kar liya
+        </div>
+
+        <div class="highlight-box green">
+            <strong>Extra Features:</strong> Har name ke left mein ek colored avatar circle hai with first letter. Table row pe hover karne pe light background aata hai. Neeche pagination hai — "Showing 1-5 of 47 leads" with page numbers. Pagination buttons kaam karte hain — click karne se active state change hota hai.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 7: QUICK ACTIONS + TOP PROPERTIES ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">9</span>
+            Quick Actions Panel
+        </div>
+        <p class="section-desc">Recent Leads table ke right side mein yeh section hai. Jaldi-khar-jaldi kaam karne ke liye shortcut buttons hain.</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="icon-box amber"><i class="fa-solid fa-plus"></i></div>
+                <div class="text">
+                    <h4>Add Property</h4>
+                    <p>Naya property list karne ka shortcut. Click karne pe toast message aata hai: "Redirecting to Add Property..." — actual pe koi page nahi jayega kyunki ye single page hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box green"><i class="fa-solid fa-users"></i></div>
+                <div class="text">
+                    <h4>View Leads</h4>
+                    <p>Sab leads dekhne ka button. Neeche "47 total enquiries" likha hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box purple"><i class="fa-solid fa-qrcode"></i></div>
+                <div class="text">
+                    <h4>Download QR</h4>
+                    <p>QR codes download karne ka button. Property ke liye QR code print karne ke kaam aata hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-file-pdf"></i></div>
+                <div class="text">
+                    <h4>PDF Brochure</h4>
+                    <p>Property ki PDF brochure download karne ka shortcut.</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-box">
+            <strong>Hover Effect:</strong> Har quick action card pe hover karne pe — card thoda right side shift hota hai (4px), icon ka background full color ho jata hai (pale se solid), aur text color brand color ho jata hai. Bahut smooth transition hai.
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">10</span>
+            Top Properties Panel
+        </div>
+        <p class="section-desc">Quick Actions ke neeche yeh section hai jo sabse zyada leads wali properties dikhata hai.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Property Name</th><th>Location</th><th>Leads</th><th>Image</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Luxury 3BHK Apartment</td><td>Vijay Nagar, Indore</td><td><strong style="color:var(--brand)">12 leads</strong></td><td><i class="fa-solid fa-image" style="color:var(--textMuted)"></i> picsum.photos</td></tr>
+                <tr><td>Premium Villa</td><td>Super Corridor, Indore</td><td><strong style="color:var(--brand)">9 leads</strong></td><td><i class="fa-solid fa-image" style="color:var(--textMuted)"></i> picsum.photos</td></tr>
+                <tr><td>Modern 2BHK Flat</td><td>Palasia, Indore</td><td><strong style="color:var(--brand)">8 leads</strong></td><td><i class="fa-solid fa-image" style="color:var(--textMuted)"></i> picsum.photos</td></tr>
+                <tr><td>Commercial Plot</td><td>MR-10, Indore</td><td><strong style="color:var(--brand)">6 leads</strong></td><td><i class="fa-solid fa-image" style="color:var(--textMuted)"></i> picsum.photos</td></tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box blue">
+            <strong>Image Source:</strong> Sab images <strong>picsum.photos</strong> se aati hain — yeh ek free placeholder image service hai. Real mein yeh property ki actual photos hongi. Har property ki alag seed value hai (dash-prop1, dash-prop2, etc.) isliye har baar same image aati hai.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 8: ALL PROPERTIES TABLE ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">11</span>
+            All Properties Table
+        </div>
+        <p class="section-desc">Yeh sabse bada table hai page mein — sabhi listed properties ki complete details dikhata hai.</p>
+
+        <h3 style="font-family:'Space Grotesk'; font-size:15px; font-weight:700; margin-bottom:10px; color:var(--textPrimary);">
+            Table ke Columns:
+        </h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Column Name</th><th>Kya Dikhata Hai</th><th>Extra Detail</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Property</td><td>Image + Name + Type</td><td>Thumbnail 44x44px rounded, neeche chhota type label</td></tr>
+                <tr><td>Location</td><td>Area + City</td><td>Amber location icon before text</td></tr>
+                <tr><td>Price</td><td>Full price in Rupees</td><td>Bold font, Indian number format</td></tr>
+                <tr><td>Size</td><td>Area in sq.ft</td><td>Normal gray text</td></tr>
+                <tr><td>Leads</td><td>Lead count</td><td>Green badge with pulsing dot</td></tr>
+                <tr><td>Actions</td><td>4 buttons</td><td>View (eye), QR (qrcode), Edit (pen), Delete (trash)</td></tr>
+            </tbody>
+        </table>
+
+        <h3 style="font-family:'Space Grotesk'; font-size:15px; font-weight:700; margin:20px 0 10px; color:var(--textPrimary);">
+            Listed Properties Data:
+        </h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Property</th><th>Type</th><th>Location</th><th>Price</th><th>Size</th><th>Leads</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Luxury 3BHK Apartment</td><td>Apartment</td><td>Vijay Nagar, Indore</td><td>₹85,00,000</td><td>1450 sq.ft</td><td>12</td></tr>
+                <tr><td>Premium Villa</td><td>Villa</td><td>Super Corridor, Indore</td><td>₹1,80,00,000</td><td>2800 sq.ft</td><td>9</td></tr>
+                <tr><td>Modern 2BHK Flat</td><td>Flat</td><td>Palasia, Indore</td><td>₹45,00,000</td><td>980 sq.ft</td><td>8</td></tr>
+                <tr><td>Commercial Plot</td><td>Plot</td><td>MR-10, Indore</td><td>₹62,00,000</td><td>2400 sq.ft</td><td>6</td></tr>
+                <tr><td>Semi-Furnished 4BHK</td><td>Apartment</td><td>Scheme No. 78, Indore</td><td>₹1,20,00,000</td><td>2200 sq.ft</td><td>5</td></tr>
+                <tr><td>Studio Apartment</td><td>Flat</td><td>Bhawarkuan, Indore</td><td>₹22,00,000</td><td>450 sq.ft</td><td>4</td></tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box red" style="margin-top:14px;">
+            <strong>Action Buttons Detail:</strong><br>
+            <strong>View</strong> (cyan eye icon) → "Opening property page..." toast<br>
+            <strong>QR</strong> (purple QR icon) → "QR Code downloaded!" success toast<br>
+            <strong>Edit</strong> (amber pen icon) → "Opening edit form..." toast<br>
+            <strong>Delete</strong> (red trash icon) → Delete confirmation modal khulta hai
+        </div>
+
+        <div class="highlight-box">
+            <strong>Table ke upar:</strong> Ek search box hai aur "Add New" button hai. Search abhi kaam nahi karta (sirf UI hai). "Add New" pe click karne se toast aata hai. Table ke neeche pagination hai — "Showing 1-6 of 24 properties" with 4 page numbers.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 9: INTERACTIVE FEATURES ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">12</span>
+            Interactive Features (JavaScript)
+        </div>
+        <p class="section-desc">Yeh woh cheezein hain jo JavaScript se kaam karti hain — user interaction handle karti hain.</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="icon-box amber"><i class="fa-solid fa-bars"></i></div>
+                <div class="text">
+                    <h4>Sidebar Toggle</h4>
+                    <p>Mobile pe hamburger button click karne se sidebar slide in/out hota hai. CSS transform (translateX) use hua hai. Background overlay bhi aata hai. Body scroll lock hota hai jab sidebar open ho.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-bell"></i></div>
+                <div class="text">
+                    <h4>Notification Panel Toggle</h4>
+                    <p>Bell icon click karne se dropdown khulta hai. Bahar click karne se band hota hai (document click event listener). "hidden" class add/remove karke show/hide hota hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box green"><i class="fa-solid fa-message"></i></div>
+                <div class="text">
+                    <h4>Toast Notifications</h4>
+                    <p>Har action pe ek small popup message aata hai screen ke top-right corner mein. 3 types: Success (green), Error (red), Info (blue). 4 seconds mein auto-disappear. Close button bhi hai. Slide-in/slide-out animation hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-trash"></i></div>
+                <div class="text">
+                    <h4>Delete Confirmation Modal</h4>
+                    <p>Delete button pe click karne se ek popup modal khulta hai with warning icon. Property ka naam dikhta hai. "Cancel" ya "Delete" button hai. Delete pe toast aata hai "Property deleted successfully!". Background dark overlay hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box blue"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="text">
+                    <h4>Chart Period Switching</h4>
+                    <p>Week/Month/Year buttons chart ka data change karte hain. Chart.js ka update() method call hota hai with animation. Active button ka style change hota hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box purple"><i class="fa-solid fa-pager"></i></div>
+                <div class="text">
+                    <h4>Pagination Click</h4>
+                    <p>Page number buttons pe click karne se active state change hota hai. Document level event listener hai jo ".page-btn" class detect karta hai. Disabled aur already active buttons pe click nahi hota.</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="highlight-box red">
+            <strong>Important Limitation:</strong> Toast, modal, aur pagination sirf <strong>UI level</strong> pe kaam karte hain. Actual data change nahi hota. Delete karne pe table se row remove nahi hota, pagination pe table data change nahi hota. Yeh sab front-end mockup hai.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 10: COLORS + ANIMATIONS ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">13</span>
+            Color System
+        </div>
+        <p class="section-desc">Pura dashboard ek fixed color palette use karta hai. Tailwind CSS ke custom colors define kiye gaye hain config mein.</p>
+
+        <div class="color-row">
+            <div class="color-swatch" style="background:#d97706;"></div>
+            <div class="color-name">Brand (Primary)</div>
+            <div class="color-hex">#d97706</div>
+            <div class="color-use">Buttons, active states, highlights, chart</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#b45309;"></div>
+            <div class="color-name">Brand Dark</div>
+            <div class="color-hex">#b45309</div>
+            <div class="color-use">Button hover state</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#0c1222;"></div>
+            <div class="color-name">Sidebar</div>
+            <div class="color-hex">#0c1222</div>
+            <div class="color-use">Sidebar background, chart tooltip bg</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#f8fafc;"></div>
+            <div class="color-name">Surface</div>
+            <div class="color-hex">#f8fafc</div>
+            <div class="color-use">Page background, table header, card bg</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#10b981;"></div>
+            <div class="color-name">Accent (Green)</div>
+            <div class="color-hex">#10b981</div>
+            <div class="color-use">Success states, lead counts, growth %</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#06b6d4;"></div>
+            <div class="color-name">Info (Cyan)</div>
+            <div class="color-hex">#06b6d4</div>
+            <div class="color-use">Today's leads, view buttons, villa chart</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#ef4444;"></div>
+            <div class="color-name">Danger (Red)</div>
+            <div class="color-hex">#ef4444</div>
+            <div class="color-use">Delete buttons, lost status, notification dot</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#8b5cf6;"></div>
+            <div class="color-name">Purple</div>
+            <div class="color-hex">#8b5cf6</div>
+            <div class="color-use">QR codes section, plot chart, "all" badge</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#1e293b;"></div>
+            <div class="color-name">Text Primary</div>
+            <div class="color-hex">#1e293b</div>
+            <div class="color-use">Main text, headings, numbers</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#64748b;"></div>
+            <div class="color-name">Text Secondary</div>
+            <div class="color-hex">#64748b</div>
+            <div class="color-use">Descriptions, table data, subtext</div>
+        </div>
+        <div class="color-row">
+            <div class="color-swatch" style="background:#94a3b8;"></div>
+            <div class="color-name">Text Muted</div>
+            <div class="color-hex">#94a3b8</div>
+            <div class="color-use">Labels, dates, small hints, sidebar text</div>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">14</span>
+            Animations & Effects
+        </div>
+        <p class="section-desc">Dashboard mein bahut subtle animations hain jo use experience smooth banate hain.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Animation</th><th>CSS Property</th><th>Duration</th><th>Kahan Use Hua</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Sidebar Slide</td><td>transform + transition</td><td>0.35s</td><td>Mobile sidebar open/close</td></tr>
+                <tr><td>Stat Card Hover</td><td>translateY + box-shadow</td><td>0.25s</td><td>4 stat cards pe hover</td></tr>
+                <tr><td>Badge Pulse</td><td>@keyframes opacity</td><td>2s infinite</td><td>Notification dot, online dot, lead dots</td></tr>
+                <tr><td>Toast Slide In</td><td>@keyframes translateX</td><td>0.4s</td><td>Toast message enter</td></tr>
+                <tr><td>Toast Slide Out</td><td>@keyframes translateX</td><td>0.3s</td><td>Toast message exit</td></tr>
+                <tr><td>Quick Card Hover</td><td>translateX</td><td>0.2s</td><td>Quick actions cards shift right</td></tr>
+                <tr><td>Nav Item Hover</td><td>background transition</td><td>0.2s</td><td>Sidebar menu items</td></tr>
+                <tr><td>Table Row Hover</td><td>background transition</td><td>0.15s</td><td>All table rows</td></tr>
+                <tr><td>Button Press</td><td>active:scale(0.95)</td><td>instant</td><td>Export & Add Property buttons</td></tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box blue">
+            <strong>Background Glow:</strong> Page ke 2 corners mein 2 blurry circles hain (amber top-right, cyan bottom-left). Yeh "glow" class se bane hain — 80px blur, 4% opacity. Yeh sirf visual depth ke liye hai, koi functional purpose nahi.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE 11: RESPONSIVE + LIMITATIONS ==================== -->
+<div class="page">
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">15</span>
+            Responsive Design (Mobile Support)
+        </div>
+        <p class="section-desc">Yeh dashboard mobile, tablet, aur desktop teeno pe properly kaam karta hai. Tailwind ke breakpoints use kiye gaye hain.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Breakpoint</th><th>Screen Size</th><th>Kya Change Hota Hai</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>&lt; 640px</strong> (Mobile)</td>
+                    <td>Phone</td>
+                    <td>Sidebar hidden (hamburger menu), stat cards 2 columns, search bar hide, welcome text hide, profile name hide, tables horizontal scroll</td>
+                </tr>
+                <tr>
+                    <td><strong>640px - 1024px</strong> (Tablet)</td>
+                    <td>iPad / Tablet</td>
+                    <td>Sidebar hidden, search visible, profile name visible, stat cards 2 columns, chart section stacks vertically</td>
+                </tr>
+                <tr>
+                    <td><strong>1024px - 1280px</strong> (Laptop)</td>
+                    <td>Small laptop</td>
+                    <td>Sidebar visible, stat cards 4 columns, chart+donut side by side, leads table+quick actions side by side</td>
+                </tr>
+                <tr>
+                    <td><strong>&gt; 1280px</strong> (Desktop)</td>
+                    <td>Monitor</td>
+                    <td>Full layout, sab kuch side by side, maximum use of space</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight-box green">
+            <strong>Tables Scroll:</strong> Chhoti screen pe tables horizontally scroll hote hain (overflow-x-auto). Minimum width set ki gayi hai (550px for leads, 700px for properties) taaki content toot na paye.
+        </div>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">16</span>
+            Limitations & Missing Things
+        </div>
+        <p class="section-desc">Yeh dashboard abhi ek <strong>front-end prototype</strong> hai. Yeh cheezein isme missing hain:</p>
+
+        <ul class="feature-list">
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-database"></i></div>
+                <div class="text">
+                    <h4>No Backend / Database</h4>
+                    <p>Sab data hardcoded hai JavaScript mein. Koi API call nahi hoti. Real mein yeh data server se aana chahiye.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="text">
+                    <h4>Search Doesn't Work</h4>
+                    <p>Search bar sirf UI hai. Type karo kuch bhi, kuch nahi hoga. Real mein filter functionality chahiye.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-trash"></i></div>
+                <div class="text">
+                    <h4>Delete Doesn't Remove Data</h4>
+                    <p>Delete pe modal khulta hai aur toast aata hai, par table se row actually remove nahi hota.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-pager"></i></div>
+                <div class="text">
+                    <h4>Pagination is Fake</h4>
+                    <p>Page numbers click hote hain par table data change nahi hota. Hamesha same 5-6 rows dikhte hain.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-lock"></i></div>
+                <div class="text">
+                    <h4>No Authentication</h4>
+                    <p>Login page nahi hai. Koi bhi is URL ko open kar ke dashboard dekh sakta hai. Real mein login required hona chahiye.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-rotate"></i></div>
+                <div class="text">
+                    <h4>No Real-time Updates</h4>
+                    <p>Agar koi naya lead aaye toh page auto-refresh nahi hoga. Static data hai.</p>
+                </div>
+            </li>
+            <li>
+                <div class="icon-box red"><i class="fa-solid fa-moon"></i></div>
+                <div class="text">
+                    <h4>No Dark Mode</h4>
+                    <p>Sirf light theme hai. Dark mode toggle nahi hai.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="report-section">
+        <div class="section-title">
+            <span class="section-num">17</span>
+            Final Summary
+        </div>
+        <p class="section-desc">Ek line mein kahun toh:</p>
+
+        <div class="highlight-box" style="border-left-width:5px; padding:20px 24px;">
+            <strong style="font-size:15px;">PropQR Dashboard ek visually polished, mobile-friendly admin panel hai real estate property management ke liye. Yeh 24 properties, 47 leads, aur QR codes ko track karta hai. Charts, tables, quick actions, notifications — sab features hain. Lekin yeh abhi sirf ek front-end design hai — koi backend nahi hai, data static hai, aur buttons sirf UI-level pe kaam karte hain. Isko production-ready banane ke liye backend API, database, authentication, aur real functionality add karni hogi.</strong>
+        </div>
+
+        <div class="summary-grid" style="margin-top:20px;">
+            <div class="summary-card" style="border-left:4px solid var(--accent);">
+                <h4><i class="fa-solid fa-check" style="color:var(--accent)"></i> Strengths</h4>
+                <p>Beautiful design, smooth animations, mobile responsive, clean code structure, good color system, professional typography.</p>
+            </div>
+            <div class="summary-card" style="border-left:4px solid var(--danger);">
+                <h4><i class="fa-solid fa-xmark" style="color:var(--danger)"></i> Weaknesses</h4>
+                <p>No backend, fake data, search/pagination/delete not functional, no login, no dark mode, single file (hard to maintain).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="report-footer">
+        <p>PropQR Dashboard Code Analysis Report &bull; Generated on <span id="footerDate"></span></p>
+        <p style="margin-top:4px;">Total Sections Analyzed: 17 &bull; Total Interactive Elements: 6 &bull; Total Data Tables: 8</p>
+    </div>
+</div>
+
+<script>
+    // Set dates
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('reportDate').textContent = dateStr;
+    document.getElementById('footerDate').textContent = dateStr;
+</script>
+
+</body>
+</html>
