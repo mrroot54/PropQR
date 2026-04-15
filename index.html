@@ -75,9 +75,6 @@
 
         .mob-menu{transition:opacity .3s ease,visibility .3s ease}
         .mob-menu.open{opacity:1;visibility:visible}
-
-        @keyframes scrollDot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
-        .scroll-dot{animation:scrollDot 1.6s ease-in-out infinite}
     </style>
 </head>
 <body>
@@ -121,7 +118,6 @@
     <div class="orb w-[350px] h-[350px] bg-info -bottom-[80px] -left-[80px] opacity-[0.04]"></div>
 
     <div class="max-w-6xl mx-auto px-5 w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center py-16 lg:py-0">
-        <!-- Text -->
         <div>
             <div id="hBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brandLight border border-brand/20 rounded-full mb-6" style="opacity:0">
                 <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
@@ -157,10 +153,8 @@
             </div>
         </div>
 
-        <!-- Visual -->
         <div id="hVisual" class="relative flex justify-center lg:justify-end" style="opacity:0">
             <div class="relative float">
-                <!-- Phone -->
                 <div class="w-[270px] sm:w-[290px] bg-white rounded-[1.8rem] shadow-2xl shadow-dark/10 border border-border/50 p-3.5 relative z-10">
                     <div class="flex items-center justify-between px-1.5 mb-3">
                         <span class="text-[9px] font-bold text-textMuted">9:41</span>
@@ -182,16 +176,12 @@
                         <div class="text-center flex-1"><p class="text-base font-bold text-info">3</p><p class="text-[9px] text-textMuted">Visits</p></div>
                     </div>
                 </div>
-
-                <!-- Floating Badge: Lead -->
                 <div class="absolute -left-10 sm:-left-14 top-20 bg-white rounded-xl shadow-xl shadow-dark/8 border border-border/40 px-3 py-2.5 z-20 float-d1">
                     <div class="flex items-center gap-2">
                         <div class="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center"><i class="fa-solid fa-user-plus text-accent text-[10px]"></i></div>
                         <div><p class="text-[10px] font-bold text-dark">New Lead!</p><p class="text-[8px] text-textMuted">Just now</p></div>
                     </div>
                 </div>
-
-                <!-- Floating Badge: Scan -->
                 <div class="absolute -right-6 sm:-right-10 bottom-28 bg-white rounded-xl shadow-xl shadow-dark/8 border border-border/40 px-3 py-2.5 z-20 float-d2">
                     <div class="flex items-center gap-2">
                         <div class="w-7 h-7 rounded-lg bg-brand/10 flex items-center justify-center"><i class="fa-solid fa-qrcode text-brand text-[10px]"></i></div>
@@ -199,13 +189,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-30">
-        <span class="text-[9px] font-semibold text-textMuted tracking-[.2em] uppercase">Scroll</span>
-        <div class="w-4 h-7 border-[1.5px] border-textMuted rounded-full flex justify-center pt-1.5">
-            <div class="w-[3px] h-[6px] bg-textMuted rounded-full scroll-dot"></div>
         </div>
     </div>
 </section>
@@ -232,7 +215,6 @@
             <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-2">Everything You Need</h2>
             <p class="text-textSecondary text-sm max-w-md mx-auto">One platform to generate, share, and track QR codes for every property you list.</p>
         </div>
-
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div class="feat-card fc bg-white rounded-2xl p-5 border border-border/40" style="opacity:0;transform:translateY(28px)">
                 <div class="w-10 h-10 rounded-xl bg-brandLight flex items-center justify-center mb-3.5"><i class="fa-solid fa-qrcode text-brand"></i></div>
@@ -267,7 +249,6 @@
             <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-white mb-2">Three Simple Steps</h2>
             <p class="text-white/40 text-sm max-w-md mx-auto">From listing to leads — get started in under 2 minutes.</p>
         </div>
-
         <div class="grid md:grid-cols-3 gap-8">
             <div class="sw text-center relative" style="opacity:0;transform:translateY(28px)">
                 <div class="step-connector r"></div>
@@ -322,7 +303,7 @@
     </div>
 </section>
 
-<!-- ===== PROPERTIES ===== -->
+<!-- ===== PROPERTIES — REAL IMAGES ===== -->
 <section id="properties" class="py-16 lg:py-20 bg-surface/40">
     <div class="max-w-6xl mx-auto px-5">
         <div class="text-center mb-12 rv">
@@ -330,44 +311,83 @@
             <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-2">See It In Action</h2>
             <p class="text-textSecondary text-sm max-w-md mx-auto">Real properties with real QR codes generating real leads.</p>
         </div>
-
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <!-- Card 1: Luxury Apartment -->
             <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30" style="opacity:0;transform:translateY(28px)">
                 <div class="relative overflow-hidden aspect-[4/3]">
-                    <img src="https://picsum.photos/seed/pqr-apt1/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=450&fit=crop&q=82" class="prop-img w-full h-full object-cover" alt="Luxury 3BHK Apartment">
                     <div class="absolute top-3 left-3 px-2.5 py-1 bg-brand text-white text-[10px] font-bold rounded-lg">Apartment</div>
                     <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
+                    <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-2 py-1 bg-black/50 backdrop-blur-sm rounded-lg">
+                        <i class="fa-solid fa-camera text-white text-[8px]"></i>
+                        <span class="text-white text-[10px] font-medium">12 Photos</span>
+                    </div>
                 </div>
                 <div class="p-4">
                     <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Luxury 3BHK Apartment</h3>
                     <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Vijay Nagar, Indore</p>
-                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹85L</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">12 leads</span></div>
+                    <div class="flex items-center gap-3 mb-2.5">
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-bed text-textMuted mr-1"></i>3 BHK</span>
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-ruler-combined text-textMuted mr-1"></i>1450 sq.ft</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-2.5 border-t border-border/50">
+                        <span class="font-display font-bold text-brand text-lg">₹85 Lac</span>
+                        <span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full"><i class="fa-solid fa-user-plus text-[8px] mr-1"></i>12 leads</span>
+                    </div>
                 </div>
             </div>
+
+            <!-- Card 2: Premium Villa -->
             <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30" style="opacity:0;transform:translateY(28px)">
                 <div class="relative overflow-hidden aspect-[4/3]">
-                    <img src="https://picsum.photos/seed/pqr-villa2/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=450&fit=crop&q=82" class="prop-img w-full h-full object-cover" alt="Premium Villa">
                     <div class="absolute top-3 left-3 px-2.5 py-1 bg-info text-white text-[10px] font-bold rounded-lg">Villa</div>
                     <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
+                    <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-2 py-1 bg-black/50 backdrop-blur-sm rounded-lg">
+                        <i class="fa-solid fa-camera text-white text-[8px]"></i>
+                        <span class="text-white text-[10px] font-medium">18 Photos</span>
+                    </div>
                 </div>
                 <div class="p-4">
                     <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Premium Villa</h3>
                     <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Super Corridor, Indore</p>
-                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹1.8Cr</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">9 leads</span></div>
+                    <div class="flex items-center gap-3 mb-2.5">
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-bed text-textMuted mr-1"></i>4 BHK</span>
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-ruler-combined text-textMuted mr-1"></i>2800 sq.ft</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-2.5 border-t border-border/50">
+                        <span class="font-display font-bold text-brand text-lg">₹1.8 Cr</span>
+                        <span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full"><i class="fa-solid fa-user-plus text-[8px] mr-1"></i>9 leads</span>
+                    </div>
                 </div>
             </div>
+
+            <!-- Card 3: Modern Flat -->
             <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30 sm:col-span-2 lg:col-span-1" style="opacity:0;transform:translateY(28px)">
                 <div class="relative overflow-hidden aspect-[4/3]">
-                    <img src="https://picsum.photos/seed/pqr-flat3/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=450&fit=crop&q=82" class="prop-img w-full h-full object-cover" alt="Modern 2BHK Flat">
                     <div class="absolute top-3 left-3 px-2.5 py-1 bg-accent text-white text-[10px] font-bold rounded-lg">Flat</div>
                     <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
+                    <div class="absolute bottom-3 left-3 flex items-center gap-1.5 px-2 py-1 bg-black/50 backdrop-blur-sm rounded-lg">
+                        <i class="fa-solid fa-camera text-white text-[8px]"></i>
+                        <span class="text-white text-[10px] font-medium">9 Photos</span>
+                    </div>
                 </div>
                 <div class="p-4">
                     <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Modern 2BHK Flat</h3>
                     <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Palasia, Indore</p>
-                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹45L</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">8 leads</span></div>
+                    <div class="flex items-center gap-3 mb-2.5">
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-bed text-textMuted mr-1"></i>2 BHK</span>
+                        <span class="text-[10px] text-textSecondary bg-surface px-2 py-0.5 rounded"><i class="fa-solid fa-ruler-combined text-textMuted mr-1"></i>980 sq.ft</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-2.5 border-t border-border/50">
+                        <span class="font-display font-bold text-brand text-lg">₹45 Lac</span>
+                        <span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full"><i class="fa-solid fa-user-plus text-[8px] mr-1"></i>8 leads</span>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -482,7 +502,7 @@
 </footer>
 
 <script>
-/* QR Code Pattern */
+/* QR Code */
 (function(){
     const g=document.getElementById('qrGrid'),p=[
         1,1,1,1,1,1,1,0,1,
@@ -511,13 +531,11 @@ document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',closeMob)
 /* ===== GSAP ===== */
 gsap.registerPlugin(ScrollTrigger);
 
-/* Nav background on scroll */
 ScrollTrigger.create({
     start:'top -60',
     onUpdate:self=>{self.scroll()>60?document.getElementById('nav').classList.add('nav-solid'):document.getElementById('nav').classList.remove('nav-solid')}
 });
 
-/* Hero Timeline */
 const ht=gsap.timeline({defaults:{ease:'power3.out'}});
 gsap.set('#hSub',{y:18});
 gsap.set('#hBtns',{y:18});
@@ -531,22 +549,18 @@ ht.to('#hBadge',{opacity:1,duration:.5})
   .to('#hSocial',{opacity:1,y:0,duration:.5},'-=.25')
   .to('#hVisual',{opacity:1,x:0,duration:.85,ease:'power2.out'},'-=.7');
 
-/* Generic reveal */
 gsap.utils.toArray('.rv').forEach(el=>{
     gsap.to(el,{opacity:1,y:0,duration:.65,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}})
 });
 
-/* Feature cards stagger */
 gsap.utils.toArray('.fc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
-/* How it works steps stagger */
 gsap.utils.toArray('.sw').forEach((s,i)=>{
     gsap.to(s,{opacity:1,y:0,duration:.6,delay:i*.15,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 88%',toggleActions:'play none none none'}})
 });
 
-/* Stats counter */
 gsap.utils.toArray('.ctr').forEach(c=>{
     const t=+c.dataset.to;
     ScrollTrigger.create({trigger:c,start:'top 92%',once:true,onEnter:()=>{
@@ -558,12 +572,10 @@ gsap.utils.toArray('.sc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.5,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
-/* Property cards stagger */
 gsap.utils.toArray('.pc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.12,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
-/* Testimonial cards stagger */
 gsap.utils.toArray('.tc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
