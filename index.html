@@ -42,7 +42,7 @@
         ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
 
-        .nav-solid{background:rgba(255,255,255,.92)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,232,240,.6)}
+        .nav-solid{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,232,240,.6)}
         .gradient-text{background:linear-gradient(135deg,#d97706 0%,#f59e0b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
         .qr-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
@@ -69,403 +69,303 @@
         .cta-dots{background-image:radial-gradient(circle at 2px 2px,rgba(217,119,6,.07) 1px,transparent 0);background-size:22px 22px}
 
         .step-connector{position:absolute;top:28px;height:2px;background:linear-gradient(90deg,#d97706,rgba(226,232,240,.3))}
-        .step-connector.l{right:-50%;width:50%}
-        .step-connector.r{left:-50%;width:50%}
-        @media(max-width:767px){.step-connector{display:none}}
+        .step-connector.l{right:-50%;width:50%;display:none}
+        .step-connector.r{left:-50%;width:50%;display:none}
+        @media(min-width:768px){.step-connector.l,.step-connector.r{display:block}}
 
-        /* ===== MOBILE NAV — SLIDE FROM RIGHT ===== */
-        .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;z-index:998}
-        .mob-overlay.open{opacity:1;visibility:visible}
+        .mob-menu{transition:opacity .3s ease,visibility .3s ease}
+        .mob-menu.open{opacity:1;visibility:visible}
 
-        .mob-panel{position:fixed;top:0;right:0;bottom:0;width:min(310px,84vw);background:#fff;transform:translateX(100%);transition:transform .4s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;overflow-y:auto;box-shadow:-8px 0 40px rgba(0,0,0,.1);z-index:999}
-        .mob-panel.open{transform:translateX(0)}
-
-        .mob-link{display:flex;align-items:center;gap:14px;padding:13px 24px;font-size:15px;font-weight:600;color:#1e293b;transition:all .15s ease;position:relative;text-decoration:none}
-        .mob-link::after{content:'';position:absolute;right:0;top:10px;bottom:10px;width:3px;background:#d97706;border-radius:4px 0 0 4px;opacity:0;transition:opacity .15s ease}
-        .mob-link:hover,.mob-link.active{background:#fffbeb;color:#d97706}
-        .mob-link:hover::after,.mob-link.active::after{opacity:1}
-        .mob-link i{width:20px;text-align:center;font-size:14px;color:#94a3b8;transition:color .15s ease}
-        .mob-link:hover i,.mob-link.active i{color:#d97706}
-        .mob-divider{height:1px;background:#f1f5f9;margin:4px 24px}
-
-        /* ===== RESPONSIVE HELPERS ===== */
-        @media(max-width:374px){
-            .hero-title{font-size:1.85rem!important;line-height:1.12!important}
-            .hero-sub{font-size:14px!important}
-            .hero-btns a{padding:10px 18px!important;font-size:13px!important}
-            .stat-num{font-size:1.6rem!important}
-            .section-title-r{font-size:1.4rem!important}
-        }
+        @keyframes scrollDot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(6px);opacity:1}}
+        .scroll-dot{animation:scrollDot 1.6s ease-in-out infinite}
     </style>
 </head>
 <body>
 
 <!-- ===== NAVBAR ===== -->
-<nav id="nav" style="position:fixed;top:0;left:0;right:0;z-index:100;transition:all .3s ease;background:transparent">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between">
-        <!-- Logo — always on top -->
-        <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none;z-index:1001">
-            <div style="width:32px;height:32px;border-radius:8px;background:#d97706;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-building" style="color:#fff;font-size:14px"></i></div>
-            <span class="font-display" style="font-weight:700;font-size:1.15rem;color:#1e293b">Prop<span style="color:#d97706">QR</span></span>
+<nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-5 h-[60px] flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center"><i class="fa-solid fa-building text-white text-sm"></i></div>
+            <span class="font-display font-bold text-[1.15rem] text-dark">Prop<span class="text-brand">QR</span></span>
         </a>
-
-        <!-- Desktop Links -->
-        <div class="hidden md:flex" style="align-items:center;gap:28px">
-            <a href="#features" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:500;transition:color .15s">Features</a>
-            <a href="#how" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:500;transition:color .15s">How It Works</a>
-            <a href="#properties" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:500;transition:color .15s">Properties</a>
-            <a href="#stats" style="font-size:13px;color:#64748b;text-decoration:none;font-weight:500;transition:color .15s">Results</a>
+        <div class="hidden md:flex items-center gap-7">
+            <a href="#features" class="text-[13px] text-textSecondary hover:text-brand transition font-medium">Features</a>
+            <a href="#how" class="text-[13px] text-textSecondary hover:text-brand transition font-medium">How It Works</a>
+            <a href="#properties" class="text-[13px] text-textSecondary hover:text-brand transition font-medium">Properties</a>
+            <a href="#stats" class="text-[13px] text-textSecondary hover:text-brand transition font-medium">Results</a>
         </div>
-
-        <!-- Right Side -->
-        <div style="display:flex;align-items:center;gap:12px">
-            <a href="#" class="hidden sm:inline" style="font-size:13px;font-weight:600;color:#64748b;text-decoration:none">Login</a>
-            <a href="#" class="hidden sm:inline-flex" style="align-items:center;gap:8px;padding:8px 20px;background:#d97706;color:#fff;font-size:13px;font-weight:600;border-radius:8px;text-decoration:none;transition:background .15s;box-shadow:0 4px 14px rgba(217,119,6,.25)">
-                Get Started <i class="fa-solid fa-arrow-right" style="font-size:10px"></i>
+        <div class="flex items-center gap-3">
+            <a href="#" class="hidden sm:inline text-[13px] font-semibold text-textSecondary hover:text-brand transition">Login</a>
+            <a href="#" class="inline-flex items-center gap-2 px-5 py-2 bg-brand hover:bg-brandDark text-white text-[13px] font-semibold rounded-lg transition shadow-lg shadow-brand/20">
+                Get Started <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </a>
-            <!-- Hamburger — z-index 1001 so it stays above panel -->
-            <button id="menuOpen" style="z-index:1001;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:none;background:transparent;cursor:pointer;color:#1e293b;font-size:18px" class="md:hidden">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <button id="menuOpen" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface transition"><i class="fa-solid fa-bars text-lg"></i></button>
         </div>
     </div>
 </nav>
 
-<!-- Mobile Overlay -->
-<div id="mobOverlay" class="mob-overlay"></div>
-
-<!-- Mobile Panel — Slides from RIGHT -->
-<div id="mobPanel" class="mob-panel">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e2e8f0;flex-shrink:0;background:#fff">
-        <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none">
-            <div style="width:32px;height:32px;border-radius:8px;background:#d97706;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-building" style="color:#fff;font-size:14px"></i></div>
-            <span class="font-display" style="font-weight:700;font-size:1.1rem;color:#1e293b">Prop<span style="color:#d97706">QR</span></span>
-        </a>
-        <button id="menuClose" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:none;background:transparent;cursor:pointer;color:#94a3b8;font-size:18px">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-
-    <div style="padding:16px 20px;background:#fffbeb;border-bottom:1px solid #f1f5f9;flex-shrink:0">
-        <div style="display:flex;align-items:center;gap:12px">
-            <div style="width:40px;height:40px;border-radius:50%;background:rgba(217,119,6,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <i class="fa-solid fa-user" style="color:#d97706;font-size:14px"></i>
-            </div>
-            <div style="min-width:0">
-                <p style="font-size:13px;font-weight:700;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Welcome back!</p>
-                <p style="font-size:11px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Start your free trial today</p>
-            </div>
-        </div>
-    </div>
-
-    <div style="flex:1;padding:12px 0;overflow-y:auto">
-        <p style="padding:6px 24px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.15em">Menu</p>
-        <a href="#features" class="mob-link ml"><i class="fa-solid fa-bolt"></i><span>Features</span></a>
-        <a href="#how" class="mob-link ml"><i class="fa-solid fa-route"></i><span>How It Works</span></a>
-        <a href="#properties" class="mob-link ml"><i class="fa-solid fa-building"></i><span>Properties</span></a>
-        <a href="#stats" class="mob-link ml"><i class="fa-solid fa-chart-line"></i><span>Results</span></a>
-        <div class="mob-divider"></div>
-        <p style="padding:6px 24px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.15em">Resources</p>
-        <a href="#" class="mob-link ml"><i class="fa-solid fa-book-open"></i><span>Blog</span></a>
-        <a href="#" class="mob-link ml"><i class="fa-solid fa-circle-question"></i><span>Help Center</span></a>
-        <a href="#" class="mob-link ml"><i class="fa-solid fa-headset"></i><span>Contact Support</span></a>
-    </div>
-
-    <div style="padding:20px;border-top:1px solid #e2e8f0;flex-shrink:0;background:#fff;display:flex;flex-direction:column;gap:10px">
-        <a href="#" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:#d97706;color:#fff;font-size:14px;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s;box-shadow:0 4px 14px rgba(217,119,6,.25)">
-            Get Started Free <i class="fa-solid fa-arrow-right" style="font-size:12px"></i>
-        </a>
-        <a href="#" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:#f8fafc;color:#1e293b;font-size:14px;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s">
-            <i class="fa-solid fa-right-to-bracket" style="color:#64748b;font-size:12px"></i> Log In
-        </a>
-    </div>
-
-    <div style="padding:14px 20px;border-top:1px solid #f1f5f9;background:#f8fafc;flex-shrink:0">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-            <div style="display:flex;align-items:center;gap:8px">
-                <a href="#" style="width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;color:#94a3b8;text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" style="width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;color:#94a3b8;text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#" style="width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;color:#94a3b8;text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" style="width:32px;height:32px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;color:#94a3b8;text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-youtube"></i></a>
-            </div>
-            <a href="tel:+919876543210" style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#64748b;text-decoration:none">
-                <i class="fa-solid fa-phone" style="font-size:10px"></i> Call Us
-            </a>
-        </div>
-    </div>
+<!-- Mobile Menu -->
+<div id="mobMenu" class="mob-menu fixed inset-0 z-[60] bg-white flex flex-col items-center justify-center gap-5 opacity-0 invisible">
+    <a href="#features" class="ml text-xl font-bold text-dark hover:text-brand transition">Features</a>
+    <a href="#how" class="ml text-xl font-bold text-dark hover:text-brand transition">How It Works</a>
+    <a href="#properties" class="ml text-xl font-bold text-dark hover:text-brand transition">Properties</a>
+    <a href="#stats" class="ml text-xl font-bold text-dark hover:text-brand transition">Results</a>
+    <a href="#" class="mt-3 px-8 py-3 bg-brand text-white font-semibold rounded-xl">Get Started</a>
+    <button id="menuClose" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-xl hover:bg-surface transition"><i class="fa-solid fa-xmark text-xl"></i></button>
 </div>
 
 <!-- ===== HERO ===== -->
-<section style="position:relative;min-height:100vh;display:flex;align-items:center;padding-top:60px;overflow:hidden">
-    <div class="orb" style="width:550px;height:550px;background:#d97706;top:-180px;right:-120px;opacity:.06"></div>
-    <div class="orb" style="width:350px;height:350px;background:#06b6d4;bottom:-80px;left:-80px;opacity:.04"></div>
+<section class="relative min-h-screen flex items-center pt-[60px] overflow-hidden">
+    <div class="orb w-[550px] h-[550px] bg-brand -top-[180px] -right-[120px] opacity-[0.06]"></div>
+    <div class="orb w-[350px] h-[350px] bg-info -bottom-[80px] -left-[80px] opacity-[0.04]"></div>
 
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px;width:100%;display:grid;grid-template-columns:1fr;gap:48px;align-items:center;padding-top:40px;padding-bottom:40px">
+    <div class="max-w-6xl mx-auto px-5 w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center py-16 lg:py-0">
         <!-- Text -->
         <div>
-            <div id="hBadge" style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:#fffbeb;border:1px solid rgba(217,119,6,.2);border-radius:999px;margin-bottom:24px;opacity:0">
-                <span style="width:6px;height:6px;border-radius:50%;background:#d97706;animation:pulse 2s infinite"></span>
-                <span style="font-size:11px;font-weight:600;color:#92400e;letter-spacing:.03em">Trusted by 500+ Real Estate Agents</span>
+            <div id="hBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brandLight border border-brand/20 rounded-full mb-6" style="opacity:0">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+                <span class="text-[11px] font-semibold text-brandDark tracking-wide">Trusted by 500+ Real Estate Agents</span>
             </div>
-            <h1 id="hTitle" class="font-display hero-title" style="font-weight:700;font-size:2.4rem;line-height:1.08;color:#1e293b;margin-bottom:20px">
+            <h1 id="hTitle" class="font-display font-bold text-[2.4rem] sm:text-[3.1rem] lg:text-[3.5rem] leading-[1.08] text-dark mb-5">
                 <span class="hw">Turn Every</span><br>
                 <span class="hw">Property Into a</span><br>
                 <span class="hw gradient-text">Smart QR Code</span>
             </h1>
-            <p id="hSub" class="hero-sub" style="color:#64748b;font-size:15px;line-height:1.7;margin-bottom:32px;max-width:460px;opacity:0">
+            <p id="hSub" class="text-textSecondary text-[15px] sm:text-base leading-relaxed mb-8 max-w-[460px]" style="opacity:0">
                 Generate QR codes for your properties. Share them anywhere. Track every scan, capture every lead — all from one powerful dashboard.
             </p>
-            <div id="hBtns" class="hero-btns" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:0;opacity:0">
-                <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:#d97706;color:#fff;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s;box-shadow:0 8px 24px rgba(217,119,6,.25)">
-                    Start Free Trial <i class="fa-solid fa-arrow-right" style="font-size:12px"></i>
+            <div id="hBtns" class="flex flex-wrap items-center gap-3" style="opacity:0">
+                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-brand hover:bg-brandDark text-white font-semibold rounded-xl transition shadow-xl shadow-brand/25 active:scale-[.97]">
+                    Start Free Trial <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
-                <a href="#how" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s">
-                    <i class="fa-solid fa-play" style="color:#d97706;font-size:10px"></i> Watch Demo
+                <a href="#how" class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-border text-textPrimary font-semibold rounded-xl hover:bg-surface transition active:scale-[.97]">
+                    <i class="fa-solid fa-play text-brand text-[10px]"></i> Watch Demo
                 </a>
             </div>
-            <div id="hSocial" style="display:flex;align-items:center;gap:16px;margin-top:36px;opacity:0">
-                <div style="display:flex;margin-left:-8px">
-                    <div style="width:32px;height:32px;border-radius:50%;background:rgba(217,119,6,.12);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#d97706;font-size:10px;font-weight:700">R</div>
-                    <div style="width:32px;height:32px;border-radius:50%;background:rgba(6,182,212,.12);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#06b6d4;font-size:10px;font-weight:700;margin-left:-8px">P</div>
-                    <div style="width:32px;height:32px;border-radius:50%;background:rgba(16,185,129,.12);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#10b981;font-size:10px;font-weight:700;margin-left:-8px">A</div>
-                    <div style="width:32px;height:32px;border-radius:50%;background:rgba(139,92,246,.12);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#8b5cf6;font-size:10px;font-weight:700;margin-left:-8px">S</div>
+            <div id="hSocial" class="flex items-center gap-4 mt-9" style="opacity:0">
+                <div class="flex -space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-brand/15 border-2 border-white flex items-center justify-center text-brand text-[10px] font-bold">R</div>
+                    <div class="w-8 h-8 rounded-full bg-info/15 border-2 border-white flex items-center justify-center text-info text-[10px] font-bold">P</div>
+                    <div class="w-8 h-8 rounded-full bg-accent/15 border-2 border-white flex items-center justify-center text-accent text-[10px] font-bold">A</div>
+                    <div class="w-8 h-8 rounded-full bg-violet-500/15 border-2 border-white flex items-center justify-center text-violet-500 text-[10px] font-bold">S</div>
                 </div>
                 <div>
-                    <div style="display:flex;gap:2px;color:#f59e0b;font-size:10px"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p style="font-size:11px;color:#94a3b8;margin-top:2px">4.9/5 from 500+ agents</p>
+                    <div class="flex gap-0.5 text-amber-400 text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="text-[11px] text-textMuted mt-0.5">4.9/5 from 500+ agents</p>
                 </div>
             </div>
         </div>
 
-        <!-- Visual — Phone -->
-        <div id="hVisual" style="position:relative;display:flex;justify-content:center;opacity:0">
-            <div class="float" style="position:relative">
-                <div style="width:270px;background:#fff;border-radius:1.8rem;box-shadow:0 25px 60px rgba(12,18,34,.1);border:1px solid rgba(226,232,240,.5);padding:14px;position:relative;z-index:10">
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 6px;margin-bottom:12px">
-                        <span style="font-size:9px;font-weight:700;color:#94a3b8">9:41</span>
-                        <div style="width:60px;height:16px;background:#0c1222;border-radius:999px"></div>
-                        <div style="display:flex;align-items:center;gap:4px;color:#94a3b8;font-size:7px"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></div>
+        <!-- Visual -->
+        <div id="hVisual" class="relative flex justify-center lg:justify-end" style="opacity:0">
+            <div class="relative float">
+                <!-- Phone -->
+                <div class="w-[270px] sm:w-[290px] bg-white rounded-[1.8rem] shadow-2xl shadow-dark/10 border border-border/50 p-3.5 relative z-10">
+                    <div class="flex items-center justify-between px-1.5 mb-3">
+                        <span class="text-[9px] font-bold text-textMuted">9:41</span>
+                        <div class="w-16 h-4 bg-dark rounded-full mx-auto"></div>
+                        <div class="flex items-center gap-1 text-textMuted text-[7px]"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></div>
                     </div>
-                    <div style="background:#f8fafc;border-radius:16px;padding:14px;margin-bottom:10px">
-                        <div style="width:100%;aspect-ratio:1;background:#fff;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(226,232,240,.3)">
-                            <div class="qr-grid" style="width:100%;max-width:140px" id="qrGrid"></div>
+                    <div class="bg-surface rounded-2xl p-3.5 mb-2.5">
+                        <div class="w-full aspect-square bg-white rounded-xl p-2.5 flex items-center justify-center border border-border/30">
+                            <div class="qr-grid w-full max-w-[150px]" id="qrGrid"></div>
                         </div>
-                        <p style="text-align:center;font-size:11px;font-weight:700;color:#1e293b;margin-top:10px">Luxury 3BHK Apartment</p>
-                        <p style="text-align:center;font-size:9px;color:#94a3b8">Vijay Nagar, Indore</p>
+                        <p class="text-center text-[11px] font-bold text-dark mt-2.5">Luxury 3BHK Apartment</p>
+                        <p class="text-center text-[9px] text-textMuted">Vijay Nagar, Indore</p>
                     </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px">
-                        <div style="text-align:center;flex:1"><p style="font-size:16px;font-weight:700;color:#d97706">12</p><p style="font-size:9px;color:#94a3b8">Scans</p></div>
-                        <div style="width:1px;height:28px;background:#e2e8f0"></div>
-                        <div style="text-align:center;flex:1"><p style="font-size:16px;font-weight:700;color:#10b981">8</p><p style="font-size:9px;color:#94a3b8">Leads</p></div>
-                        <div style="width:1px;height:28px;background:#e2e8f0"></div>
-                        <div style="text-align:center;flex:1"><p style="font-size:16px;font-weight:700;color:#06b6d4">3</p><p style="font-size:9px;color:#94a3b8">Visits</p></div>
-                    </div>
-                </div>
-                <div class="float-d1" style="position:absolute;left:-40px;top:80px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:1px solid rgba(226,232,240,.4);padding:10px 12px;z-index:20">
-                    <div style="display:flex;align-items:center;gap:8px">
-                        <div style="width:28px;height:28px;border-radius:8px;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-user-plus" style="color:#10b981;font-size:10px"></i></div>
-                        <div><p style="font-size:10px;font-weight:700;color:#1e293b">New Lead!</p><p style="font-size:8px;color:#94a3b8">Just now</p></div>
+                    <div class="flex items-center justify-between px-1">
+                        <div class="text-center flex-1"><p class="text-base font-bold text-brand">12</p><p class="text-[9px] text-textMuted">Scans</p></div>
+                        <div class="w-px h-7 bg-border"></div>
+                        <div class="text-center flex-1"><p class="text-base font-bold text-accent">8</p><p class="text-[9px] text-textMuted">Leads</p></div>
+                        <div class="w-px h-7 bg-border"></div>
+                        <div class="text-center flex-1"><p class="text-base font-bold text-info">3</p><p class="text-[9px] text-textMuted">Visits</p></div>
                     </div>
                 </div>
-                <div class="float-d2" style="position:absolute;right:-24px;bottom:112px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:1px solid rgba(226,232,240,.4);padding:10px 12px;z-index:20">
-                    <div style="display:flex;align-items:center;gap:8px">
-                        <div style="width:28px;height:28px;border-radius:8px;background:rgba(217,119,6,.1);display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-qrcode" style="color:#d97706;font-size:10px"></i></div>
-                        <div><p style="font-size:10px;font-weight:700;color:#1e293b">QR Scanned</p><p style="font-size:8px;color:#94a3b8">2 min ago</p></div>
+
+                <!-- Floating Badge: Lead -->
+                <div class="absolute -left-10 sm:-left-14 top-20 bg-white rounded-xl shadow-xl shadow-dark/8 border border-border/40 px-3 py-2.5 z-20 float-d1">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center"><i class="fa-solid fa-user-plus text-accent text-[10px]"></i></div>
+                        <div><p class="text-[10px] font-bold text-dark">New Lead!</p><p class="text-[8px] text-textMuted">Just now</p></div>
+                    </div>
+                </div>
+
+                <!-- Floating Badge: Scan -->
+                <div class="absolute -right-6 sm:-right-10 bottom-28 bg-white rounded-xl shadow-xl shadow-dark/8 border border-border/40 px-3 py-2.5 z-20 float-d2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-brand/10 flex items-center justify-center"><i class="fa-solid fa-qrcode text-brand text-[10px]"></i></div>
+                        <div><p class="text-[10px] font-bold text-dark">QR Scanned</p><p class="text-[8px] text-textMuted">2 min ago</p></div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-30">
+        <span class="text-[9px] font-semibold text-textMuted tracking-[.2em] uppercase">Scroll</span>
+        <div class="w-4 h-7 border-[1.5px] border-textMuted rounded-full flex justify-center pt-1.5">
+            <div class="w-[3px] h-[6px] bg-textMuted rounded-full scroll-dot"></div>
         </div>
     </div>
 </section>
 
 <!-- ===== TRUSTED BAR ===== -->
-<section style="border-top:1px solid rgba(226,232,240,.5);border-bottom:1px solid rgba(226,232,240,.5);background:rgba(248,250,252,.4);padding:14px 0">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div id="trustBar" class="rv" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 32px">
-            <span style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.15em">Trusted by agents at</span>
-            <span class="font-display" style="font-size:13px;font-weight:700;color:rgba(148,163,184,.5)">Godrej Properties</span>
-            <span class="font-display" style="font-size:13px;font-weight:700;color:rgba(148,163,184,.5)">Sobha Ltd</span>
-            <span class="font-display" style="font-size:13px;font-weight:700;color:rgba(148,163,184,.5)">DLF Homes</span>
-            <span class="font-display" style="font-size:13px;font-weight:700;color:rgba(148,163,184,.5)">Prestige Group</span>
-            <span class="font-display" style="font-size:13px;font-weight:700;color:rgba(148,163,184,.5)">Brigade Group</span>
+<section class="border-y border-border/50 bg-surface/40 py-4">
+    <div class="max-w-6xl mx-auto px-5">
+        <div id="trustBar" class="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 gap-y-2 rv">
+            <span class="text-[10px] font-bold text-textMuted tracking-[.15em] uppercase">Trusted by agents at</span>
+            <span class="text-sm font-bold text-textMuted/50 font-display">Godrej Properties</span>
+            <span class="text-sm font-bold text-textMuted/50 font-display">Sobha Ltd</span>
+            <span class="text-sm font-bold text-textMuted/50 font-display">DLF Homes</span>
+            <span class="text-sm font-bold text-textMuted/50 font-display">Prestige Group</span>
+            <span class="text-sm font-bold text-textMuted/50 font-display">Brigade Group</span>
         </div>
     </div>
 </section>
 
 <!-- ===== FEATURES ===== -->
-<section id="features" style="padding:60px 0">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div class="rv" style="text-align:center;margin-bottom:48px">
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#fffbeb;border-radius:999px;font-size:11px;font-weight:600;color:#92400e;margin-bottom:12px"><i class="fa-solid fa-bolt" style="font-size:9px"></i> Features</span>
-            <h2 class="font-display section-title-r" style="font-weight:700;font-size:1.75rem;color:#1e293b;margin-bottom:8px">Everything You Need</h2>
-            <p style="color:#64748b;font-size:14px;max-width:28rem;margin:0 auto">One platform to generate, share, and track QR codes for every property you list.</p>
+<section id="features" class="py-16 lg:py-20">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12 rv">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brandLight rounded-full text-[11px] font-semibold text-brandDark mb-3"><i class="fa-solid fa-bolt text-[9px]"></i> Features</span>
+            <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-2">Everything You Need</h2>
+            <p class="text-textSecondary text-sm max-w-md mx-auto">One platform to generate, share, and track QR codes for every property you list.</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" class="fc-grid">
-            <div class="feat-card fc" style="background:#fff;border-radius:16px;padding:20px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="width:40px;height:40px;border-radius:12px;background:#fffbeb;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fa-solid fa-qrcode" style="color:#d97706"></i></div>
-                <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Instant QR Codes</h3>
-                <p style="font-size:13px;color:#64748b;line-height:1.6">Generate unique QR codes for every property in seconds. No design skills needed.</p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div class="feat-card fc bg-white rounded-2xl p-5 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="w-10 h-10 rounded-xl bg-brandLight flex items-center justify-center mb-3.5"><i class="fa-solid fa-qrcode text-brand"></i></div>
+                <h3 class="font-display font-bold text-dark text-[15px] mb-1">Instant QR Codes</h3>
+                <p class="text-[13px] text-textSecondary leading-relaxed">Generate unique QR codes for every property in seconds. No design skills needed.</p>
             </div>
-            <div class="feat-card fc" style="background:#fff;border-radius:16px;padding:20px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="width:40px;height:40px;border-radius:12px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fa-solid fa-users" style="color:#10b981"></i></div>
-                <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Lead Capture</h3>
-                <p style="font-size:13px;color:#64748b;line-height:1.6">Every QR scan becomes a lead. Name, phone, interest — all captured automatically.</p>
+            <div class="feat-card fc bg-white rounded-2xl p-5 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center mb-3.5"><i class="fa-solid fa-users text-accent"></i></div>
+                <h3 class="font-display font-bold text-dark text-[15px] mb-1">Lead Capture</h3>
+                <p class="text-[13px] text-textSecondary leading-relaxed">Every QR scan becomes a lead. Name, phone, interest — all captured automatically.</p>
             </div>
-            <div class="feat-card fc" style="background:#fff;border-radius:16px;padding:20px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="width:40px;height:40px;border-radius:12px;background:#cffafe;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fa-solid fa-chart-line" style="color:#06b6d4"></i></div>
-                <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Live Analytics</h3>
-                <p style="font-size:13px;color:#64748b;line-height:1.6">Track scans, views, and leads in real-time. Know which property gets the most attention.</p>
+            <div class="feat-card fc bg-white rounded-2xl p-5 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center mb-3.5"><i class="fa-solid fa-chart-line text-info"></i></div>
+                <h3 class="font-display font-bold text-dark text-[15px] mb-1">Live Analytics</h3>
+                <p class="text-[13px] text-textSecondary leading-relaxed">Track scans, views, and leads in real-time. Know which property gets the most attention.</p>
             </div>
-            <div class="feat-card fc" style="background:#fff;border-radius:16px;padding:20px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="width:40px;height:40px;border-radius:12px;background:#ede9fe;display:flex;align-items:center;justify-content:center;margin-bottom:14px"><i class="fa-solid fa-share-nodes" style="color:#8b5cf6"></i></div>
-                <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Share Anywhere</h3>
-                <p style="font-size:13px;color:#64748b;line-height:1.6">Print on brochures, banners, site boards, or share digitally on WhatsApp & social.</p>
+            <div class="feat-card fc bg-white rounded-2xl p-5 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center mb-3.5"><i class="fa-solid fa-share-nodes text-violet-500"></i></div>
+                <h3 class="font-display font-bold text-dark text-[15px] mb-1">Share Anywhere</h3>
+                <p class="text-[13px] text-textSecondary leading-relaxed">Print on brochures, banners, site boards, or share digitally on WhatsApp & social.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ===== HOW IT WORKS ===== -->
-<section id="how" style="padding:60px 0;background:#0c1222;position:relative;overflow:hidden">
-    <div class="orb" style="width:400px;height:400px;background:#d97706;top:-120px;right:-60px;opacity:.07"></div>
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px;position:relative;z-index:1">
-        <div class="rv" style="text-align:center;margin-bottom:56px">
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:999px;font-size:11px;font-weight:600;color:#d97706;margin-bottom:12px"><i class="fa-solid fa-route" style="font-size:9px"></i> How It Works</span>
-            <h2 class="font-display section-title-r" style="font-weight:700;font-size:1.75rem;color:#fff;margin-bottom:8px">Three Simple Steps</h2>
-            <p style="color:rgba(255,255,255,.4);font-size:14px;max-width:28rem;margin:0 auto">From listing to leads — get started in under 2 minutes.</p>
+<section id="how" class="py-16 lg:py-20 bg-dark relative overflow-hidden">
+    <div class="orb w-[400px] h-[400px] bg-brand -top-[120px] right-[-60px] opacity-[0.07]"></div>
+    <div class="max-w-6xl mx-auto px-5 relative z-10">
+        <div class="text-center mb-14 rv">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[11px] font-semibold text-brand mb-3"><i class="fa-solid fa-route text-[9px]"></i> How It Works</span>
+            <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-white mb-2">Three Simple Steps</h2>
+            <p class="text-white/40 text-sm max-w-md mx-auto">From listing to leads — get started in under 2 minutes.</p>
         </div>
-        <div style="display:grid;grid-template-columns:1fr;gap:32px" class="sw-grid">
-            <div class="sw" style="text-align:center;position:relative;opacity:0;transform:translateY(28px)">
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="sw text-center relative" style="opacity:0;transform:translateY(28px)">
                 <div class="step-connector r"></div>
-                <div style="width:56px;height:56px;border-radius:16px;background:#d97706;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(217,119,6,.3);position:relative;z-index:1">
-                    <span class="font-display" style="font-weight:700;color:#fff;font-size:20px">1</span>
+                <div class="w-14 h-14 rounded-2xl bg-brand flex items-center justify-center mx-auto mb-4 shadow-lg shadow-brand/30 relative z-10">
+                    <span class="font-display font-bold text-white text-xl">1</span>
                 </div>
-                <h3 class="font-display" style="font-weight:700;color:#fff;font-size:17px;margin-bottom:6px">Add Your Property</h3>
-                <p style="font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:260px;margin:0 auto">Enter property details — name, location, price, photos. Takes less than a minute.</p>
+                <h3 class="font-display font-bold text-white text-[17px] mb-1.5">Add Your Property</h3>
+                <p class="text-[13px] text-white/40 leading-relaxed max-w-[260px] mx-auto">Enter property details — name, location, price, photos. Takes less than a minute.</p>
             </div>
-            <div class="sw" style="text-align:center;position:relative;opacity:0;transform:translateY(28px)">
+            <div class="sw text-center relative" style="opacity:0;transform:translateY(28px)">
                 <div class="step-connector l"></div>
                 <div class="step-connector r"></div>
-                <div style="width:56px;height:56px;border-radius:16px;background:#d97706;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(217,119,6,.3);position:relative;z-index:1">
-                    <span class="font-display" style="font-weight:700;color:#fff;font-size:20px">2</span>
+                <div class="w-14 h-14 rounded-2xl bg-brand flex items-center justify-center mx-auto mb-4 shadow-lg shadow-brand/30 relative z-10">
+                    <span class="font-display font-bold text-white text-xl">2</span>
                 </div>
-                <h3 class="font-display" style="font-weight:700;color:#fff;font-size:17px;margin-bottom:6px">Get Your QR Code</h3>
-                <p style="font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:260px;margin:0 auto">A unique QR code is generated instantly. Download as PNG or print-ready PDF.</p>
+                <h3 class="font-display font-bold text-white text-[17px] mb-1.5">Get Your QR Code</h3>
+                <p class="text-[13px] text-white/40 leading-relaxed max-w-[260px] mx-auto">A unique QR code is generated instantly. Download as PNG or print-ready PDF.</p>
             </div>
-            <div class="sw" style="text-align:center;position:relative;opacity:0;transform:translateY(28px)">
+            <div class="sw text-center relative" style="opacity:0;transform:translateY(28px)">
                 <div class="step-connector l"></div>
-                <div style="width:56px;height:56px;border-radius:16px;background:#d97706;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(217,119,6,.3);position:relative;z-index:1">
-                    <span class="font-display" style="font-weight:700;color:#fff;font-size:20px">3</span>
+                <div class="w-14 h-14 rounded-2xl bg-brand flex items-center justify-center mx-auto mb-4 shadow-lg shadow-brand/30 relative z-10">
+                    <span class="font-display font-bold text-white text-xl">3</span>
                 </div>
-                <h3 class="font-display" style="font-weight:700;color:#fff;font-size:17px;margin-bottom:6px">Share & Track Leads</h3>
-                <p style="font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:260px;margin:0 auto">Place QR anywhere. When someone scans, their details land in your dashboard.</p>
+                <h3 class="font-display font-bold text-white text-[17px] mb-1.5">Share & Track Leads</h3>
+                <p class="text-[13px] text-white/40 leading-relaxed max-w-[260px] mx-auto">Place QR anywhere. When someone scans, their details land in your dashboard.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ===== STATS ===== -->
-<section id="stats" style="padding:48px 0">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" class="sc-grid">
-            <div class="sc" style="text-align:center;padding:20px 12px;opacity:0;transform:translateY(20px)">
-                <p class="font-display stat-num" style="font-weight:700;font-size:2rem;color:#1e293b;line-height:1"><span class="ctr" data-to="500">0</span>+</p>
-                <p style="font-size:12px;color:#94a3b8;margin-top:6px;font-weight:500">Active Agents</p>
+<section id="stats" class="py-14 lg:py-16">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="sc text-center py-5 px-3" style="opacity:0;transform:translateY(20px)">
+                <p class="font-display font-bold text-[2rem] sm:text-[2.5rem] text-dark leading-none"><span class="ctr" data-to="500">0</span>+</p>
+                <p class="text-[12px] text-textMuted mt-1.5 font-medium">Active Agents</p>
             </div>
-            <div class="sc" style="text-align:center;padding:20px 12px;opacity:0;transform:translateY(20px)">
-                <p class="font-display stat-num" style="font-weight:700;font-size:2rem;color:#1e293b;line-height:1"><span class="ctr" data-to="12500">0</span>+</p>
-                <p style="font-size:12px;color:#94a3b8;margin-top:6px;font-weight:500">QR Codes Generated</p>
+            <div class="sc text-center py-5 px-3" style="opacity:0;transform:translateY(20px)">
+                <p class="font-display font-bold text-[2rem] sm:text-[2.5rem] text-dark leading-none"><span class="ctr" data-to="12500">0</span>+</p>
+                <p class="text-[12px] text-textMuted mt-1.5 font-medium">QR Codes Generated</p>
             </div>
-            <div class="sc" style="text-align:center;padding:20px 12px;opacity:0;transform:translateY(20px)">
-                <p class="font-display stat-num" style="font-weight:700;font-size:2rem;color:#1e293b;line-height:1"><span class="ctr" data-to="48000">0</span>+</p>
-                <p style="font-size:12px;color:#94a3b8;margin-top:6px;font-weight:500">Total Scans</p>
+            <div class="sc text-center py-5 px-3" style="opacity:0;transform:translateY(20px)">
+                <p class="font-display font-bold text-[2rem] sm:text-[2.5rem] text-dark leading-none"><span class="ctr" data-to="48000">0</span>+</p>
+                <p class="text-[12px] text-textMuted mt-1.5 font-medium">Total Scans</p>
             </div>
-            <div class="sc" style="text-align:center;padding:20px 12px;opacity:0;transform:translateY(20px)">
-                <p class="font-display stat-num" style="font-weight:700;font-size:2rem;color:#1e293b;line-height:1"><span class="ctr" data-to="8200">0</span>+</p>
-                <p style="font-size:12px;color:#94a3b8;margin-top:6px;font-weight:500">Leads Captured</p>
+            <div class="sc text-center py-5 px-3" style="opacity:0;transform:translateY(20px)">
+                <p class="font-display font-bold text-[2rem] sm:text-[2.5rem] text-dark leading-none"><span class="ctr" data-to="8200">0</span>+</p>
+                <p class="text-[12px] text-textMuted mt-1.5 font-medium">Leads Captured</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ===== PROPERTIES ===== -->
-<section id="properties" style="padding:60px 0;background:rgba(248,250,252,.4)">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div class="rv" style="text-align:center;margin-bottom:48px">
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#fffbeb;border-radius:999px;font-size:11px;font-weight:600;color:#92400e;margin-bottom:12px"><i class="fa-solid fa-building" style="font-size:9px"></i> Properties</span>
-            <h2 class="font-display section-title-r" style="font-weight:700;font-size:1.75rem;color:#1e293b;margin-bottom:8px">See It In Action</h2>
-            <p style="color:#64748b;font-size:14px;max-width:28rem;margin:0 auto">Real properties with real QR codes generating real leads.</p>
+<section id="properties" class="py-16 lg:py-20 bg-surface/40">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12 rv">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brandLight rounded-full text-[11px] font-semibold text-brandDark mb-3"><i class="fa-solid fa-building text-[9px]"></i> Properties</span>
+            <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-2">See It In Action</h2>
+            <p class="text-textSecondary text-sm max-w-md mx-auto">Real properties with real QR codes generating real leads.</p>
         </div>
-        <div style="display:grid;grid-template-columns:1fr;gap:16px" class="pc-grid">
-            <div class="pc prop-card" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid rgba(226,232,240,.3);opacity:0;transform:translateY(28px)">
-                <div style="position:relative;overflow:hidden;aspect-ratio:4/3">
-                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=450&fit=crop&q=82" class="prop-img" style="width:100%;height:100%;object-fit:cover;display:block" alt="Luxury 3BHK Apartment">
-                    <div style="position:absolute;top:12px;left:12px;padding:4px 10px;background:#d97706;color:#fff;font-size:10px;font-weight:700;border-radius:8px">Apartment</div>
-                    <div style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.1)"><i class="fa-solid fa-qrcode" style="color:#d97706;font-size:14px"></i></div>
-                    <div style="position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border-radius:8px">
-                        <i class="fa-solid fa-camera" style="color:#fff;font-size:8px"></i>
-                        <span style="color:#fff;font-size:10px;font-weight:500">12 Photos</span>
-                    </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30" style="opacity:0;transform:translateY(28px)">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img src="https://picsum.photos/seed/pqr-apt1/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <div class="absolute top-3 left-3 px-2.5 py-1 bg-brand text-white text-[10px] font-bold rounded-lg">Apartment</div>
+                    <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
                 </div>
-                <div style="padding:16px">
-                    <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Luxury 3BHK Apartment</h3>
-                    <p style="font-size:11px;color:#94a3b8;margin-bottom:10px"><i class="fa-solid fa-location-dot" style="color:#d97706;margin-right:4px"></i>Vijay Nagar, Indore</p>
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-bed" style="color:#94a3b8;margin-right:4px"></i>3 BHK</span>
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-ruler-combined" style="color:#94a3b8;margin-right:4px"></i>1450 sq.ft</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid rgba(226,232,240,.5)">
-                        <span class="font-display" style="font-weight:700;color:#d97706;font-size:18px">₹85 Lac</span>
-                        <span style="font-size:11px;color:#10b981;font-weight:700;background:#d1fae5;padding:3px 10px;border-radius:999px"><i class="fa-solid fa-user-plus" style="font-size:8px;margin-right:4px"></i>12 leads</span>
-                    </div>
+                <div class="p-4">
+                    <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Luxury 3BHK Apartment</h3>
+                    <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Vijay Nagar, Indore</p>
+                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹85L</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">12 leads</span></div>
                 </div>
             </div>
-
-            <div class="pc prop-card" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid rgba(226,232,240,.3);opacity:0;transform:translateY(28px)">
-                <div style="position:relative;overflow:hidden;aspect-ratio:4/3">
-                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&h=450&fit=crop&q=82" class="prop-img" style="width:100%;height:100%;object-fit:cover;display:block" alt="Premium Villa">
-                    <div style="position:absolute;top:12px;left:12px;padding:4px 10px;background:#06b6d4;color:#fff;font-size:10px;font-weight:700;border-radius:8px">Villa</div>
-                    <div style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.1)"><i class="fa-solid fa-qrcode" style="color:#d97706;font-size:14px"></i></div>
-                    <div style="position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border-radius:8px">
-                        <i class="fa-solid fa-camera" style="color:#fff;font-size:8px"></i>
-                        <span style="color:#fff;font-size:10px;font-weight:500">18 Photos</span>
-                    </div>
+            <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30" style="opacity:0;transform:translateY(28px)">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img src="https://picsum.photos/seed/pqr-villa2/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <div class="absolute top-3 left-3 px-2.5 py-1 bg-info text-white text-[10px] font-bold rounded-lg">Villa</div>
+                    <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
                 </div>
-                <div style="padding:16px">
-                    <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Premium Villa</h3>
-                    <p style="font-size:11px;color:#94a3b8;margin-bottom:10px"><i class="fa-solid fa-location-dot" style="color:#d97706;margin-right:4px"></i>Super Corridor, Indore</p>
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-bed" style="color:#94a3b8;margin-right:4px"></i>4 BHK</span>
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-ruler-combined" style="color:#94a3b8;margin-right:4px"></i>2800 sq.ft</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid rgba(226,232,240,.5)">
-                        <span class="font-display" style="font-weight:700;color:#d97706;font-size:18px">₹1.8 Cr</span>
-                        <span style="font-size:11px;color:#10b981;font-weight:700;background:#d1fae5;padding:3px 10px;border-radius:999px"><i class="fa-solid fa-user-plus" style="font-size:8px;margin-right:4px"></i>9 leads</span>
-                    </div>
+                <div class="p-4">
+                    <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Premium Villa</h3>
+                    <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Super Corridor, Indore</p>
+                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹1.8Cr</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">9 leads</span></div>
                 </div>
             </div>
-
-            <div class="pc prop-card" style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid rgba(226,232,240,.3);opacity:0;transform:translateY(28px)">
-                <div style="position:relative;overflow:hidden;aspect-ratio:4/3">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=450&fit=crop&q=82" class="prop-img" style="width:100%;height:100%;object-fit:cover;display:block" alt="Modern 2BHK Flat">
-                    <div style="position:absolute;top:12px;left:12px;padding:4px 10px;background:#10b981;color:#fff;font-size:10px;font-weight:700;border-radius:8px">Flat</div>
-                    <div style="position:absolute;bottom:12px;right:12px;width:36px;height:36px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.1)"><i class="fa-solid fa-qrcode" style="color:#d97706;font-size:14px"></i></div>
-                    <div style="position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border-radius:8px">
-                        <i class="fa-solid fa-camera" style="color:#fff;font-size:8px"></i>
-                        <span style="color:#fff;font-size:10px;font-weight:500">9 Photos</span>
-                    </div>
+            <div class="pc prop-card bg-white rounded-2xl overflow-hidden border border-border/30 sm:col-span-2 lg:col-span-1" style="opacity:0;transform:translateY(28px)">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img src="https://picsum.photos/seed/pqr-flat3/600/450.jpg" class="prop-img w-full h-full object-cover" alt="">
+                    <div class="absolute top-3 left-3 px-2.5 py-1 bg-accent text-white text-[10px] font-bold rounded-lg">Flat</div>
+                    <div class="absolute bottom-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg"><i class="fa-solid fa-qrcode text-brand text-sm"></i></div>
                 </div>
-                <div style="padding:16px">
-                    <h3 class="font-display" style="font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px">Modern 2BHK Flat</h3>
-                    <p style="font-size:11px;color:#94a3b8;margin-bottom:10px"><i class="fa-solid fa-location-dot" style="color:#d97706;margin-right:4px"></i>Palasia, Indore</p>
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-bed" style="color:#94a3b8;margin-right:4px"></i>2 BHK</span>
-                        <span style="font-size:10px;color:#64748b;background:#f8fafc;padding:3px 8px;border-radius:4px"><i class="fa-solid fa-ruler-combined" style="color:#94a3b8;margin-right:4px"></i>980 sq.ft</span>
-                    </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid rgba(226,232,240,.5)">
-                        <span class="font-display" style="font-weight:700;color:#d97706;font-size:18px">₹45 Lac</span>
-                        <span style="font-size:11px;color:#10b981;font-weight:700;background:#d1fae5;padding:3px 10px;border-radius:999px"><i class="fa-solid fa-user-plus" style="font-size:8px;margin-right:4px"></i>8 leads</span>
-                    </div>
+                <div class="p-4">
+                    <h3 class="font-display font-bold text-dark text-[15px] mb-0.5">Modern 2BHK Flat</h3>
+                    <p class="text-[11px] text-textMuted mb-2.5"><i class="fa-solid fa-location-dot text-brand mr-1"></i>Palasia, Indore</p>
+                    <div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-lg">₹45L</span><span class="text-[11px] text-accent font-bold bg-emerald-50 px-2.5 py-1 rounded-full">8 leads</span></div>
                 </div>
             </div>
         </div>
@@ -473,35 +373,35 @@
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
-<section style="padding:60px 0">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div class="rv" style="text-align:center;margin-bottom:48px">
-            <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#fffbeb;border-radius:999px;font-size:11px;font-weight:600;color:#92400e;margin-bottom:12px"><i class="fa-solid fa-quote-left" style="font-size:9px"></i> Testimonials</span>
-            <h2 class="font-display section-title-r" style="font-weight:700;font-size:1.75rem;color:#1e293b;margin-bottom:8px">Loved by Agents</h2>
+<section class="py-16 lg:py-20">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12 rv">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brandLight rounded-full text-[11px] font-semibold text-brandDark mb-3"><i class="fa-solid fa-quote-left text-[9px]"></i> Testimonials</span>
+            <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-2">Loved by Agents</h2>
         </div>
-        <div style="display:grid;grid-template-columns:1fr;gap:16px" class="tc-grid">
-            <div class="tc" style="background:#fff;border-radius:16px;padding:24px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="display:flex;gap:2px;color:#f59e0b;font-size:12px;margin-bottom:12px"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:16px">"PropQR changed how I market my properties. I just print the QR and put it on site boards. Leads come in automatically."</p>
-                <div style="display:flex;align-items:center;gap:12px">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(217,119,6,.1);display:flex;align-items:center;justify-content:center;color:#d97706;font-size:12px;font-weight:700">RK</div>
-                    <div><p style="font-size:13px;font-weight:700;color:#1e293b">Rajesh Kumar</p><p style="font-size:11px;color:#94a3b8">Indore, MP</p></div>
+        <div class="grid md:grid-cols-3 gap-4">
+            <div class="tc bg-white rounded-2xl p-6 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="flex gap-0.5 text-amber-400 text-xs mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="text-[13px] text-textSecondary leading-relaxed mb-4">"PropQR changed how I market my properties. I just print the QR and put it on site boards. Leads come in automatically."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-brand/10 flex items-center justify-center text-brand text-xs font-bold">RK</div>
+                    <div><p class="text-[13px] font-bold text-dark">Rajesh Kumar</p><p class="text-[11px] text-textMuted">Indore, MP</p></div>
                 </div>
             </div>
-            <div class="tc" style="background:#fff;border-radius:16px;padding:24px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="display:flex;gap:2px;color:#f59e0b;font-size:12px;margin-bottom:12px"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:16px">"I used to spend hours following up on calls. Now people scan the QR, fill their details, and I get qualified leads directly."</p>
-                <div style="display:flex;align-items:center;gap:12px">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(6,182,212,.1);display:flex;align-items:center;justify-content:center;color:#06b6d4;font-size:12px;font-weight:700">PM</div>
-                    <div><p style="font-size:13px;font-weight:700;color:#1e293b">Priya Mehta</p><p style="font-size:11px;color:#94a3b8">Bhopal, MP</p></div>
+            <div class="tc bg-white rounded-2xl p-6 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="flex gap-0.5 text-amber-400 text-xs mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="text-[13px] text-textSecondary leading-relaxed mb-4">"I used to spend hours following up on calls. Now people scan the QR, fill their details, and I get qualified leads directly."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-info/10 flex items-center justify-center text-info text-xs font-bold">PM</div>
+                    <div><p class="text-[13px] font-bold text-dark">Priya Mehta</p><p class="text-[11px] text-textMuted">Bhopal, MP</p></div>
                 </div>
             </div>
-            <div class="tc" style="background:#fff;border-radius:16px;padding:24px;border:1px solid rgba(226,232,240,.4);opacity:0;transform:translateY(28px)">
-                <div style="display:flex;gap:2px;color:#f59e0b;font-size:12px;margin-bottom:12px"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p style="font-size:13px;color:#64748b;line-height:1.6;margin-bottom:16px">"The dashboard is so clean and simple. I can see exactly which property is getting attention. Best tool for small agencies."</p>
-                <div style="display:flex;align-items:center;gap:12px">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center;color:#10b981;font-size:12px;font-weight:700">AS</div>
-                    <div><p style="font-size:13px;font-weight:700;color:#1e293b">Amit Sharma</p><p style="font-size:11px;color:#94a3b8">Jaipur, RJ</p></div>
+            <div class="tc bg-white rounded-2xl p-6 border border-border/40" style="opacity:0;transform:translateY(28px)">
+                <div class="flex gap-0.5 text-amber-400 text-xs mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="text-[13px] text-textSecondary leading-relaxed mb-4">"The dashboard is so clean and simple. I can see exactly which property is getting attention. Best tool for small agencies."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xs font-bold">AS</div>
+                    <div><p class="text-[13px] font-bold text-dark">Amit Sharma</p><p class="text-[11px] text-textMuted">Jaipur, RJ</p></div>
                 </div>
             </div>
         </div>
@@ -509,157 +409,115 @@
 </section>
 
 <!-- ===== CTA ===== -->
-<section style="padding:60px 0;position:relative;overflow:hidden">
-    <div class="cta-dots" style="position:absolute;inset:0"></div>
-    <div class="orb" style="width:300px;height:300px;background:#d97706;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.07"></div>
-    <div class="rv" style="max-width:40rem;margin:0 auto;padding:0 20px;text-align:center;position:relative;z-index:1">
-        <div style="width:52px;height:52px;border-radius:16px;background:#d97706;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(217,119,6,.25)">
-            <i class="fa-solid fa-rocket" style="color:#fff;font-size:18px"></i>
+<section class="py-16 lg:py-20 relative overflow-hidden">
+    <div class="absolute inset-0 cta-dots"></div>
+    <div class="orb w-[300px] h-[300px] bg-brand top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"></div>
+    <div class="max-w-2xl mx-auto px-5 text-center relative z-10 rv">
+        <div class="w-13 h-13 rounded-2xl bg-brand flex items-center justify-center mx-auto mb-5 shadow-lg shadow-brand/25" style="width:52px;height:52px">
+            <i class="fa-solid fa-rocket text-white text-lg"></i>
         </div>
-        <h2 class="font-display section-title-r" style="font-weight:700;font-size:1.75rem;color:#1e293b;margin-bottom:12px">Ready to Get More Leads?</h2>
-        <p style="color:#64748b;font-size:15px;margin-bottom:28px;max-width:28rem;margin-left:auto;margin-right:auto">Join 500+ agents who are already using PropQR to convert scans into deals.</p>
-        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px">
-            <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#d97706;color:#fff;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s;box-shadow:0 8px 24px rgba(217,119,6,.25)">
-                Start Free Trial <i class="fa-solid fa-arrow-right" style="font-size:14px"></i>
+        <h2 class="font-display font-bold text-[1.75rem] sm:text-[2.1rem] text-dark mb-3">Ready to Get More Leads?</h2>
+        <p class="text-textSecondary text-[15px] mb-7 max-w-md mx-auto">Join 500+ agents who are already using PropQR to convert scans into deals.</p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+            <a href="#" class="inline-flex items-center gap-2 px-7 py-3 bg-brand hover:bg-brandDark text-white font-semibold rounded-xl transition shadow-xl shadow-brand/25 active:scale-[.97]">
+                Start Free Trial <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
-            <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-weight:600;border-radius:12px;text-decoration:none;transition:background .15s">
-                <i class="fa-solid fa-phone" style="color:#d97706;font-size:14px"></i> Talk to Sales
+            <a href="#" class="inline-flex items-center gap-2 px-7 py-3 bg-white border border-border text-textPrimary font-semibold rounded-xl hover:bg-surface transition active:scale-[.97]">
+                <i class="fa-solid fa-phone text-brand text-sm"></i> Talk to Sales
             </a>
         </div>
-        <p style="font-size:11px;color:#94a3b8;margin-top:16px">No credit card required &middot; Free for 14 days &middot; Cancel anytime</p>
+        <p class="text-[11px] text-textMuted mt-4">No credit card required &middot; Free for 14 days &middot; Cancel anytime</p>
     </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer style="background:#0c1222;padding:48px 0 28px">
-    <div style="max-width:72rem;margin:0 auto;padding:0 20px">
-        <div style="display:grid;grid-template-columns:1fr;gap:32px;margin-bottom:40px" class="ft-grid">
+<footer class="bg-dark pt-12 pb-7">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             <div>
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-                    <div style="width:28px;height:28px;border-radius:8px;background:#d97706;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-building" style="color:#fff;font-size:12px"></i></div>
-                    <span class="font-display" style="font-weight:700;font-size:16px;color:#fff">Prop<span style="color:#d97706">QR</span></span>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-7 h-7 rounded-lg bg-brand flex items-center justify-center"><i class="fa-solid fa-building text-white text-xs"></i></div>
+                    <span class="font-display font-bold text-base text-white">Prop<span class="text-brand">QR</span></span>
                 </div>
-                <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.6">Smart QR codes for real estate. Generate, share, track — all from one dashboard.</p>
+                <p class="text-[13px] text-white/35 leading-relaxed">Smart QR codes for real estate. Generate, share, track — all from one dashboard.</p>
             </div>
             <div>
-                <h4 style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Product</h4>
-                <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Features</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Pricing</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Integrations</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">API Docs</a></li>
+                <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-3">Product</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Features</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Pricing</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Integrations</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">API Docs</a></li>
                 </ul>
             </div>
             <div>
-                <h4 style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Company</h4>
-                <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">About Us</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Blog</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Careers</a></li>
-                    <li><a href="#" style="font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s">Contact</a></li>
+                <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-3">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">About Us</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Blog</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Careers</a></li>
+                    <li><a href="#" class="text-[13px] text-white/35 hover:text-brand transition">Contact</a></li>
                 </ul>
             </div>
             <div>
-                <h4 style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Connect</h4>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                    <a href="#" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.35);text-decoration:none;font-size:12px;transition:all .15s"><i class="fa-brands fa-youtube"></i></a>
+                <h4 class="text-[12px] font-bold text-white uppercase tracking-wider mb-3">Connect</h4>
+                <div class="flex items-center gap-2.5 mb-4">
+                    <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-brand flex items-center justify-center text-white/35 hover:text-white transition"><i class="fa-brands fa-instagram text-xs"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-brand flex items-center justify-center text-white/35 hover:text-white transition"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-brand flex items-center justify-center text-white/35 hover:text-white transition"><i class="fa-brands fa-x-twitter text-xs"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-brand flex items-center justify-center text-white/35 hover:text-white transition"><i class="fa-brands fa-youtube text-xs"></i></a>
                 </div>
-                <p style="font-size:12px;color:rgba(255,255,255,.35)">support@propqr.in</p>
-                <p style="font-size:12px;color:rgba(255,255,255,.35)">+91 98765 43210</p>
+                <p class="text-[12px] text-white/35">support@propqr.in</p>
+                <p class="text-[12px] text-white/35">+91 98765 43210</p>
             </div>
         </div>
-        <div style="border-top:1px solid rgba(255,255,255,.05);padding-top:20px;display:flex;flex-direction:column;gap:8px;align-items:center" class="ft-bottom">
-            <p style="font-size:11px;color:rgba(255,255,255,.2)">&copy; 2025 PropQR. All rights reserved.</p>
-            <div style="display:flex;align-items:center;gap:16px">
-                <a href="#" style="font-size:11px;color:rgba(255,255,255,.2);text-decoration:none;transition:color .15s">Privacy Policy</a>
-                <a href="#" style="font-size:11px;color:rgba(255,255,255,.2);text-decoration:none;transition:color .15s">Terms of Service</a>
+        <div class="border-t border-white/5 pt-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p class="text-[11px] text-white/20">&copy; 2025 PropQR. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-[11px] text-white/20 hover:text-white/40 transition">Privacy Policy</a>
+                <a href="#" class="text-[11px] text-white/20 hover:text-white/40 transition">Terms of Service</a>
             </div>
         </div>
     </div>
 </footer>
 
-<style>
-    /* ===== RESPONSIVE GRID BREAKPOINTS ===== */
-    @media(min-width:640px){
-        .hero-title{font-size:3rem!important}
-        .fc-grid{grid-template-columns:repeat(2,1fr);gap:14px}
-        .sw-grid{grid-template-columns:repeat(3,1fr);gap:32px}
-        .sc-grid{gap:14px}
-        .pc-grid{grid-template-columns:repeat(2,1fr);gap:16px}
-        .pc-grid>:last-child{grid-column:span 1}
-        .tc-grid{grid-template-columns:repeat(2,1fr);gap:16px}
-        .tc-grid>:last-child{grid-column:span 2}
-        .ft-grid{grid-template-columns:repeat(2,1fr);gap:32px}
-        .ft-bottom{flex-direction:row;justify-content:space-between}
-    }
-    @media(min-width:768px){
-        .hero-title{font-size:3.1rem!important}
-        .section-title-r{font-size:2.1rem!important}
-        .stat-num{font-size:2.5rem!important}
-        #hVisual{display:flex!important;justify-content:flex-end}
-        section:first-of-type>div{grid-template-columns:1fr 1fr;gap:0;align-items:center}
-    }
-    @media(min-width:1024px){
-        .fc-grid{grid-template-columns:repeat(4,1fr)}
-        .pc-grid{grid-template-columns:repeat(3,1fr)}
-        .tc-grid{grid-template-columns:repeat(3,1fr)}
-        .tc-grid>:last-child{grid-column:span 1}
-        .ft-grid{grid-template-columns:repeat(4,1fr)}
-    }
-    @media(max-width:767px){
-        #hVisual{display:none}
-    }
-    @media(min-width:768px) and (max-width:1023px){
-        #hVisual{display:flex;justify-content:center}
-        section:first-of-type>div{grid-template-columns:1fr;gap:40px;align-items:center}
-    }
-</style>
-
 <script>
-/* QR Code */
+/* QR Code Pattern */
 (function(){
     const g=document.getElementById('qrGrid'),p=[
-        1,1,1,1,1,1,1,0,1,1,0,0,0,0,0,1,0,0,1,0,1,1,1,0,1,0,1,1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,0,1,0,1,1,0,1,1,1,1
+        1,1,1,1,1,1,1,0,1,
+        1,0,0,0,0,0,1,0,0,
+        1,0,1,1,1,0,1,0,1,
+        1,0,1,1,1,0,1,0,0,
+        1,0,1,1,1,0,1,0,1,
+        1,0,0,0,0,0,1,0,1,
+        1,1,1,1,1,1,1,0,0,
+        0,0,0,0,0,0,0,0,1,
+        1,0,1,1,0,1,1,1,1
     ];
     p.forEach(v=>{const c=document.createElement('div');c.className='qr-cell '+(v?'on':'off');g.appendChild(c)});
 })();
 
-/* ===== MOBILE MENU ===== */
-const panel=document.getElementById('mobPanel');
-const overlay=document.getElementById('mobOverlay');
-const links=panel.querySelectorAll('.ml');
-
-function openMenu(){
-    panel.classList.add('open');
-    overlay.classList.add('open');
-    document.body.style.overflow='hidden';
-    gsap.from(links,{x:20,opacity:0,stagger:.04,duration:.3,ease:'power3.out',delay:.15});
-}
-function closeMenu(){
-    panel.classList.remove('open');
-    overlay.classList.remove('open');
-    document.body.style.overflow='';
-}
-
-document.getElementById('menuOpen').addEventListener('click',openMenu);
-document.getElementById('menuClose').addEventListener('click',closeMenu);
-overlay.addEventListener('click',closeMenu);
-links.forEach(l=>l.addEventListener('click',closeMenu));
+/* Mobile Menu */
+const mob=document.getElementById('mobMenu');
+document.getElementById('menuOpen').addEventListener('click',()=>{
+    mob.classList.add('open');
+    gsap.from('.ml',{y:20,opacity:0,stagger:.07,duration:.35,ease:'power3.out'});
+});
+function closeMob(){mob.classList.remove('open')}
+document.getElementById('menuClose').addEventListener('click',closeMob);
+document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',closeMob));
 
 /* ===== GSAP ===== */
 gsap.registerPlugin(ScrollTrigger);
 
+/* Nav background on scroll */
 ScrollTrigger.create({
     start:'top -60',
-    onUpdate:self=>{
-        if(self.scroll()>60){document.getElementById('nav').classList.add('nav-solid')}
-        else{document.getElementById('nav').classList.remove('nav-solid')}
-    }
+    onUpdate:self=>{self.scroll()>60?document.getElementById('nav').classList.add('nav-solid'):document.getElementById('nav').classList.remove('nav-solid')}
 });
 
+/* Hero Timeline */
 const ht=gsap.timeline({defaults:{ease:'power3.out'}});
 gsap.set('#hSub',{y:18});
 gsap.set('#hBtns',{y:18});
@@ -673,18 +531,22 @@ ht.to('#hBadge',{opacity:1,duration:.5})
   .to('#hSocial',{opacity:1,y:0,duration:.5},'-=.25')
   .to('#hVisual',{opacity:1,x:0,duration:.85,ease:'power2.out'},'-=.7');
 
+/* Generic reveal */
 gsap.utils.toArray('.rv').forEach(el=>{
     gsap.to(el,{opacity:1,y:0,duration:.65,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}})
 });
 
+/* Feature cards stagger */
 gsap.utils.toArray('.fc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
+/* How it works steps stagger */
 gsap.utils.toArray('.sw').forEach((s,i)=>{
     gsap.to(s,{opacity:1,y:0,duration:.6,delay:i*.15,ease:'power3.out',scrollTrigger:{trigger:s,start:'top 88%',toggleActions:'play none none none'}})
 });
 
+/* Stats counter */
 gsap.utils.toArray('.ctr').forEach(c=>{
     const t=+c.dataset.to;
     ScrollTrigger.create({trigger:c,start:'top 92%',once:true,onEnter:()=>{
@@ -696,13 +558,15 @@ gsap.utils.toArray('.sc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.5,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
+/* Property cards stagger */
 gsap.utils.toArray('.pc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.12,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 
+/* Testimonial cards stagger */
 gsap.utils.toArray('.tc').forEach((c,i)=>{
     gsap.to(c,{opacity:1,y:0,duration:.55,delay:i*.1,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 90%',toggleActions:'play none none none'}})
 });
 </script>
 </body>
-</html>
+</html>   
