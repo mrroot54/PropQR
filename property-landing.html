@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury 3BHK Apartment — Vijay Nagar, Indore | PropQR</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{brand:'#d97706',brandDark:'#b45309',brandLight:'#fffbeb',sidebar:'#0c1222',surface:'#f8fafc',accent:'#10b981',info:'#06b6d4',warning:'#f59e0b',danger:'#ef4444',textPrimary:'#1e293b',textSecondary:'#64748b',textMuted:'#94a3b8',border:'#e2e8f0'},fontFamily:{display:['Space Grotesk','sans-serif'],body:['Plus Jakarta Sans','sans-serif']}}}}
+</script>
+<style>
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;overflow-x:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+*:focus-visible{outline:2px solid #d97706;outline-offset:2px;border-radius:4px}
+.skip-link{position:absolute;top:-100%;left:16px;z-index:999;background:#d97706;color:#fff;padding:8px 16px;border-radius:0 0 8px 8px;font-size:14px;font-weight:600;transition:top .2s}
+.skip-link:focus{top:0}
+
+#topBar{background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .35s ease;border-bottom:1px solid rgba(0,0,0,0.04)}
+#topBar.scrolled{background:rgba(255,255,255,0.97);box-shadow:0 4px 30px rgba(0,0,0,0.08);padding-top:.5rem;padding-bottom:.5rem}
+
+.gallery-wrap{position:relative;max-height:500px;overflow:hidden}
+@media(max-width:767px){.gallery-wrap{max-height:300px}}
+@media(min-width:768px)and(max-width:1023px){.gallery-wrap{max-height:400px}}
+@media(min-width:1024px)and(max-width:1279px){.gallery-wrap{max-height:460px}}
+.gallery-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
+.gallery-img.active{opacity:1}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.3) 50%,transparent 100%);padding:2rem 1.5rem 1.5rem}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;z-index:10;font-size:16px}
+.gallery-arrow:hover{background:rgba(255,255,255,0.35)}
+.gallery-arrow.left{left:16px}
+.gallery-arrow.right{right:16px}
+@media(max-width:480px){.gallery-arrow{width:36px;height:36px;font-size:13px}.gallery-arrow.left{left:8px}.gallery-arrow.right{right:8px}}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.45);cursor:pointer;transition:all .25s}
+.dot.active{background:#d97706;transform:scale(1.3)}
+
+.section-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.25);border-radius:50px;padding:5px 14px;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.75rem}
+
+.spec-card{background:#fff;border-radius:16px;border:1px solid rgba(226,232,240,0.6);padding:20px 16px;text-align:center;transition:transform .25s ease,box-shadow .25s ease}
+.spec-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.07)}
+.spec-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:16px}
+
+.amenity-card{background:#fff;border-radius:12px;border:1px solid rgba(226,232,240,0.6);padding:14px 8px;text-align:center;transition:all .2s ease;cursor:default}
+.amenity-card:hover{border-color:rgba(217,119,6,0.3);background:#fffbeb}
+.amenity-card:hover i{color:#d97706}
+.amenity-card i{color:#64748b;transition:color .2s;font-size:18px;margin-bottom:6px;display:block}
+
+.landmark-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(226,232,240,0.4)}
+.landmark-row:last-child{border-bottom:none}
+.dist-badge{margin-left:auto;font-size:12px;font-weight:700;color:#d97706;background:#fffbeb;border:1px solid rgba(217,119,6,0.2);padding:3px 10px;border-radius:50px;flex-shrink:0}
+
+.map-pin{animation:pinBounce 1.5s ease-in-out infinite}
+@keyframes pinBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.prop-card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid rgba(226,232,240,0.6);transition:transform .25s ease,box-shadow .25s ease}
+.prop-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.08)}
+.prop-card img{transition:transform .5s ease}
+.prop-card:hover img{transform:scale(1.05)}
+
+.form-field{position:relative}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:#1e293b;background:#fff;transition:all .2s;outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,0.15)}
+.form-field.error input,.form-field.error select,.form-field.error textarea{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.1)}
+.form-field .err-msg{font-size:12px;color:#ef4444;margin-top:4px;display:none}
+.form-field.error .err-msg{display:block}
+
+.success-check{width:80px;height:80px;border-radius:50%;background:#ecfdf5;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.success-check svg{width:40px;height:40px}
+.success-check .check-path{stroke-dasharray:60;stroke-dashoffset:60;animation:drawCheck .6s ease forwards .2s}
+@keyframes drawCheck{to{stroke-dashoffset:0}}
+
+#floatingBar{padding-bottom:env(safe-area-inset-bottom,0px)}
+
+.toast-enter{animation:slideInR .4s cubic-bezier(.16,1,.3,1)}
+@keyframes slideInR{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast-exit{animation:slideOutR .3s ease forwards}
+@keyframes slideOutR{to{transform:translateX(120%);opacity:0}}
+
+.glow{position:fixed;border-radius:50%;filter:blur(80px);opacity:.04;pointer-events:none;z-index:0}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+  .gallery-img{transition:none!important}
+  .map-pin{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<a href="#enquiryForm" class="skip-link">Skip to Enquiry Form</a>
+
+<div class="glow w-[400px] h-[400px] bg-brand top-[5%] right-[-100px]"></div>
+<div class="glow w-[300px] h-[300px] bg-info bottom-[15%] left-[-80px]"></div>
+
+<!-- ═══════════════ 1. STICKY TOP BAR ═══════════════ -->
+<header id="topBar" class="fixed top-0 left-0 right-0 z-50 py-3">
+  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between gap-3">
+    <a href="#" class="flex items-center gap-2 flex-shrink-0" aria-label="PropQR Home">
+      <div class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center shadow-md shadow-brand/30"><i class="fa-solid fa-building text-white text-xs"></i></div>
+      <span class="font-display font-bold text-slate-900 text-base hidden sm:inline">Prop<span class="text-brand">QR</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-2 text-sm text-textSecondary min-w-0">
+      <span class="truncate font-medium text-textPrimary" id="topBarName"></span>
+      <span class="flex items-center gap-1 bg-emerald-50 text-accent text-[11px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"><i class="fa-solid fa-circle-check text-[9px]"></i> QR Verified</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="shareProperty()" class="hidden sm:flex items-center justify-center w-9 h-9 rounded-xl bg-surface hover:bg-brandLight text-textSecondary hover:text-brand transition" aria-label="Share property"><i class="fa-solid fa-share-nodes text-sm"></i></button>
+      <a href="#enquiryForm" class="flex items-center gap-1.5 px-4 py-2 bg-brand hover:bg-brandDark text-white text-sm font-semibold rounded-xl transition active:scale-95 shadow-lg shadow-brand/25">
+        <i class="fa-solid fa-paper-plane text-xs"></i><span class="hidden xs:inline">Enquire Now</span><span class="xs:hidden">Enquire</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ 2. IMAGE GALLERY HERO ═══════════════ -->
+<section id="gallery" class="gallery-wrap" aria-label="Property image gallery">
+  <div id="galleryImgContainer" style="position:relative;height:100%;min-height:260px">
+    <!-- Images injected by JS -->
+  </div>
+  <button class="gallery-arrow left" onclick="carouselPrev()" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+  <button class="gallery-arrow right" onclick="carouselNext()" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="gallery-overlay">
+    <div class="max-w-7xl mx-auto flex items-end justify-between gap-4">
+      <div>
+        <h1 id="galleryName" class="font-display font-bold text-white text-xl sm:text-2xl lg:text-3xl mb-1"></h1>
+        <p id="galleryLocation" class="text-white/75 text-sm sm:text-base flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-brand text-xs"></i><span id="galleryLocText"></span></p>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span id="galleryPrice" class="bg-brand text-white font-display font-bold text-sm px-4 py-1.5 rounded-full shadow-lg"></span>
+        <span id="galleryCount" class="bg-black/40 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-camera text-[10px]"></i><span></span></span>
+      </div>
+    </div>
+  </div>
+  <div id="galleryDots" class="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10" role="tablist" aria-label="Image navigation"></div>
+</section>
+
+<!-- ═══════════════ 3. VERIFIED BADGE BAR ═══════════════ -->
+<div id="badgeBar" class="bg-gradient-to-r from-brandLight via-surface to-brandLight border-y border-border py-3">
+  <div class="max-w-5xl mx-auto px-4 flex items-center justify-center gap-4 sm:gap-8 flex-wrap">
+    <div class="flex items-center gap-2 text-textSecondary text-xs sm:text-sm"><i class="fa-solid fa-shield-halved text-accent"></i><span class="font-medium">QR Verified</span></div>
+    <div class="flex items-center gap-2 text-textSecondary text-xs sm:text-sm"><i class="fa-solid fa-users text-brand"></i><span class="font-medium">24 Active Leads</span></div>
+    <div class="flex items-center gap-2 text-textSecondary text-xs sm:text-sm"><i class="fa-solid fa-file-pdf text-danger"></i><span class="font-medium">PDF Available</span></div>
+    <div class="flex items-center gap-2 text-textSecondary text-xs sm:text-sm"><i class="fa-solid fa-user-check text-info"></i><span class="font-medium">Agent Verified</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════ 4. KEY SPECS GRID ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4" id="specsGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ 5. ABOUT / DESCRIPTION ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-white border-t border-border/40" id="aboutSection">
+  <div class="max-w-3xl mx-auto">
+    <div class="section-tag"><i class="fa-solid fa-circle-info text-xs"></i> About Property</div>
+    <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl mb-4">About This Property</h2>
+    <p id="descText" class="text-textSecondary leading-relaxed text-sm sm:text-base mb-6"></p>
+    <button onclick="showToast('PDF brochure download started!','success')" class="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-brand/30 hover:border-brand text-brand hover:bg-brandLight font-semibold rounded-xl transition text-sm active:scale-95">
+      <i class="fa-solid fa-file-pdf"></i> Download PDF Brochure
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════ 6. AMENITIES ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-surface" id="amenitiesSection">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-8">
+      <div class="section-tag"><i class="fa-solid fa-star text-xs"></i> Features</div>
+      <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl">Amenities &amp; Features</h2>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3" id="amenitiesGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ 7. LOCATION ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-white" id="locationSection">
+  <div class="max-w-6xl mx-auto">
+    <div class="section-tag"><i class="fa-solid fa-location-dot text-xs"></i> Location</div>
+    <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl mb-6">Location</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="rounded-2xl bg-surface border border-border/60 h-[280px] relative overflow-hidden flex flex-col items-center justify-center">
+        <div class="absolute inset-0" style="background-image:radial-gradient(circle at 50% 60%,rgba(217,119,6,0.06) 0%,transparent 60%)"></div>
+        <div class="map-pin text-brand text-4xl mb-3 relative z-10"><i class="fa-solid fa-map-pin"></i></div>
+        <p class="text-textPrimary font-semibold text-sm text-center px-4 relative z-10"><i class="fa-solid fa-location-dot text-brand mr-1.5 text-xs"></i>Vijay Nagar, Indore, Madhya Pradesh</p>
+        <a href="https://maps.google.com/?q=Vijay+Nagar,Indore,MP" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-brand/10 hover:bg-brand/20 text-brand text-xs font-semibold rounded-lg transition relative z-10">
+          <i class="fa-solid fa-up-right-from-square text-[10px]"></i> Open in Google Maps
+        </a>
+      </div>
+      <div class="bg-white rounded-2xl border border-border/60 p-5">
+        <h3 class="font-display font-bold text-textPrimary text-base mb-4">Nearby Landmarks</h3>
+        <div id="landmarksList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 8. AGENT / CONTACT ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-gradient-to-b from-surface to-white" id="agentSection">
+  <div class="max-w-3xl mx-auto">
+    <div class="section-tag"><i class="fa-solid fa-headset text-xs"></i> Contact</div>
+    <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl mb-6 text-center">Interested? Contact the Agent</h2>
+    <div class="bg-white rounded-2xl border border-border/60 p-5 sm:p-6 shadow-sm">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+        <div class="flex-shrink-0 text-center sm:text-left">
+          <div class="w-16 h-16 rounded-2xl bg-brand flex items-center justify-center mx-auto sm:mx-0 mb-2 shadow-lg shadow-brand/20">
+            <span class="text-white font-display font-bold text-xl">RS</span>
+          </div>
+        </div>
+        <div class="flex-1 text-center sm:text-left min-w-0">
+          <h3 class="font-display font-bold text-textPrimary text-lg" id="agentName"></h3>
+          <p class="text-textMuted text-sm" id="agentCompany"></p>
+          <p class="text-textSecondary text-sm mt-1"><i class="fa-solid fa-envelope text-brand text-xs mr-1"></i><span id="agentEmail"></span></p>
+        </div>
+        <div class="flex sm:flex-col gap-3 flex-shrink-0 w-full sm:w-auto">
+          <a id="callBtn" href="#" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-emerald-600 text-white font-semibold rounded-xl transition active:scale-95 shadow-lg shadow-accent/25 text-sm">
+            <i class="fa-solid fa-phone"></i> Call Now
+          </a>
+          <a id="waBtn" href="#" target="_blank" rel="noopener" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition active:scale-95 shadow-lg shadow-green-600/25 text-sm">
+            <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 9. ENQUIRY FORM ═══════════════ -->
+<section class="py-10 sm:py-14 px-4 bg-white" id="enquiryForm">
+  <div class="max-w-xl mx-auto">
+    <div class="text-center mb-8">
+      <div class="section-tag"><i class="fa-solid fa-pen-to-square text-xs"></i> Enquire</div>
+      <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl mb-2">Get More Details</h2>
+      <p class="text-textSecondary text-sm">Fill this form and our agent will contact you within 30 minutes</p>
+    </div>
+    <div id="formCard" class="bg-white rounded-2xl border border-border/60 p-5 sm:p-7 shadow-sm">
+      <form id="enquiryFormEl" onsubmit="handleEnquiry(event)" novalidate>
+        <div class="space-y-4">
+          <div class="form-field">
+            <label for="fName" class="text-sm font-semibold text-textPrimary block mb-1.5">Full Name <span class="text-danger">*</span></label>
+            <input id="fName" type="text" placeholder="Enter your full name" required>
+            <p class="err-msg">Please enter your name (min 2 characters)</p>
+          </div>
+          <div class="form-field">
+            <label for="fPhone" class="text-sm font-semibold text-textPrimary block mb-1.5">Phone Number <span class="text-danger">*</span></label>
+            <input id="fPhone" type="tel" placeholder="+91 98765 43210" required>
+            <p class="err-msg">Please enter a valid phone number (10+ digits)</p>
+          </div>
+          <div class="form-field">
+            <label for="fEmail" class="text-sm font-semibold text-textPrimary block mb-1.5">Email Address <span class="text-danger">*</span></label>
+            <input id="fEmail" type="email" placeholder="you@example.com" required>
+            <p class="err-msg">Please enter a valid email address</p>
+          </div>
+          <div class="form-field">
+            <label for="fBudget" class="text-sm font-semibold text-textPrimary block mb-1.5">Budget Range</label>
+            <select id="fBudget">
+              <option value="">Select your budget</option>
+              <option>Below 50L</option>
+              <option>50L - 80L</option>
+              <option selected>80L - 1Cr</option>
+              <option>1Cr - 2Cr</option>
+              <option>Above 2Cr</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="fMsg" class="text-sm font-semibold text-textPrimary block mb-1.5">Message</label>
+            <textarea id="fMsg" rows="3" placeholder="I'm interested in this property..."></textarea>
+          </div>
+          <label class="flex items-start gap-2.5 cursor-pointer group">
+            <input type="checkbox" id="fAgree" class="mt-1 w-4 h-4 rounded border-border text-brand focus:ring-brand/20 accent-[#d97706]">
+            <span class="text-sm text-textSecondary leading-snug">I agree to be contacted by PropQR regarding this property <span class="text-danger">*</span></span>
+          </label>
+          <p id="agreeErr" class="text-xs text-danger hidden" style="margin-top:-8px">You must agree to proceed</p>
+          <button type="submit" id="submitBtn" class="w-full py-3.5 bg-brand hover:bg-brandDark text-white font-semibold rounded-xl transition active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-brand/25 text-sm">
+            <i class="fa-solid fa-paper-plane text-xs"></i> Submit Enquiry
+          </button>
+        </div>
+      </form>
+    </div>
+    <div id="successCard" class="hidden text-center py-8">
+      <div class="success-check">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#10b981" stroke-width="2" opacity="0.2"/><path class="check-path" d="M12 20 L18 26 L28 14" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <h3 class="font-display font-bold text-textPrimary text-xl mb-2">Thank You!</h3>
+      <p class="text-textSecondary text-sm mb-4">Our agent will call you within 30 minutes</p>
+      <div class="flex items-center justify-center gap-3 text-sm text-textSecondary">
+        <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center text-white text-xs font-bold">RS</div><span class="font-medium text-textPrimary" id="successAgent"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 10. SIMILAR PROPERTIES ═══════════════ -->
+<section class="py-8 sm:py-10 px-4 bg-surface" id="similarSection">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <div class="section-tag"><i class="fa-solid fa-building text-xs"></i> Explore</div>
+        <h2 class="font-display font-bold text-textPrimary text-2xl sm:text-3xl">Similar Properties in Indore</h2>
+      </div>
+      <a href="index.html" class="hidden sm:flex items-center gap-1.5 text-brand text-sm font-semibold hover:underline flex-shrink-0">View All <i class="fa-solid fa-arrow-right text-xs"></i></a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5" id="similarGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ 11. FLOATING BOTTOM BAR (mobile) ═══════════════ -->
+<div id="floatingBar" class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)] md:hidden">
+  <div class="flex">
+    <a id="floatCall" href="#" class="flex-1 flex items-center justify-center gap-2 py-3.5 text-white font-semibold text-sm transition active:scale-[0.98]" style="background:#10b981">
+      <i class="fa-solid fa-phone"></i> Call Agent
+    </a>
+    <a href="#enquiryForm" class="flex-1 flex items-center justify-center gap-2 py-3.5 bg-brand text-white font-semibold text-sm transition active:scale-[0.98]">
+      <i class="fa-solid fa-message"></i> Enquire Now
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════ 12. FOOTER ═══════════════ -->
+<footer class="bg-[#070d1a] py-10 px-4 pb-24 md:pb-10">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="flex items-center justify-center gap-2.5 mb-3">
+      <div class="w-8 h-8 rounded-lg bg-brand flex items-center justify-center"><i class="fa-solid fa-building text-white text-xs"></i></div>
+      <span class="font-display font-bold text-white text-lg">Prop<span class="text-brand">QR</span></span>
+    </div>
+    <p class="text-white/40 text-sm mb-4">Scanned via PropQR Smart QR Technology</p>
+    <p class="text-white/25 text-xs mb-3">India's leading QR-based property management platform</p>
+    <div class="flex items-center justify-center gap-4 text-xs text-white/30 mb-5">
+      <a href="#" class="hover:text-brand transition">Privacy Policy</a>
+      <span>|</span>
+      <a href="#" class="hover:text-brand transition">Terms of Service</a>
+    </div>
+    <p class="text-white/20 text-xs">2025 PropQR. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Toast Container -->
+<div id="toastBox" class="fixed top-20 right-4 z-[200] space-y-2 pointer-events-none" style="max-width:340px"></div>
+
+<script>
+/* ═══════════════ PROPERTY DATA ═══════════════ */
+var P={
+  name:"Luxury 3BHK Apartment",
+  location:"Vijay Nagar, Indore, Madhya Pradesh",
+  price:"\u20b985,00,000",
+  priceLabel:"85 Lakhs",
+  size:"1450 sq.ft",
+  type:"3 BHK",
+  category:"Apartment",
+  floors:"8th Floor (out of 12)",
+  age:"New Construction",
+  facing:"East-Facing",
+  parking:"2 Covered Parking",
+  bathrooms:"3",
+  balcony:"2 Balconies",
+  description:"Premium 3BHK apartment in the heart of Vijay Nagar with modern amenities, spacious rooms, modular kitchen, and beautiful city views. Located near schools, hospitals, and shopping malls. Gated society with 24/7 security, power backup, and clubhouse access.",
+  images:[
+    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=500&fit=crop"
+  ],
+  amenities:["Swimming Pool","Gym","Clubhouse","24/7 Security","Power Backup","Garden","Kids Play Area","Intercom","Lift","Rainwater Harvesting","Fire Safety","Jogging Track"],
+  amenityIcons:["fa-person-swimming","fa-dumbbell","fa-building-shield","fa-shield-halved","fa-bolt","fa-tree","fa-child-reaching","fa-phone","fa-elevator","fa-droplet","fa-fire-extinguisher","fa-person-running"],
+  agent:{name:"Rahul Sharma",phone:"+919876543210",email:"rahul@propqr.in",company:"PropQR Realty"},
+  landmarks:[
+    {name:"Indore Railway Station",dist:"3 km",icon:"fa-train"},
+    {name:"Devi Ahilya Airport",dist:"8 km",icon:"fa-plane"},
+    {name:"Phoenix Mall",dist:"1.5 km",icon:"fa-bag-shopping"},
+    {name:"Choithram Hospital",dist:"2 km",icon:"fa-hospital"},
+    {name:"Sri Sathya Sai School",dist:"500m",icon:"fa-school"}
+  ],
+  similarProperties:[
+    {name:"Modern 2BHK Flat",location:"Palasia, Indore",price:"\u20b945,00,000",img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=300&fit=crop"},
+    {name:"Premium Villa",location:"Super Corridor, Indore",price:"\u20b91,80,00,000",img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop"},
+    {name:"Semi-Furnished 4BHK",location:"Scheme No. 78, Indore",price:"\u20b91,20,00,000",img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop"}
+  ]
+};
+
+/* ═══════════════ POPULATE PAGE ═══════════════ */
+document.getElementById('topBarName').textContent=P.name;
+document.getElementById('galleryName').textContent=P.name;
+document.getElementById('galleryLocText').textContent=P.location;
+document.getElementById('galleryPrice').textContent=P.price;
+document.getElementById('galleryCount').querySelector('span').textContent=P.images.length+' Photos';
+document.getElementById('descText').textContent=P.description;
+document.getElementById('agentName').textContent=P.agent.name;
+document.getElementById('agentCompany').textContent=P.agent.company;
+document.getElementById('agentEmail').textContent=P.agent.email;
+document.getElementById('successAgent').textContent=P.agent.name+' — '+P.agent.phone;
+document.getElementById('callBtn').href='tel:'+P.agent.phone;
+document.getElementById('waBtn').href='https://wa.me/'+P.agent.phone+'?text=Hi, I am interested in the '+encodeURIComponent(P.name)+' at '+encodeURIComponent(P.location)+' listed on PropQR.';
+document.getElementById('floatCall').href='tel:'+P.agent.phone;
+
+/* Gallery Images */
+var imgC=document.getElementById('galleryImgContainer');
+P.images.forEach(function(src,i){
+  var im=document.createElement('img');
+  im.src=src;im.alt=P.name+' — Image '+(i+1);im.className='gallery-img'+(i===0?' active':'');im.loading=i===0?'eager':'lazy';
+  imgC.appendChild(im);
+});
+
+/* Gallery Dots */
+var dotsC=document.getElementById('galleryDots');
+P.images.forEach(function(_,i){
+  var d=document.createElement('button');
+  d.className='dot'+(i===0?' active':'');d.setAttribute('role','tab');d.setAttribute('aria-label','Image '+(i+1));d.setAttribute('aria-selected',i===0?'true':'false');
+  d.onclick=function(){goToSlide(i)};
+  dotsC.appendChild(d);
+});
+
+/* Key Specs */
+var specs=[
+  {label:'Size',value:P.size,icon:'fa-vector-square',color:'bg-brandLight text-brand'},
+  {label:'Type',value:P.type,icon:'fa-building',color:'bg-cyan-50 text-info'},
+  {label:'Floor',value:P.floors,icon:'fa-layer-group',color:'bg-emerald-50 text-accent'},
+  {label:'Age',value:P.age,icon:'fa-calendar-check',color:'bg-violet-50 text-violet-500'},
+  {label:'Facing',value:P.facing,icon:'fa-compass',color:'bg-amber-50 text-warning'},
+  {label:'Parking',value:P.parking,icon:'fa-car',color:'bg-rose-50 text-danger'},
+  {label:'Bathrooms',value:P.bathrooms,icon:'fa-bath',color:'bg-sky-50 text-sky-500'},
+  {label:'Balconies',value:P.balcony,icon:'fa-door-open',color:'bg-teal-50 text-teal-500'}
+];
+var specsG=document.getElementById('specsGrid');
+specs.forEach(function(s){
+  var d=document.createElement('div');
+  d.className='spec-card';
+  d.innerHTML='<div class="spec-icon '+s.color+' rounded-xl"><i class="fa-solid '+s.icon+'"></i></div><p class="text-textMuted text-[11px] uppercase tracking-wider font-semibold mb-1">'+s.label+'</p><p class="font-display font-bold text-textPrimary text-base sm:text-lg">'+s.value+'</p>';
+  specsG.appendChild(d);
+});
+
+/* Amenities */
+var amG=document.getElementById('amenitiesGrid');
+P.amenities.forEach(function(a,i){
+  var d=document.createElement('div');
+  d.className='amenity-card';
+  d.innerHTML='<i class="fa-solid '+P.amenityIcons[i]+'"></i><span class="text-xs text-textSecondary font-medium">'+a+'</span>';
+  amG.appendChild(d);
+});
+
+/* Landmarks */
+var lmC=document.getElementById('landmarksList');
+P.landmarks.forEach(function(l){
+  var d=document.createElement('div');
+  d.className='landmark-row';
+  d.innerHTML='<div class="w-9 h-9 rounded-lg bg-brandLight flex items-center justify-center flex-shrink-0"><i class="fa-solid '+l.icon+' text-brand text-sm"></i></div><span class="text-sm text-textPrimary font-medium">'+l.name+'</span><span class="dist-badge">'+l.dist+'</span>';
+  lmC.appendChild(d);
+});
+
+/* Similar Properties */
+var simG=document.getElementById('similarGrid');
+P.similarProperties.forEach(function(sp){
+  var d=document.createElement('div');
+  d.className='prop-card';
+  d.innerHTML='<div class="h-48 overflow-hidden"><img src="'+sp.img+'" alt="'+sp.name+'" class="w-full h-full object-cover" loading="lazy"></div><div class="p-4"><h3 class="font-display font-bold text-textPrimary text-base mb-1">'+sp.name+'</h3><p class="text-textSecondary text-xs mb-3 flex items-center gap-1"><i class="fa-solid fa-location-dot text-brand text-[10px]"></i>'+sp.location+'</p><div class="flex items-center justify-between"><span class="font-display font-bold text-brand text-sm">'+sp.price+'</span><button onclick="showToast(\'Opening property details...\',\'info\')" class="px-4 py-2 border-2 border-brand/30 hover:border-brand hover:bg-brandLight text-brand text-xs font-semibold rounded-xl transition active:scale-95">View Details</button></div></div>';
+  simG.appendChild(d);
+});
+
+/* ═══════════════ IMAGE CAROUSEL ═══════════════ */
+var curSlide=0,totalSlides=P.images.length,autoTimer=null,touchStartX=0;
+function goToSlide(n){
+  var imgs=document.querySelectorAll('.gallery-img'),dots=document.querySelectorAll('.dot');
+  imgs[curSlide].classList.remove('active');dots[curSlide].classList.remove('active');dots[curSlide].setAttribute('aria-selected','false');
+  curSlide=(n+totalSlides)%totalSlides;
+  imgs[curSlide].classList.add('active');dots[curSlide].classList.add('active');dots[curSlide].setAttribute('aria-selected','true');
+}
+function carouselNext(){goToSlide(curSlide+1)}
+function carouselPrev(){goToSlide(curSlide-1)}
+function startAuto(){autoTimer=setInterval(carouselNext,5000)}
+function stopAuto(){clearInterval(autoTimer)}
+
+var gc=document.getElementById('gallery');
+gc.addEventListener('mouseenter',stopAuto);
+gc.addEventListener('mouseleave',startAuto);
+gc.addEventListener('touchstart',function(e){touchStartX=e.changedTouches[0].screenX;stopAuto()},{passive:true});
+gc.addEventListener('touchend',function(e){
+  var diff=touchStartX-e.changedTouches[0].screenX;
+  if(Math.abs(diff)>50){diff>0?carouselNext():carouselPrev()}
+  startAuto();
+},{passive:true});
+startAuto();
+
+/* ═══════════════ FORM VALIDATION ═══════════════ */
+function clearErrors(){
+  document.querySelectorAll('.form-field').forEach(function(f){f.classList.remove('error')});
+  document.getElementById('agreeErr').classList.add('hidden');
+}
+document.querySelectorAll('#enquiryFormEl input, #enquiryFormEl textarea, #enquiryFormEl select').forEach(function(el){
+  el.addEventListener('focus',function(){this.closest('.form-field')?.classList.remove('error')});
+});
+
+function handleEnquiry(e){
+  e.preventDefault();clearErrors();
+  var name=document.getElementById('fName').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  var email=document.getElementById('fEmail').value.trim();
+  var agree=document.getElementById('fAgree').checked;
+  var valid=true;
+
+  if(!name||name.length<2){document.getElementById('fName').closest('.form-field').classList.add('error');gsap.fromTo('#fName',0.25,{x:-6},{x:0,ease:'power2.inOut',repeat:5,yoyo:true});valid=false}
+  if(!/^[0-9+\s\-]{10,15}$/.test(phone)){document.getElementById('fPhone').closest('.form-field').classList.add('error');gsap.fromTo('#fPhone',0.25,{x:-6},{x:0,ease:'power2.inOut',repeat:5,yoyo:true});valid=false}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById('fEmail').closest('.form-field').classList.add('error');gsap.fromTo('#fEmail',0.25,{x:-6},{x:0,ease:'power2.inOut',repeat:5,yoyo:true});valid=false}
+  if(!agree){document.getElementById('agreeErr').classList.remove('hidden');valid=false}
+
+  if(!valid)return;
+
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin text-xs"></i> Submitting...';
+
+  setTimeout(function(){
+    gsap.to('#formCard',{scale:0.95,opacity:0,duration:0.4,ease:'power2.in',onComplete:function(){
+      document.getElementById('formCard').classList.add('hidden');
+      var sc=document.getElementById('successCard');sc.classList.remove('hidden');
+      gsap.fromTo(sc,{scale:0.8,opacity:0},{scale:1,opacity:1,duration:0.5,ease:'back.out(1.5)'});
+    }});
+    showToast('Enquiry submitted successfully!','success');
+  },1500);
+}
+
+/* ═══════════════ TOAST SYSTEM ═══════════════ */
+function showToast(msg,type){
+  type=type||'success';
+  var c=document.getElementById('toastBox'),t=document.createElement('div');
+  var icons={success:'fa-circle-check',error:'fa-circle-xmark',info:'fa-circle-info'};
+  var colors={success:'#10b981',error:'#ef4444',info:'#06b6d4'};
+  t.className='toast-enter pointer-events-auto flex items-start gap-3 bg-white rounded-xl shadow-2xl border border-border p-4';
+  t.innerHTML='<i class="fa-solid '+icons[type]+' flex-shrink-0 mt-0.5" style="color:'+colors[type]+';font-size:18px"></i><div class="flex-1 min-w-0"><p class="text-sm text-textPrimary font-medium">'+msg+'</p><p class="text-xs text-textMuted mt-0.5">Just now</p></div><button onclick="dismissToast(this.parentElement)" class="text-textMuted hover:text-textPrimary transition flex-shrink-0"><i class="fa-solid fa-xmark text-sm"></i></button>';
+  c.appendChild(t);
+  setTimeout(function(){dismissToast(t)},4000);
+}
+function dismissToast(el){
+  if(!el||!el.parentElement)return;
+  el.classList.remove('toast-enter');el.classList.add('toast-exit');
+  setTimeout(function(){if(el.parentElement)el.remove()},300);
+}
+
+/* ═══════════════ SHARE ═══════════════ */
+function shareProperty(){
+  var data={title:P.name+' — '+P.location,text:P.name+' at '+P.price+', '+P.location+'. Scanned via PropQR.',url:window.location.href};
+  if(navigator.share){navigator.share(data).catch(function(){});}
+  else{navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard!','info')}).catch(function(){showToast('Could not copy link','error')});}
+}
+
+/* ═══════════════ SCROLL BEHAVIOR ═══════════════ */
+window.addEventListener('scroll',function(){
+  document.getElementById('topBar').classList.toggle('scrolled',window.scrollY>20);
+},{passive:true});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var href=a.getAttribute('href');
+    if(href==='#')return;
+    var target=document.querySelector(href);
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+
+/* ═══════════════ GSAP ANIMATIONS ═══════════════ */
+gsap.registerPlugin(ScrollTrigger);
+var prefersRM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!prefersRM){
+  /* Initial Load */
+  var heroTl=gsap.timeline({defaults:{ease:'power3.out'}});
+  heroTl.from('#topBar',{y:-20,opacity:0,duration:0.6,delay:0.2})
+    .from('#gallery',{opacity:0,scale:0.98,duration:1},'-=0.3')
+    .from('#galleryName',{y:30,opacity:0,duration:0.8},'-=0.5')
+    .from('#galleryLocation',{y:20,opacity:0,duration:0.6},'-=0.5')
+    .from('#galleryPrice',{y:15,opacity:0,duration:0.5},'-=0.4')
+    .from('#galleryCount',{y:15,opacity:0,duration:0.5},'-=0.3')
+    .from('#badgeBar',{y:15,opacity:0,duration:0.6},'-=0.3');
+
+  /* ScrollTrigger reveals */
+  gsap.utils.toArray('.spec-card').forEach(function(el,i){
+    gsap.from(el,{opacity:0,y:30,duration:0.6,delay:i*0.06,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
+  });
+  gsap.from('#aboutSection .section-tag',{opacity:0,y:20,duration:0.5,scrollTrigger:{trigger:'#aboutSection',start:'top 80%'}});
+  gsap.from('#aboutSection h2',{opacity:0,y:20,duration:0.6,scrollTrigger:{trigger:'#aboutSection',start:'top 80%'}});
+  gsap.from('#descText',{opacity:0,y:25,duration:0.7,scrollTrigger:{trigger:'#descText',start:'top 85%'}});
+  gsap.utils.toArray('.amenity-card').forEach(function(el,i){
+    gsap.from(el,{opacity:0,scale:0.92,duration:0.5,delay:i*0.04,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}});
+  });
+  gsap.from('#locationSection .section-tag',{opacity:0,y:20,duration:0.5,scrollTrigger:{trigger:'#locationSection',start:'top 80%'}});
+  gsap.from('#locationSection h2',{opacity:0,y:20,duration:0.6,scrollTrigger:{trigger:'#locationSection',start:'top 80%'}});
+  gsap.from('#locationSection .grid',{opacity:0,y:30,duration:0.7,scrollTrigger:{trigger:'#locationSection .grid',start:'top 85%'}});
+  gsap.from('#agentSection .section-tag',{opacity:0,y:20,duration:0.5,scrollTrigger:{trigger:'#agentSection',start:'top 80%'}});
+  gsap.from('#agentSection h2',{opacity:0,y:20,duration:0.6,scrollTrigger:{trigger:'#agentSection',start:'top 80%'}});
+  gsap.from('#agentSection .rounded-2xl',{opacity:0,y:30,duration:0.7,scrollTrigger:{trigger:'#agentSection .rounded-2xl',start:'top 85%'}});
+  gsap.from('#formCard',{opacity:0,scale:0.96,duration:0.8,scrollTrigger:{trigger:'#formCard',start:'top 85%'}});
+  gsap.utils.toArray('.prop-card').forEach(function(el,i){
+    gsap.from(el,{opacity:0,y:40,duration:0.7,delay:i*0.1,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}});
+  });
+  gsap.from('footer',{opacity:0,y:20,duration:0.5,scrollTrigger:{trigger:'footer',start:'top 95%'}});
+}
+</script>
+</body>
+</html>
