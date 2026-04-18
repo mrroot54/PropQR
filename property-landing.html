@@ -20,37 +20,36 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1e293b;ov
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px}
 ::-webkit-scrollbar-thumb:hover{background:#94a3b8}
-
 .font-display{font-family:'Space Grotesk',sans-serif}
-
-/* Skip link */
 .skip-link{position:absolute;left:-9999px;top:0;background:#d97706;color:#fff;padding:10px 16px;border-radius:8px;z-index:9999;font-weight:600}
 .skip-link:focus{left:8px;top:8px}
-
-/* Top bar */
 #topBar{transition:all .35s ease;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04)}
 #topBar.scrolled{box-shadow:0 6px 24px rgba(12,18,34,0.08);background:rgba(255,255,255,0.98)}
 .brand-logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#d97706,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 18px rgba(217,119,6,0.35)}
-
-/* Section tag */
 .section-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(217,119,6,0.10);color:#d97706;border:1px solid rgba(217,119,6,0.25);border-radius:50px;padding:5px 14px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
 
-/* Gallery */
-.gallery{position:relative;width:100%;height:300px;background:#0c1222;overflow:hidden}
-@media(min-width:768px){.gallery{height:420px}}
-@media(min-width:1024px){.gallery{height:480px}}
-.gallery-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
-.gallery-img.active{opacity:1}
-.gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,0.75) 100%);pointer-events:none}
-.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#1e293b;border:none;cursor:pointer;z-index:5;transition:all .2s ease;box-shadow:0 4px 14px rgba(0,0,0,0.2)}
-.gallery-arrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
-.gallery-arrow.prev{left:14px}
-.gallery-arrow.next{right:14px}
-.gallery-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:5}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);border:none;cursor:pointer;transition:all .25s ease;padding:0}
-.dot.active{background:#d97706;width:24px;border-radius:6px}
-.gallery-counter{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:600;padding:6px 12px;border-radius:50px;display:flex;align-items:center;gap:6px;z-index:5}
-.price-pill{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;padding:6px 14px;border-radius:50px;font-size:.95rem;box-shadow:0 6px 16px rgba(217,119,6,0.4)}
+/* Hero Gallery — clean */
+.hero-gallery{position:relative;background:#0c1222;height:320px;overflow:hidden}
+@media(min-width:640px){.hero-gallery{height:440px}}
+@media(min-width:768px){.hero-gallery{height:500px}}
+@media(min-width:1024px){.hero-gallery{height:560px}}
+@media(min-width:1280px){.hero-gallery{height:600px}}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease,transform .8s ease;transform:scale(1.06)}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-slide img{width:100%;height:100%;object-fit:cover}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.2) 45%,transparent 100%);pointer-events:none}
+.hero-info{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:24px 20px 28px}
+@media(min-width:640px){.hero-info{padding:32px 28px 36px}}
+@media(min-width:1024px){.hero-info{padding:40px 48px 44px}}
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#1e293b;border:none;cursor:pointer;z-index:8;transition:all .25s;box-shadow:0 4px 14px rgba(0,0,0,.2);font-size:15px}
+.hero-arrow:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+.hero-arrow.prev{left:14px}.hero-arrow.next{right:14px}
+@media(max-width:480px){.hero-arrow{width:36px;height:36px;font-size:12px}.hero-arrow.prev{left:8px}.hero-arrow.next{right:8px}}
+.hero-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:8}
+.hdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);border:none;cursor:pointer;transition:all .3s;padding:0}
+.hdot.active{background:#d97706;width:28px;border-radius:6px;box-shadow:0 0 10px rgba(217,119,6,.5)}
+.hero-counter{position:absolute;top:14px;right:14px;z-index:8;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:600;padding:6px 13px;border-radius:50px;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.1)}
+.price-pill{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;padding:8px 16px;border-radius:50px;font-size:clamp(.9rem,2vw,1.1rem);box-shadow:0 8px 22px rgba(217,119,6,.45)}
 
 /* Verified bar */
 .verified-bar{background:linear-gradient(90deg,#fffbeb,#f8fafc,#fffbeb);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0}
@@ -58,65 +57,98 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1e293b;ov
 .trust-badge i{font-size:13px}
 
 /* Spec cards */
-.spec-card{background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:16px;padding:18px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-.spec-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(12,18,34,0.08);border-color:rgba(217,119,6,0.3)}
+.spec-card{background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:16px;padding:18px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.spec-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(12,18,34,.08);border-color:rgba(217,119,6,.3)}
 .spec-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:12px}
 
 /* Amenity */
-.amenity{background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:14px;padding:16px 10px;text-align:center;transition:all .22s ease;cursor:default}
-.amenity i{font-size:20px;color:#64748b;margin-bottom:8px;transition:color .22s ease}
+.amenity{background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:14px;padding:16px 10px;text-align:center;transition:all .22s;cursor:default}
+.amenity i{font-size:20px;color:#64748b;margin-bottom:8px;transition:color .22s;display:block}
 .amenity:hover{border-color:#d97706;background:#fffbeb;transform:translateY(-2px)}
 .amenity:hover i{color:#d97706}
 .amenity-label{font-size:11px;color:#64748b;font-weight:600;line-height:1.3}
 
 /* Map */
 .map-box{position:relative;background:linear-gradient(135deg,#fef3c7,#fffbeb,#f8fafc);border:1px solid #e2e8f0;border-radius:20px;height:280px;overflow:hidden}
-.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(217,119,6,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(217,119,6,0.08) 1px,transparent 1px);background-size:40px 40px}
-.map-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);width:42px;height:42px;border-radius:50% 50% 50% 0;background:linear-gradient(135deg,#d97706,#b45309);transform-origin:center bottom;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;rotate:-45deg;box-shadow:0 8px 24px rgba(217,119,6,0.45);animation:pinBounce 1.6s ease-in-out infinite}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(217,119,6,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(217,119,6,.08) 1px,transparent 1px);background-size:40px 40px}
+.map-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);width:42px;height:42px;border-radius:50% 50% 50% 0;background:linear-gradient(135deg,#d97706,#b45309);transform-origin:center bottom;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;rotate:-45deg;box-shadow:0 8px 24px rgba(217,119,6,.45);animation:pinBounce 1.6s ease-in-out infinite}
 .map-pin i{rotate:45deg}
-.map-pin::after{content:'';position:absolute;bottom:-22px;left:50%;transform:translateX(-50%) rotate(45deg);width:24px;height:8px;background:rgba(0,0,0,0.18);border-radius:50%;filter:blur(4px)}
+.map-pin::after{content:'';position:absolute;bottom:-22px;left:50%;transform:translateX(-50%) rotate(45deg);width:24px;height:8px;background:rgba(0,0,0,.18);border-radius:50%;filter:blur(4px)}
 @keyframes pinBounce{0%,100%{translate:0 0}50%{translate:0 -10px}}
-.map-overlay-text{position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;color:#1e293b;display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0}
-.map-cta{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-weight:600;font-size:13px;padding:9px 16px;border-radius:50px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,0.08);transition:all .2s ease}
+.map-overlay-text{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:8px 14px;border-radius:50px;font-size:12px;font-weight:600;color:#1e293b;display:flex;align-items:center;gap:6px;border:1px solid #e2e8f0}
+.map-cta{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-weight:600;font-size:13px;padding:9px 16px;border-radius:50px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.08);transition:all .2s}
 .map-cta:hover{border-color:#d97706;color:#d97706}
-
-.landmark{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:12px;transition:all .2s ease}
-.landmark:hover{border-color:rgba(217,119,6,0.3);background:#fffbeb}
-.landmark-ic{width:36px;height:36px;border-radius:10px;background:rgba(217,119,6,0.1);color:#d97706;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.landmark{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:12px;transition:all .2s}
+.landmark:hover{border-color:rgba(217,119,6,.3);background:#fffbeb}
+.landmark-ic{width:36px;height:36px;border-radius:10px;background:rgba(217,119,6,.1);color:#d97706;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .landmark-name{font-size:13px;font-weight:600;color:#1e293b;flex:1}
-.landmark-dist{font-size:11px;font-weight:700;color:#d97706;background:#fffbeb;padding:3px 9px;border-radius:50px;border:1px solid rgba(217,119,6,0.25)}
+.landmark-dist{font-size:11px;font-weight:700;color:#d97706;background:#fffbeb;padding:3px 9px;border-radius:50px;border:1px solid rgba(217,119,6,.25)}
 
-/* Agent card */
-.agent-card{background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:20px;padding:24px;box-shadow:0 12px 30px rgba(12,18,34,0.05)}
-.agent-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(217,119,6,0.35)}
-.btn-call{background:#10b981;color:#fff}
-.btn-call:hover{background:#059669}
-.btn-wa{background:#16a34a;color:#fff}
-.btn-wa:hover{background:#15803d}
-.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;padding:12px 18px;border-radius:12px;transition:all .2s ease;text-decoration:none;font-size:14px;box-shadow:0 6px 16px rgba(0,0,0,0.08)}
+/* ===== MEDIA SECTION — Gallery / Video tabs ===== */
+.media-radio-group{display:inline-flex;background:#f1f5f9;border-radius:50px;padding:4px;gap:3px}
+.media-radio{position:relative}
+.media-radio input{position:absolute;opacity:0;width:0;height:0}
+.media-radio label{display:flex;align-items:center;gap:6px;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;color:#64748b;cursor:pointer;transition:all .3s;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;user-select:none}
+.media-radio input:checked+label{background:#d97706;color:#fff;box-shadow:0 4px 14px rgba(217,119,6,.35)}
+.media-radio label:hover{color:#1e293b}
+.media-radio input:checked+label:hover{color:#fff}
+.album-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.album-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.album-thumb{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;aspect-ratio:4/3;background:#f1f5f9}
+.album-thumb:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+@media(max-width:640px){.album-thumb:first-child{grid-column:span 2;grid-row:span 1;aspect-ratio:16/9}}
+.album-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .5s}
+.album-thumb:hover img{transform:scale(1.06);filter:brightness(1.05)}
+.album-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 50%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:12px}
+.album-thumb:hover .album-thumb-overlay{opacity:1}
+.album-thumb-overlay span{color:#fff;font-size:12px;font-weight:600}
+.video-card{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;background:#0c1222}
+.video-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.video-card:hover img{transform:scale(1.04)}
+.video-card-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(217,119,6,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#fff;border:none;cursor:pointer;transition:all .3s;box-shadow:0 8px 28px rgba(217,119,6,.45);font-size:20px;z-index:5}
+.video-card-play i{margin-left:3px}
+.video-card-play:hover{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 12px 36px rgba(217,119,6,.55)}
+.video-card-label{position:absolute;bottom:14px;left:14px;z-index:5;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:600;padding:6px 13px;border-radius:50px;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.1)}
+.video-card-duration{position:absolute;bottom:14px;right:14px;z-index:5;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox img,.lightbox video{max-width:92vw;max-height:85vh;border-radius:16px;object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.lightbox-close:hover{background:rgba(255,255,255,.25)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.lightbox-nav:hover{background:rgba(255,255,255,.25)}
+.lightbox-nav.prev{left:16px}.lightbox-nav.next{right:16px}
+.lightbox-counter{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:13px;font-weight:600;z-index:10}
+
+/* Agent */
+.agent-card{background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:20px;padding:24px;box-shadow:0 12px 30px rgba(12,18,34,.05)}
+.agent-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 20px rgba(217,119,6,.35)}
+.btn-call{background:#10b981;color:#fff}.btn-call:hover{background:#059669}
+.btn-wa{background:#16a34a;color:#fff}.btn-wa:hover{background:#15803d}
+.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;padding:12px 18px;border-radius:12px;transition:all .2s;text-decoration:none;font-size:14px;box-shadow:0 6px 16px rgba(0,0,0,.08);border:none;cursor:pointer}
 .action-btn:active{transform:scale(.96)}
 
 /* Form */
-.form-card{background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:20px;padding:28px;box-shadow:0 16px 40px rgba(12,18,34,0.06)}
+.form-card{background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:20px;padding:28px;box-shadow:0 16px 40px rgba(12,18,34,.06)}
 @media(max-width:480px){.form-card{padding:22px}}
 .field-label{display:block;font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px}
-.field{width:100%;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;font-size:14px;color:#1e293b;font-family:inherit;transition:all .2s ease;outline:none}
-.field:focus{border-color:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,0.15)}
-.field.error{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.12)}
+.field{width:100%;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;font-size:14px;color:#1e293b;font-family:inherit;transition:all .2s;outline:none}
+.field:focus{border-color:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,.15)}
+.field.error{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.12)}
 .field-error{display:none;color:#ef4444;font-size:12px;margin-top:5px;font-weight:500}
 .field-error.show{display:block}
 textarea.field{resize:vertical;min-height:90px}
 select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2364748b'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:42px}
 .checkbox-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#64748b;line-height:1.5;cursor:pointer}
 .checkbox-row input{margin-top:2px;width:18px;height:18px;accent-color:#d97706;cursor:pointer;flex-shrink:0}
-.submit-btn{width:100%;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-weight:700;padding:14px;border-radius:12px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:15px;box-shadow:0 10px 24px rgba(217,119,6,0.35);transition:all .2s ease}
-.submit-btn:hover:not(:disabled){box-shadow:0 14px 30px rgba(217,119,6,0.45);transform:translateY(-1px)}
+.submit-btn{width:100%;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-weight:700;padding:14px;border-radius:12px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:15px;box-shadow:0 10px 24px rgba(217,119,6,.35);transition:all .2s}
+.submit-btn:hover:not(:disabled){box-shadow:0 14px 30px rgba(217,119,6,.45);transform:translateY(-1px)}
 .submit-btn:active{transform:scale(.98)}
 .submit-btn:disabled{opacity:.7;cursor:not-allowed}
-.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.spinner{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Success state */
 .success-state{display:none;text-align:center;padding:30px 10px}
 .success-state.show{display:block}
 .check-circle{width:84px;height:84px;border-radius:50%;background:#10b981;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
@@ -125,55 +157,37 @@ select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
 .check-svg path{stroke-dasharray:50;stroke-dashoffset:50;animation:drawCheck .6s ease .25s forwards}
 @keyframes drawCheck{to{stroke-dashoffset:0}}
 
-/* Similar properties */
+/* Similar */
 .sim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media(max-width:1023px){.sim-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.sim-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:8px;margin:0 -16px;padding-left:16px;padding-right:16px}.sim-card{min-width:78%;scroll-snap-align:start;flex-shrink:0}}
-.sim-card{background:#fff;border:1px solid rgba(226,232,240,0.7);border-radius:18px;overflow:hidden;transition:all .25s ease}
-.sim-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(12,18,34,0.08);border-color:rgba(217,119,6,0.3)}
+.sim-card{background:#fff;border:1px solid rgba(226,232,240,.7);border-radius:18px;overflow:hidden;transition:all .25s}
+.sim-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(12,18,34,.08);border-color:rgba(217,119,6,.3)}
 .sim-card-img{height:170px;overflow:hidden;background:#f1f5f9}
-.sim-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sim-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .sim-card:hover .sim-card-img img{transform:scale(1.06)}
 
-/* Floating bottom bar */
-#floatBar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;box-shadow:0 -8px 24px rgba(12,18,34,0.08);z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px}
+/* Float bar */
+#floatBar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;box-shadow:0 -8px 24px rgba(12,18,34,.08);z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px}
 #floatBar .action-btn{flex:1;font-size:14px;padding:13px 8px;box-shadow:none}
 @media(min-width:768px){#floatBar{display:none}body{padding-bottom:0}}
 @media(max-width:767px){body{padding-bottom:80px}}
 
 /* Toast */
 #toastWrap{position:fixed;top:80px;right:16px;z-index:200;display:flex;flex-direction:column;gap:10px;max-width:340px}
-.toast{background:#fff;border:1px solid #e2e8f0;border-left:4px solid #d97706;border-radius:12px;padding:12px 14px;box-shadow:0 12px 28px rgba(12,18,34,0.12);display:flex;align-items:center;gap:10px;font-size:13px;color:#1e293b;font-weight:500;transform:translateX(120%);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);min-width:240px}
+.toast{background:#fff;border:1px solid #e2e8f0;border-left:4px solid #d97706;border-radius:12px;padding:12px 14px;box-shadow:0 12px 28px rgba(12,18,34,.12);display:flex;align-items:center;gap:10px;font-size:13px;color:#1e293b;font-weight:500;transform:translateX(120%);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);min-width:240px}
 .toast.show{transform:translateX(0);opacity:1}
-.toast.success{border-left-color:#10b981}
-.toast.error{border-left-color:#ef4444}
-.toast.info{border-left-color:#06b6d4}
-.toast i{font-size:16px}
-.toast.success i{color:#10b981}
-.toast.error i{color:#ef4444}
-.toast.info i{color:#06b6d4}
+.toast.success{border-left-color:#10b981}.toast.error{border-left-color:#ef4444}.toast.info{border-left-color:#06b6d4}
+.toast i{font-size:16px}.toast.success i{color:#10b981}.toast.error i{color:#ef4444}.toast.info i{color:#06b6d4}
 .toast-close{margin-left:auto;background:none;border:none;color:#94a3b8;cursor:pointer;font-size:14px;padding:4px}
-
-/* Buttons */
-.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-weight:700;padding:10px 18px;border-radius:12px;font-size:14px;box-shadow:0 8px 20px rgba(217,119,6,0.35);transition:all .2s ease;border:none;cursor:pointer;text-decoration:none}
-.btn-primary:hover{box-shadow:0 12px 26px rgba(217,119,6,0.45);transform:translateY(-1px)}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#d97706,#b45309);color:#fff;font-weight:700;padding:10px 18px;border-radius:12px;font-size:14px;box-shadow:0 8px 20px rgba(217,119,6,.35);transition:all .2s;border:none;cursor:pointer;text-decoration:none}
+.btn-primary:hover{box-shadow:0 12px 26px rgba(217,119,6,.45);transform:translateY(-1px)}
 .btn-primary:active{transform:scale(.97)}
-.btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#d97706;font-weight:700;padding:10px 18px;border-radius:12px;font-size:14px;border:1.5px solid #d97706;transition:all .2s ease;cursor:pointer;text-decoration:none}
+.btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#d97706;font-weight:700;padding:10px 18px;border-radius:12px;font-size:14px;border:1.5px solid #d97706;transition:all .2s;cursor:pointer;text-decoration:none}
 .btn-outline:hover{background:#fffbeb}
-
-/* Focus visible */
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #d97706;outline-offset:2px}
-
-/* Verified pulse */
-.verified-pulse{animation:verifiedPulse 2.4s ease-in-out infinite}
-@keyframes verifiedPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-
-/* Footer */
 .footer{background:#070d1a;color:#94a3b8}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
-}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -189,9 +203,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
     </a>
     <div class="hidden md:flex items-center gap-3 min-w-0 flex-1 justify-center">
       <span class="font-display font-semibold text-sm text-textPrimary truncate max-w-xs">Luxury 3BHK — Vijay Nagar</span>
-      <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap">
-        <i class="fa-solid fa-circle-check"></i> QR Verified
-      </span>
+      <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap"><i class="fa-solid fa-circle-check"></i> QR Verified</span>
     </div>
     <button onclick="scrollToForm()" class="btn-primary"><i class="fa-solid fa-paper-plane text-xs"></i><span class="hidden sm:inline">Enquire Now</span><span class="sm:hidden">Enquire</span></button>
   </div>
@@ -199,31 +211,27 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 
 <main id="mainContent" class="pt-16">
 
-  <!-- ═══ GALLERY ═══ -->
-  <section id="gallery" class="gallery" aria-label="Property image gallery">
-    <img class="gallery-img active" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=700&fit=crop" alt="Luxury 3BHK Apartment view 1">
-    <img class="gallery-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=700&fit=crop" alt="Luxury 3BHK Apartment view 2">
-    <img class="gallery-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=700&fit=crop" alt="Luxury 3BHK Apartment view 3">
-    <img class="gallery-img" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=700&fit=crop" alt="Luxury 3BHK Apartment view 4">
-    <div class="gallery-overlay"></div>
-
-    <button class="gallery-arrow prev" aria-label="Previous image" onclick="changeImg(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-    <button class="gallery-arrow next" aria-label="Next image" onclick="changeImg(1)"><i class="fa-solid fa-chevron-right"></i></button>
-
-    <div class="gallery-counter"><i class="fa-solid fa-camera text-[11px]"></i><span id="imgCounter">1 / 4</span> Photos</div>
-
-    <div class="gallery-dots" role="tablist" aria-label="Gallery navigation">
-      <button class="dot active" role="tab" aria-label="Image 1" onclick="goToImg(0)"></button>
-      <button class="dot" role="tab" aria-label="Image 2" onclick="goToImg(1)"></button>
-      <button class="dot" role="tab" aria-label="Image 3" onclick="goToImg(2)"></button>
-      <button class="dot" role="tab" aria-label="Image 4" onclick="goToImg(3)"></button>
+  <!-- ═══ HERO — CLEAN GALLERY ═══ -->
+  <section class="hero-gallery" id="heroGallery" aria-label="Property gallery">
+    <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop" alt="Living Room"></div>
+    <div class="hero-slide"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop" alt="Bedroom"></div>
+    <div class="hero-slide"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=800&fit=crop" alt="Kitchen"></div>
+    <div class="hero-slide"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop" alt="Balcony View"></div>
+    <div class="hero-grad"></div>
+    <button class="hero-arrow prev" aria-label="Previous" onclick="heroSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="hero-arrow next" aria-label="Next" onclick="heroSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="hero-counter"><i class="fa-solid fa-camera text-[11px]"></i><span id="heroCounterText">1 / 4</span></div>
+    <div class="hero-dots" id="heroDots">
+      <button class="hdot active" onclick="heroGo(0)" aria-label="1"></button>
+      <button class="hdot" onclick="heroGo(1)" aria-label="2"></button>
+      <button class="hdot" onclick="heroGo(2)" aria-label="3"></button>
+      <button class="hdot" onclick="heroGo(3)" aria-label="4"></button>
     </div>
-
-    <div class="absolute bottom-12 left-4 sm:left-6 right-4 sm:right-6 z-10 pointer-events-none">
-      <div class="overlay-text">
-        <h1 class="font-display font-bold text-white text-2xl sm:text-3xl lg:text-4xl leading-tight drop-shadow-lg">Luxury 3BHK Apartment</h1>
-        <p class="text-white/85 text-sm sm:text-base mt-1 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-brand"></i> Vijay Nagar, Indore, MP</p>
-        <div class="mt-3"><span class="price-pill"><i class="fa-solid fa-tag text-[11px]"></i> ₹85,00,000 · 85 Lakhs</span></div>
+    <div class="hero-info">
+      <div class="max-w-7xl mx-auto">
+        <h1 id="heroTitle" class="font-display font-bold text-white text-[clamp(1.7rem,4.5vw,2.8rem)] leading-[1.1] mb-2 drop-shadow-lg">Luxury 3BHK Apartment</h1>
+        <p class="text-white/80 text-sm sm:text-[15px] flex items-center gap-2 drop-shadow mb-3"><i class="fa-solid fa-location-dot text-brand text-xs"></i> Vijay Nagar, Indore, Madhya Pradesh</p>
+        <span class="price-pill"><i class="fa-solid fa-indian-rupee-sign text-sm"></i> 85,00,000</span>
       </div>
     </div>
   </section>
@@ -232,7 +240,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="verified-bar py-3" id="verifiedBar">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-center gap-4 sm:gap-7 flex-wrap">
       <span class="trust-badge"><i class="fa-solid fa-shield-halved text-emerald-600"></i> QR Verified</span>
-      <span class="trust-badge"><i class="fa-solid fa-users text-brand"></i> 24 Active Leads</span>
       <span class="trust-badge"><i class="fa-solid fa-file-pdf text-red-500"></i> PDF Available</span>
       <span class="trust-badge"><i class="fa-solid fa-user-check text-info"></i> Agent Verified</span>
       <span class="trust-badge hidden sm:inline-flex"><i class="fa-solid fa-bolt text-warning"></i> Fast Response</span>
@@ -246,9 +253,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
         <span class="section-tag"><i class="fa-solid fa-list-check text-[10px]"></i> Quick Overview</span>
         <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary">Property Specifications</h2>
       </div>
-      <div id="specGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-        <!-- spec cards injected -->
-      </div>
+      <div id="specGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"></div>
     </div>
   </section>
 
@@ -258,7 +263,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
       <span class="section-tag"><i class="fa-solid fa-star text-[10px]"></i> About Property</span>
       <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary mb-4">About This Property</h2>
       <p class="text-textSecondary leading-relaxed text-[15px]">Premium 3BHK apartment in the heart of Vijay Nagar with modern amenities, spacious rooms, modular kitchen, and beautiful city views. Located near schools, hospitals, and shopping malls. Gated society with 24/7 security, power backup, and clubhouse access.</p>
-      <button onclick="downloadPDF()" class="btn-outline mt-6"><i class="fa-solid fa-file-pdf"></i> Download PDF Brochure</button>
+      <button onclick="toast('PDF brochure download started!','success')" class="btn-outline mt-6"><i class="fa-solid fa-file-pdf"></i> Download PDF Brochure</button>
     </div>
   </section>
 
@@ -268,21 +273,20 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="text-center mb-7">
         <span class="section-tag"><i class="fa-solid fa-sparkles text-[10px]"></i> Lifestyle</span>
         <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary">Amenities & Features</h2>
-        <p class="text-textSecondary text-sm mt-2">Everything you need for a premium lifestyle</p>
       </div>
       <div id="amenityGrid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
     </div>
   </section>
 
   <!-- ═══ LOCATION ═══ -->
-  <section class="py-10 sm:py-14 bg-white">
+  <section class="py-10 sm:py-14 bg-white" id="locationSection">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="mb-7">
         <span class="section-tag"><i class="fa-solid fa-map-location-dot text-[10px]"></i> Location</span>
         <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary">Where It's Located</h2>
         <p class="text-textSecondary text-sm mt-2">Prime location in Vijay Nagar, Indore</p>
       </div>
-      <div class="grid lg:grid-cols-2 gap-6" id="locationSection">
+      <div class="grid lg:grid-cols-2 gap-6">
         <div class="map-box">
           <div class="map-grid"></div>
           <div class="map-overlay-text"><i class="fa-solid fa-location-dot text-brand"></i> Vijay Nagar, Indore, MP</div>
@@ -303,8 +307,41 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
     </div>
   </section>
 
+  <!-- ═══ GALLERY & VIDEO SECTION (with radio tabs) ═══ -->
+  <section class="py-10 sm:py-14" style="background:#f8fafc" id="mediaSection">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7">
+        <div>
+          <span class="section-tag"><i class="fa-solid fa-images text-[10px]"></i> Media</span>
+          <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary">Gallery & Videos</h2>
+          <p class="text-textSecondary text-sm mt-2">Explore the property through photos and videos</p>
+        </div>
+        <div class="media-radio-group" id="mediaRadios">
+          <div class="media-radio">
+            <input type="radio" name="mediaTab" id="tabGallery" value="gallery" checked>
+            <label for="tabGallery"><i class="fa-solid fa-images text-[12px]"></i> Gallery</label>
+          </div>
+          <div class="media-radio">
+            <input type="radio" name="mediaTab" id="tabVideo" value="video">
+            <label for="tabVideo"><i class="fa-solid fa-play text-[10px]"></i> Video</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery Album Grid -->
+      <div id="galleryPanel">
+        <div class="album-grid" id="albumGrid"></div>
+      </div>
+
+      <!-- Video Cards -->
+      <div id="videoPanel" style="display:none">
+        <div class="grid md:grid-cols-2 gap-5" id="videoGrid"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ AGENT ═══ -->
-  <section class="py-10 sm:py-14" style="background:linear-gradient(180deg,#f8fafc,#fff)">
+  <section class="py-10 sm:py-14 bg-white">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-7">
         <span class="section-tag"><i class="fa-solid fa-headset text-[10px]"></i> Get In Touch</span>
@@ -323,7 +360,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
           </div>
           <div class="flex flex-col gap-2.5 w-full sm:w-auto sm:min-w-[200px]">
             <a href="tel:+919876543210" class="action-btn btn-call"><i class="fa-solid fa-phone"></i> Call Now</a>
-            <a href="https://wa.me/919876543210?text=Hi%2C%20I'm%20interested%20in%20the%20Luxury%203BHK%20at%20Vijay%20Nagar" target="_blank" rel="noopener" class="action-btn btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://wa.me/919876543210?text=Hi%2C%20I%27m%20interested%20in%20the%20Luxury%203BHK%20at%20Vijay%20Nagar" target="_blank" rel="noopener" class="action-btn btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
           </div>
         </div>
       </div>
@@ -338,54 +375,19 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
         <h2 class="font-display font-bold text-2xl sm:text-3xl text-textPrimary">Get More Details</h2>
         <p class="text-textSecondary text-sm mt-2">Fill this form and our agent will contact you within 30 minutes</p>
       </div>
-
       <div class="form-card" id="formCard">
         <form id="enquiryForm" novalidate>
-          <div class="mb-4">
-            <label for="fName" class="field-label">Full Name *</label>
-            <input id="fName" type="text" class="field" placeholder="Your full name" maxlength="100" required>
-            <div class="field-error" data-error="fName"></div>
-          </div>
-          <div class="mb-4">
-            <label for="fPhone" class="field-label">Phone Number *</label>
-            <input id="fPhone" type="tel" class="field" placeholder="+91 98765 43210" maxlength="20" required>
-            <div class="field-error" data-error="fPhone"></div>
-          </div>
-          <div class="mb-4">
-            <label for="fEmail" class="field-label">Email Address *</label>
-            <input id="fEmail" type="email" class="field" placeholder="you@example.com" maxlength="150" required>
-            <div class="field-error" data-error="fEmail"></div>
-          </div>
-          <div class="mb-4">
-            <label for="fBudget" class="field-label">Budget Range</label>
-            <select id="fBudget" class="field">
-              <option value="">Select your budget</option>
-              <option>Below ₹50 Lakhs</option>
-              <option>₹50L – ₹80L</option>
-              <option selected>₹80L – ₹1 Cr</option>
-              <option>₹1 Cr – ₹2 Cr</option>
-              <option>Above ₹2 Cr</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="fMsg" class="field-label">Message</label>
-            <textarea id="fMsg" class="field" placeholder="I'm interested in this property..." maxlength="500"></textarea>
-          </div>
-          <label class="checkbox-row mb-5">
-            <input type="checkbox" id="fAgree">
-            <span>I agree to be contacted by PropQR regarding this property and similar listings.</span>
-          </label>
+          <div class="mb-4"><label for="fName" class="field-label">Full Name *</label><input id="fName" type="text" class="field" placeholder="Your full name" maxlength="100" required><div class="field-error" data-error="fName"></div></div>
+          <div class="mb-4"><label for="fPhone" class="field-label">Phone Number *</label><input id="fPhone" type="tel" class="field" placeholder="+91 98765 43210" maxlength="20" required><div class="field-error" data-error="fPhone"></div></div>
+          <div class="mb-4"><label for="fEmail" class="field-label">Email Address *</label><input id="fEmail" type="email" class="field" placeholder="you@example.com" maxlength="150" required><div class="field-error" data-error="fEmail"></div></div>
+          <div class="mb-4"><label for="fBudget" class="field-label">Budget Range</label><select id="fBudget" class="field"><option value="">Select your budget</option><option>Below ₹50 Lakhs</option><option>₹50L – ₹80L</option><option selected>₹80L – ₹1 Cr</option><option>₹1 Cr – ₹2 Cr</option><option>Above ₹2 Cr</option></select></div>
+          <div class="mb-4"><label for="fMsg" class="field-label">Message</label><textarea id="fMsg" class="field" placeholder="I'm interested in this property..." maxlength="500"></textarea></div>
+          <label class="checkbox-row mb-5"><input type="checkbox" id="fAgree"><span>I agree to be contacted by PropQR regarding this property and similar listings.</span></label>
           <div class="field-error" data-error="fAgree" style="margin-top:-12px;margin-bottom:12px"></div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">
-            <i class="fa-solid fa-paper-plane"></i> Submit Enquiry
-          </button>
+          <button type="submit" class="submit-btn" id="submitBtn"><i class="fa-solid fa-paper-plane"></i> Submit Enquiry</button>
         </form>
-
         <div class="success-state" id="successState" role="status" aria-live="polite">
-          <div class="check-circle">
-            <svg class="check-svg" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-          </div>
+          <div class="check-circle"><svg class="check-svg" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
           <h3 class="font-display font-bold text-xl text-textPrimary mb-2">Thank You!</h3>
           <p class="text-textSecondary text-sm mb-4">Our agent <strong class="text-textPrimary">Rahul Sharma</strong> will call you within 30 minutes.</p>
           <a href="tel:+919876543210" class="btn-outline"><i class="fa-solid fa-phone"></i> Call Agent Directly</a>
@@ -425,271 +427,212 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
       <p class="text-[11px] text-slate-600">© 2025 PropQR. All rights reserved.</p>
     </div>
   </footer>
-
 </main>
 
-<!-- ═══ FLOATING BOTTOM BAR (mobile) ═══ -->
+<!-- ═══ FLOATING BAR ═══ -->
 <div id="floatBar">
   <a href="tel:+919876543210" class="action-btn btn-call"><i class="fa-solid fa-phone"></i> Call Agent</a>
   <button onclick="scrollToForm()" class="action-btn" style="background:linear-gradient(135deg,#d97706,#b45309);color:#fff"><i class="fa-solid fa-message"></i> Enquire Now</button>
 </div>
 
-<!-- Toast container -->
+<!-- ═══ LIGHTBOX ═══ -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <button class="lightbox-nav prev" id="lbPrev" onclick="lbNav(-1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+  <button class="lightbox-nav next" id="lbNext" onclick="lbNav(1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="lightbox-counter" id="lbCounter"></div>
+  <div id="lbContent"></div>
+</div>
+
 <div id="toastWrap" aria-live="polite"></div>
 
 <script>
 /* ═══════ DATA ═══════ */
-const PROPERTY = {
-  images: [
-    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=700&fit=crop",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=700&fit=crop",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=700&fit=crop",
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=700&fit=crop"
-  ]
-};
-
-const SPECS = [
-  { icon:'fa-vector-square', color:'amber', label:'Size', value:'1450 sq.ft' },
-  { icon:'fa-bed', color:'cyan', label:'Type', value:'3 BHK' },
-  { icon:'fa-building', color:'emerald', label:'Floor', value:'8th of 12' },
-  { icon:'fa-calendar-check', color:'violet', label:'Age', value:'New' },
-  { icon:'fa-compass', color:'amber', label:'Facing', value:'East' },
-  { icon:'fa-car', color:'cyan', label:'Parking', value:'2 Covered' },
-  { icon:'fa-bath', color:'emerald', label:'Bathrooms', value:'3' },
-  { icon:'fa-tree-city', color:'violet', label:'Balconies', value:'2' }
+const GALLERY_IMGS=[
+  {src:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&h=600&fit=crop',label:'Living Room'},
+  {src:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900&h=600&fit=crop',label:'Bedroom'},
+  {src:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&h=600&fit=crop',label:'Kitchen'},
+  {src:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=900&h=600&fit=crop',label:'Balcony View'},
+  {src:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&h=600&fit=crop',label:'Exterior'},
+  {src:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&h=600&fit=crop',label:'Master Bath'}
+];
+const VIDEOS=[
+  {src:'https://www.w3schools.com/html/mov_bbb.mp4',poster:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=450&fit=crop',label:'Property Tour — Living Areas',dur:'2:34'},
+  {src:'https://www.w3schools.com/html/movie.mp4',poster:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=450&fit=crop',label:'Property Tour — Bedrooms',dur:'1:48'}
+];
+const SPECS=[
+  {icon:'fa-vector-square',color:'amber',label:'Size',value:'1450 sq.ft'},
+  {icon:'fa-bed',color:'cyan',label:'Type',value:'3 BHK'},
+  {icon:'fa-building',color:'emerald',label:'Floor',value:'8th of 12'},
+  {icon:'fa-calendar-check',color:'violet',label:'Age',value:'New'},
+  {icon:'fa-compass',color:'amber',label:'Facing',value:'East'},
+  {icon:'fa-car',color:'cyan',label:'Parking',value:'2 Covered'},
+  {icon:'fa-bath',color:'emerald',label:'Bathrooms',value:'3'},
+  {icon:'fa-tree-city',color:'violet',label:'Balconies',value:'2'}
+];
+const CLR={amber:{bg:'rgba(217,119,6,0.12)',c:'#d97706'},cyan:{bg:'rgba(6,182,212,0.12)',c:'#0891b2'},emerald:{bg:'rgba(16,185,129,0.12)',c:'#059669'},violet:{bg:'rgba(139,92,246,0.12)',c:'#7c3aed'}};
+const AMENITIES=[
+  {icon:'fa-person-swimming',label:'Swimming Pool'},{icon:'fa-dumbbell',label:'Gym'},
+  {icon:'fa-building-shield',label:'Clubhouse'},{icon:'fa-shield-halved',label:'24/7 Security'},
+  {icon:'fa-bolt',label:'Power Backup'},{icon:'fa-tree',label:'Garden'},
+  {icon:'fa-child',label:'Kids Play Area'},{icon:'fa-phone-volume',label:'Intercom'},
+  {icon:'fa-elevator',label:'Lift'},{icon:'fa-droplet',label:'Rainwater'},
+  {icon:'fa-fire-extinguisher',label:'Fire Safety'},{icon:'fa-person-running',label:'Jogging Track'}
+];
+const SIMILAR=[
+  {name:'Modern 2BHK Flat',loc:'Palasia, Indore',price:'₹45,00,000',img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop'},
+  {name:'Premium Villa',loc:'Super Corridor, Indore',price:'₹1,80,00,000',img:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=400&fit=crop'},
+  {name:'Semi-Furnished 4BHK',loc:'Scheme No. 78, Indore',price:'₹1,20,00,000',img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop'}
 ];
 
-const COLORS = {
-  amber:{bg:'rgba(217,119,6,0.12)',c:'#d97706'},
-  cyan:{bg:'rgba(6,182,212,0.12)',c:'#0891b2'},
-  emerald:{bg:'rgba(16,185,129,0.12)',c:'#059669'},
-  violet:{bg:'rgba(139,92,246,0.12)',c:'#7c3aed'}
-};
+/* ═══════ RENDER SECTIONS ═══════ */
+const specGrid=document.getElementById('specGrid');
+SPECS.forEach(s=>{const c=CLR[s.color];specGrid.insertAdjacentHTML('beforeend',`<div class="spec-card"><div class="spec-icon" style="background:${c.bg};color:${c.c}"><i class="fa-solid ${s.icon}"></i></div><div class="text-[11px] uppercase tracking-wider font-semibold text-textMuted mb-1">${s.label}</div><div class="font-display font-bold text-base sm:text-lg text-textPrimary">${s.value}</div></div>`)});
+const amenityGrid=document.getElementById('amenityGrid');
+AMENITIES.forEach(a=>{amenityGrid.insertAdjacentHTML('beforeend',`<div class="amenity"><i class="fa-solid ${a.icon}"></i><div class="amenity-label">${a.label}</div></div>`)});
+const simGrid=document.getElementById('simGrid');
+SIMILAR.forEach(p=>{simGrid.insertAdjacentHTML('beforeend',`<div class="sim-card"><div class="sim-card-img"><img src="${p.img}" alt="${p.name}" loading="lazy"></div><div class="p-4"><div class="font-display font-bold text-textPrimary text-base mb-.5">${p.name}</div><div class="text-xs text-textSecondary flex items-center gap-1 mb-3"><i class="fa-solid fa-location-dot text-brand text-[10px]"></i> ${p.loc}</div><div class="flex items-center justify-between gap-2"><span class="font-display font-bold text-brand">${p.price}</span><button onclick="toast('Opening property details...','info')" class="text-xs font-bold text-textPrimary border border-border hover:border-brand hover:text-brand rounded-lg px-3 py-1.5 transition">View Details</button></div></div></div>`)});
 
-const AMENITIES = [
-  { icon:'fa-person-swimming', label:'Swimming Pool' },
-  { icon:'fa-dumbbell', label:'Gym' },
-  { icon:'fa-building-shield', label:'Clubhouse' },
-  { icon:'fa-shield-halved', label:'24/7 Security' },
-  { icon:'fa-bolt', label:'Power Backup' },
-  { icon:'fa-tree', label:'Garden' },
-  { icon:'fa-child', label:'Kids Play Area' },
-  { icon:'fa-phone-volume', label:'Intercom' },
-  { icon:'fa-elevator', label:'Lift' },
-  { icon:'fa-droplet', label:'Rainwater' },
-  { icon:'fa-fire-extinguisher', label:'Fire Safety' },
-  { icon:'fa-person-running', label:'Jogging Track' }
-];
-
-const SIMILAR = [
-  { name:'Modern 2BHK Flat', loc:'Palasia, Indore', price:'₹45,00,000', img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop' },
-  { name:'Premium Villa', loc:'Super Corridor, Indore', price:'₹1,80,00,000', img:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=400&fit=crop' },
-  { name:'Semi-Furnished 4BHK', loc:'Scheme No. 78, Indore', price:'₹1,20,00,000', img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop' }
-];
-
-/* ═══════ RENDER ═══════ */
-const specGrid = document.getElementById('specGrid');
-SPECS.forEach(s=>{
-  const c = COLORS[s.color];
-  specGrid.insertAdjacentHTML('beforeend',`
-    <div class="spec-card">
-      <div class="spec-icon" style="background:${c.bg};color:${c.c}"><i class="fa-solid ${s.icon}"></i></div>
-      <div class="text-[11px] uppercase tracking-wider font-semibold text-textMuted mb-1">${s.label}</div>
-      <div class="font-display font-bold text-base sm:text-lg text-textPrimary">${s.value}</div>
-    </div>`);
+/* ═══════ ALBUM GRID ═══════ */
+const albumGrid=document.getElementById('albumGrid');
+GALLERY_IMGS.forEach((img,i)=>{
+  albumGrid.insertAdjacentHTML('beforeend',`<div class="album-thumb" onclick="openLightbox(${i})"><img src="${img.src}" alt="${img.label}" loading="lazy"><div class="album-thumb-overlay"><span><i class="fa-solid fa-expand text-[10px] mr-1"></i>${img.label}</span></div></div>`);
 });
 
-const amenityGrid = document.getElementById('amenityGrid');
-AMENITIES.forEach(a=>{
-  amenityGrid.insertAdjacentHTML('beforeend',`
-    <div class="amenity"><i class="fa-solid ${a.icon}"></i><div class="amenity-label">${a.label}</div></div>`);
+/* ═══════ VIDEO GRID ═══════ */
+const videoGrid=document.getElementById('videoGrid');
+VIDEOS.forEach((v,i)=>{
+  videoGrid.insertAdjacentHTML('beforeend',`<div class="video-card" style="height:280px" onclick="playVideo(${i})"><img src="${v.poster}" alt="${v.label}" loading="lazy"><button class="video-card-play" aria-label="Play ${v.label}"><i class="fa-solid fa-play"></i></button><div class="video-card-label"><i class="fa-solid fa-play text-[10px]"></i> ${v.label}</div><div class="video-card-duration"><i class="fa-solid fa-clock text-[9px] mr-1"></i>${v.dur}</div></div>`);
 });
 
-const simGrid = document.getElementById('simGrid');
-SIMILAR.forEach(p=>{
-  simGrid.insertAdjacentHTML('beforeend',`
-    <div class="sim-card">
-      <div class="sim-card-img"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
-      <div class="p-4">
-        <div class="font-display font-bold text-textPrimary text-base mb-0.5">${p.name}</div>
-        <div class="text-xs text-textSecondary flex items-center gap-1 mb-3"><i class="fa-solid fa-location-dot text-brand text-[10px]"></i> ${p.loc}</div>
-        <div class="flex items-center justify-between gap-2">
-          <span class="font-display font-bold text-brand">${p.price}</span>
-          <button class="text-xs font-bold text-textPrimary border border-border hover:border-brand hover:text-brand rounded-lg px-3 py-1.5 transition">View Details</button>
-        </div>
-      </div>
-    </div>`);
+/* ═══════ HERO CAROUSEL ═══════ */
+const heroSlides=document.querySelectorAll('.hero-slide');
+const hDots=document.querySelectorAll('.hdot');
+let curH=0,hAuto=null;
+function setH(i){curH=(i+heroSlides.length)%heroSlides.length;heroSlides.forEach((s,k)=>s.classList.toggle('active',k===curH));hDots.forEach((d,k)=>d.classList.toggle('active',k===curH));document.getElementById('heroCounterText').textContent=`${curH+1} / ${heroSlides.length}`}
+function heroSlide(d){setH(curH+d);restartH()}
+function heroGo(i){setH(i);restartH()}
+function startH(){hAuto=setInterval(()=>setH(curH+1),5000)}
+function stopH(){clearInterval(hAuto);hAuto=null}
+function restartH(){stopH();startH()}
+startH();
+const hg=document.getElementById('heroGallery');
+hg.addEventListener('mouseenter',stopH);hg.addEventListener('mouseleave',startH);
+let hx=0;hg.addEventListener('touchstart',e=>{hx=e.touches[0].clientX;stopH()},{passive:true});
+hg.addEventListener('touchend',e=>{const dx=hx-e.changedTouches[0].clientX;if(Math.abs(dx)>50)setH(curH+(dx<0?1:-1));startH()},{passive:true});
+
+/* ═══════ MEDIA TAB RADIO ═══════ */
+const galleryPanel=document.getElementById('galleryPanel');
+const videoPanel=document.getElementById('videoPanel');
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('input[name="mediaTab"]').forEach(r=>{
+  r.addEventListener('change',function(){
+    const out=this.value==='gallery'?videoPanel:galleryPanel;
+    const inn=this.value==='gallery'?galleryPanel:videoPanel;
+    /* Pause videos when switching away */
+    document.querySelectorAll('.video-card video').forEach(v=>{if(v)v.pause()});
+    gsap.timeline()
+      .to(out,{opacity:0,y:12,duration:.25,ease:'power2.in'})
+      .set(out,{display:'none'})
+      .set(inn,{display:'',opacity:0,y:12})
+      .to(inn,{opacity:1,y:0,duration:.35,ease:'power2.out'});
+    /* Animate inner items */
+    const items=inn.querySelectorAll('.album-thumb, .video-card');
+    if(!reduceMotion)gsap.from(items,{opacity:0,y:20,stagger:.06,duration:.5,ease:'power2.out',delay:.15});
+  });
 });
 
-/* ═══════ TOP BAR SCROLL ═══════ */
-const topBar = document.getElementById('topBar');
-window.addEventListener('scroll',()=>{
-  if(window.scrollY > 20) topBar.classList.add('scrolled');
-  else topBar.classList.remove('scrolled');
-});
-
-/* ═══════ GALLERY CAROUSEL ═══════ */
-const imgs = document.querySelectorAll('.gallery-img');
-const dots = document.querySelectorAll('.dot');
-const counter = document.getElementById('imgCounter');
-let curImg = 0;
-let autoTimer = null;
-
-function setImg(i){
-  curImg = (i + imgs.length) % imgs.length;
-  imgs.forEach((el,k)=>el.classList.toggle('active', k===curImg));
-  dots.forEach((el,k)=>el.classList.toggle('active', k===curImg));
-  counter.textContent = `${curImg+1} / ${imgs.length}`;
+/* ═══════ LIGHTBOX ═══════ */
+let lbIdx=0;
+const lightbox=document.getElementById('lightbox');
+const lbContent=document.getElementById('lbContent');
+function openLightbox(i){
+  lbIdx=i;renderLb();lightbox.classList.add('open');document.body.style.overflow='hidden';
 }
-function changeImg(d){ setImg(curImg + d); restartAuto(); }
-function goToImg(i){ setImg(i); restartAuto(); }
-function startAuto(){ autoTimer = setInterval(()=>setImg(curImg+1), 5000); }
-function stopAuto(){ if(autoTimer){clearInterval(autoTimer); autoTimer=null;} }
-function restartAuto(){ stopAuto(); startAuto(); }
-startAuto();
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';pauseLbVideo()}
+function renderLb(){
+  const img=GALLERY_IMGS[lbIdx];
+  lbContent.innerHTML=`<img src="${img.src}" alt="${img.label}" style="max-width:92vw;max-height:85vh;border-radius:16px;object-fit:contain">`;
+  document.getElementById('lbCounter').textContent=`${lbIdx+1} / ${GALLERY_IMGS.length}`;
+}
+function lbNav(d){lbIdx=(lbIdx+d+GALLERY_IMGS.length)%GALLERY_IMGS.length;renderLb()}
+function pauseLbVideo(){const v=lbContent.querySelector('video');if(v)v.pause()}
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox()});
+document.addEventListener('keydown',e=>{if(!lightbox.classList.contains('open'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1)});
 
-const galleryEl = document.getElementById('gallery');
-galleryEl.addEventListener('mouseenter', stopAuto);
-galleryEl.addEventListener('mouseleave', startAuto);
+/* ═══════ VIDEO PLAY IN LIGHTBOX ═══════ */
+function playVideo(i){
+  const v=VIDEOS[i];
+  lbContent.innerHTML=`<video src="${v.src}" controls autoplay style="max-width:92vw;max-height:85vh;border-radius:16px;background:#000"></video>`;
+  document.getElementById('lbCounter').innerHTML=`<i class="fa-solid fa-film text-[10px] mr-1"></i> ${v.label}`;
+  document.getElementById('lbPrev').style.display='none';
+  document.getElementById('lbNext').style.display='none';
+  lightbox.classList.add('open');document.body.style.overflow='hidden';
+  lbContent.querySelector('video').addEventListener('ended',()=>{closeLightbox()});
+}
+/* Restore nav arrows when lightbox reopens for images */
+const origOpenLb=openLightbox;
+openLightbox=function(i){document.getElementById('lbPrev').style.display='';document.getElementById('lbNext').style.display='';origOpenLb(i)};
 
-/* Touch swipe */
-let touchX = 0;
-galleryEl.addEventListener('touchstart', e=>{ touchX = e.touches[0].clientX; stopAuto(); }, {passive:true});
-galleryEl.addEventListener('touchend', e=>{
-  const dx = e.changedTouches[0].clientX - touchX;
-  if(Math.abs(dx) > 50) setImg(curImg + (dx<0 ? 1 : -1));
-  startAuto();
-}, {passive:true});
+/* ═══════ TOP BAR ═══════ */
+window.addEventListener('scroll',()=>{document.getElementById('topBar').classList.toggle('scrolled',window.scrollY>20)},{passive:true});
 
 /* ═══════ TOAST ═══════ */
-function toast(msg, type='info'){
-  const wrap = document.getElementById('toastWrap');
-  const icons = {success:'fa-circle-check', error:'fa-circle-exclamation', info:'fa-circle-info'};
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.innerHTML = `<i class="fa-solid ${icons[type]}"></i><span>${msg}</span><button class="toast-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>`;
-  wrap.appendChild(t);
-  requestAnimationFrame(()=> t.classList.add('show'));
-  const remove = ()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),400); };
-  t.querySelector('.toast-close').onclick = remove;
-  setTimeout(remove, 4000);
+function toast(msg,type='info'){
+  const w=document.getElementById('toastWrap'),icons={success:'fa-circle-check',error:'fa-circle-exclamation',info:'fa-circle-info'};
+  const t=document.createElement('div');t.className=`toast ${type}`;
+  t.innerHTML=`<i class="fa-solid ${icons[type]}"></i><span>${msg}</span><button class="toast-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>`;
+  w.appendChild(t);requestAnimationFrame(()=>t.classList.add('show'));
+  const rm=()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400)};
+  t.querySelector('.toast-close').onclick=rm;setTimeout(rm,4000);
 }
+function scrollToForm(){document.getElementById('enquirySection').scrollIntoView({behavior:'smooth',block:'start'})}
 
-/* ═══════ SCROLL TO FORM ═══════ */
-function scrollToForm(){
-  document.getElementById('enquirySection').scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-/* ═══════ PDF ═══════ */
-function downloadPDF(){ toast('PDF brochure download started!', 'success'); }
-
-/* ═══════ FORM VALIDATION ═══════ */
-const form = document.getElementById('enquiryForm');
-const submitBtn = document.getElementById('submitBtn');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function showError(id, msg){
-  const field = document.getElementById(id);
-  const errEl = document.querySelector(`[data-error="${id}"]`);
-  if(field) field.classList.add('error');
-  if(errEl){ errEl.textContent = msg; errEl.classList.add('show'); }
-  if(field && !reduceMotion){
-    gsap.fromTo(field, {x:-6}, {x:0, duration:.4, ease:'power2.inOut', clearProps:'x',
-      onStart:()=>gsap.to(field,{x:6,duration:.08,yoyo:true,repeat:3})});
-  }
-}
-function clearError(id){
-  const field = document.getElementById(id);
-  const errEl = document.querySelector(`[data-error="${id}"]`);
-  if(field) field.classList.remove('error');
-  if(errEl){ errEl.classList.remove('show'); errEl.textContent=''; }
-}
-['fName','fPhone','fEmail','fAgree'].forEach(id=>{
-  const el = document.getElementById(id);
-  el.addEventListener('focus', ()=>clearError(id));
-  el.addEventListener('input', ()=>clearError(id));
-});
-
-form.addEventListener('submit', e=>{
-  e.preventDefault();
-  let valid = true;
-  const name = document.getElementById('fName').value.trim();
-  const phone = document.getElementById('fPhone').value.trim();
-  const email = document.getElementById('fEmail').value.trim();
-  const agree = document.getElementById('fAgree').checked;
-
-  if(name.length < 2){ showError('fName','Please enter your full name (min 2 characters)'); valid=false; }
-  if(!/^[0-9+\s-]{10,15}$/.test(phone)){ showError('fPhone','Please enter a valid phone number (10+ digits)'); valid=false; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showError('fEmail','Please enter a valid email address'); valid=false; }
-  if(!agree){ showError('fAgree','You must agree to be contacted'); valid=false; }
-
-  if(!valid){ toast('Please fix the errors below', 'error'); return; }
-
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<div class="spinner"></div> Submitting…';
-
-  setTimeout(()=>{
-    form.style.display = 'none';
-    document.getElementById('successState').classList.add('show');
-    toast('Enquiry submitted successfully!', 'success');
-  }, 1400);
+/* ═══════ FORM ═══════ */
+const form=document.getElementById('enquiryForm'),submitBtn=document.getElementById('submitBtn');
+function showErr(id,msg){const f=document.getElementById(id),e=document.querySelector(`[data-error="${id}"]`);if(f)f.classList.add('error');if(e){e.textContent=msg;e.classList.add('show')}if(f&&!reduceMotion)gsap.fromTo(f,{x:-6},{x:0,duration:.4,ease:'power2.inOut',clearProps:'x',onStart:()=>gsap.to(f,{x:6,duration:.08,yoyo:true,repeat:3})})}
+function clearErr(id){const f=document.getElementById(id),e=document.querySelector(`[data-error="${id}"]`);if(f)f.classList.remove('error');if(e){e.classList.remove('show');e.textContent=''}}
+['fName','fPhone','fEmail','fAgree'].forEach(id=>{document.getElementById(id).addEventListener('focus',()=>clearErr(id));document.getElementById(id).addEventListener('input',()=>clearErr(id))});
+form.addEventListener('submit',e=>{
+  e.preventDefault();let ok=true;
+  const n=document.getElementById('fName').value.trim(),p=document.getElementById('fPhone').value.trim(),em=document.getElementById('fEmail').value.trim(),ag=document.getElementById('fAgree').checked;
+  if(n.length<2){showErr('fName','Please enter your full name');ok=false}
+  if(!/^[0-9+\s-]{10,15}$/.test(p)){showErr('fPhone','Please enter a valid phone number');ok=false}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showErr('fEmail','Please enter a valid email');ok=false}
+  if(!ag){showErr('fAgree','You must agree to be contacted');ok=false}
+  if(!ok){toast('Please fix the errors below','error');return}
+  submitBtn.disabled=true;submitBtn.innerHTML='<div class="spinner"></div> Submitting…';
+  setTimeout(()=>{form.style.display='none';document.getElementById('successState').classList.add('show');toast('Enquiry submitted successfully!','success')},1400);
 });
 
 /* ═══════ GSAP ANIMATIONS ═══════ */
-if(typeof gsap !== 'undefined'){
+if(typeof gsap!=='undefined'){
   gsap.registerPlugin(ScrollTrigger);
-
   if(!reduceMotion){
-    // Initial timeline
-    const tl = gsap.timeline();
-    tl.from('#topBar', {y:-20, opacity:0, duration:.6, ease:'power2.out', delay:.1})
-      .from('#gallery', {opacity:0, scale:.98, duration:1, ease:'power2.out'}, '-=.3')
-      .from('.overlay-text > *', {y:30, opacity:0, stagger:.1, duration:.7, ease:'power2.out'}, '-=.5')
-      .from('#verifiedBar > div > *', {y:14, opacity:0, stagger:.06, duration:.5, ease:'power2.out'}, '-=.4');
+    const tl=gsap.timeline({delay:.1});
+    tl.from('#topBar',{y:-20,opacity:0,duration:.6,ease:'power2.out'})
+      .from('.hero-gallery',{opacity:0,scale:.97,duration:1.2,ease:'power3.out'},'-=.2')
+      .from('.hero-arrow',{scale:0,opacity:0,duration:.5,stagger:.1,ease:'back.out(1.6)'},'-=.5')
+      .from('.hero-counter',{y:-10,opacity:0,duration:.4,ease:'power2.out'},'-=.4')
+      .from('#heroTitle',{y:50,opacity:0,duration:1,ease:'power3.out'},'-=.5')
+      .from('.hero-info p',{y:25,opacity:0,duration:.6,ease:'power2.out'},'-=.5')
+      .from('.price-pill',{y:20,scale:.9,opacity:0,duration:.5,ease:'back.out(1.5)'},'-=.3');
 
-    // Spec cards
-    gsap.utils.toArray('#specGrid .spec-card').forEach((el,i)=>{
-      gsap.from(el,{opacity:0,y:30,duration:.6,ease:'power2.out',delay:i*0.06,
-        scrollTrigger:{trigger:el,start:'top 88%'}});
-    });
-
-    // About
-    gsap.from('#aboutSection',{opacity:0,y:25,duration:.7,ease:'power2.out',
-      scrollTrigger:{trigger:'#aboutSection',start:'top 85%'}});
-
-    // Amenities
-    gsap.utils.toArray('#amenityGrid .amenity').forEach((el,i)=>{
-      gsap.from(el,{opacity:0,scale:.92,duration:.5,ease:'power2.out',delay:i*0.04,
-        scrollTrigger:{trigger:el,start:'top 90%'}});
-    });
-
-    // Location
-    gsap.from('#locationSection',{opacity:0,y:30,duration:.7,ease:'power2.out',
-      scrollTrigger:{trigger:'#locationSection',start:'top 85%'}});
-
-    // Agent
-    gsap.from('#agentCard',{opacity:0,y:30,duration:.7,ease:'power2.out',
-      scrollTrigger:{trigger:'#agentCard',start:'top 85%'}});
-
-    // Form
-    gsap.from('#formCard',{opacity:0,scale:.96,duration:.8,ease:'power2.out',
-      scrollTrigger:{trigger:'#formCard',start:'top 85%'}});
-
-    // Similar
-    gsap.utils.toArray('#simGrid .sim-card').forEach((el,i)=>{
-      gsap.from(el,{opacity:0,y:40,duration:.7,ease:'power2.out',delay:i*0.1,
-        scrollTrigger:{trigger:el,start:'top 88%'}});
-    });
-
-    // Footer
-    gsap.from('.footer',{opacity:0,y:20,duration:.5,ease:'power2.out',
-      scrollTrigger:{trigger:'.footer',start:'top 95%'}});
+    gsap.from('#verifiedBar > div > *',{y:14,opacity:0,stagger:.06,duration:.5,ease:'power2.out',scrollTrigger:{trigger:'#verifiedBar',start:'top 90%'}});
+    gsap.utils.toArray('#specGrid .spec-card').forEach((el,i)=>{gsap.from(el,{opacity:0,y:30,duration:.6,ease:'power2.out',delay:i*.06,scrollTrigger:{trigger:el,start:'top 88%'}})});
+    gsap.from('#aboutSection',{opacity:0,y:25,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'#aboutSection',start:'top 85%'}});
+    gsap.utils.toArray('#amenityGrid .amenity').forEach((el,i)=>{gsap.from(el,{opacity:0,scale:.92,duration:.5,ease:'power2.out',delay:i*.04,scrollTrigger:{trigger:el,start:'top 90%'}})});
+    gsap.from('#locationSection',{opacity:0,y:30,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'#locationSection',start:'top 85%'}});
+    gsap.from('#mediaSection',{opacity:0,y:30,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'#mediaSection',start:'top 85%'}});
+    gsap.from('.album-grid .album-thumb',{opacity:0,scale:.92,stagger:.05,duration:.5,ease:'power2.out',scrollTrigger:{trigger:'.album-grid',start:'top 88%'}});
+    gsap.from('#agentCard',{opacity:0,y:30,duration:.7,ease:'power2.out',scrollTrigger:{trigger:'#agentCard',start:'top 85%'}});
+    gsap.from('#formCard',{opacity:0,scale:.96,duration:.8,ease:'power2.out',scrollTrigger:{trigger:'#formCard',start:'top 85%'}});
+    gsap.utils.toArray('#simGrid .sim-card').forEach((el,i)=>{gsap.from(el,{opacity:0,y:40,duration:.7,ease:'power2.out',delay:i*.1,scrollTrigger:{trigger:el,start:'top 88%'}})});
+    gsap.from('.footer',{opacity:0,y:20,duration:.5,ease:'power2.out',scrollTrigger:{trigger:'.footer',start:'top 95%'}});
   }
 }
 
-/* ═══════ Welcome toast ═══════ */
-setTimeout(()=>toast('Welcome! You scanned a verified PropQR property 🏡', 'success'), 1200);
+setTimeout(()=>toast('Welcome! You scanned a verified PropQR property','success'),1200);
 </script>
-
 </body>
 </html>
